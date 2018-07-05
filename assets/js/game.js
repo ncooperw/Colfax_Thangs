@@ -1,3 +1,6 @@
+
+//game start, title screen needs to go away
+=======
 //game will be divided into instances
 
 //each instance will have a separate js file
@@ -11,3 +14,4 @@
         //instance 1 will be inbetween instances 2
 
 //instance 3--boss fight (rpg)
+
