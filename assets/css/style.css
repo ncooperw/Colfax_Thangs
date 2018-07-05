@@ -1,10 +1,14 @@
+
+.game-container {
+    width: 900px;
+    height: 500px;
+    background-image: url("/Users/richschiffer/Desktop/code/Project-1/assets/images/p1-ogden-bg.png");
+    /* background-size:; */
+    background-repeat: no-repeat;
+=======
 .rectangle {
     height: 100px;
     width: 50px;
     background-color: red;
 }
 
-.game-container {
-    width: 900px;
-    height: 500px;
-}
