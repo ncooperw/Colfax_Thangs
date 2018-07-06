@@ -1,6 +1,6 @@
 
 //game start, title screen needs to go away
-=======
+
 //game will be divided into instances
 
 //each instance will have a separate js file
