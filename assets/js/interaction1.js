@@ -18,7 +18,24 @@ var interaction = {
         nothing: "nothing happens. You are no closer to uncovering the truth.",
         negative: "Your drink is poisoned. You wake up the next day in the alley and you lose health.",
         positive: "Everyone starts laughing at you because your dancing is off beat. You use your new found notoriety to make a new friend."
-    }
+    },
+    sidekicks: [{
+            name: "Bob",
+            image: "assets/images/bobsidekick.png"
+        },
+        {
+            name: "Jimmy",
+            image: "assets/images/jimmysidekick.png"
+        },
+        {
+            name: "Maria",
+            image: "assets/images/mariasidekick.png"
+        },
+        {
+            name: "Terry",
+            image: "assets/images/terrysidekick.jpg"
+        }
+    ]
 }
 
 var currrentScenario;
@@ -29,6 +46,7 @@ var highScore = 0; //get high score from Firebase
 var health = 100;
 var sidekick = [];
 var inventory = [];
+var sidekickChoice; //user selected sidekick
 
 
 
@@ -41,7 +59,7 @@ function updateDisplay() {
     $("#score").html("Score: " + playerScore);
     $("#highScore").html("High Score: " + highScore);
     $(".interactions").hide();
-    
+
 }
 
 updateDisplay();
@@ -55,7 +73,7 @@ $("#door1").on('click', function doorExplore() {
     $("#door1").hide();
     //hides the game play panel
     $(".gamePlay").hide();
-    
+
     //changes the background 
     $(".game-container").css('background-image', 'url(assets/images/OgdenTheater.jpg');
 
@@ -86,34 +104,35 @@ function beginInteraction() {
         console.log(choices);
     };
 
-//click events for each choice
+    //click events for each choice
     $(".thisChoice").on("click", function () {
 
         userSelect = $(this).data("index");
         console.log("Index" + userSelect);
-       
+
         consequencePage();
     })
 
 }
 
 
+
 function consequencePage() {
     $(".question").empty();
     $(".userChoices").empty();
     $(".gamePlay").show();
-    
+
 
     playContinue = true;
 
-    if(playContinue === true){
+    if (playContinue === true) {
         console.log("play Coninue = " + playContinue);
         var next = $("<button>");
         next.text("Continue");
         next.addClass("btn btn-success continue");
 
         $(".continue").append(next);
-        
+
     }
 
     $(".gamePlay").html("You decide to " + userSelect);
@@ -127,14 +146,14 @@ function consequencePage() {
     var negative = interaction.consequences.negative;
     var nothing = interaction.consequences.nothing;
 
-//if statements to add consequences for each choice
+    //if statements to add consequences for each choice
     if (userSelect == "idealChoice") {
         console.log("ideal choice");
         $(".gamePlay").append(" which " + ideal);
         var container = "Container with mesmerizing music";
         inventory.push(container);
         console.log("inventory" + inventory)
-       
+
         //update inventory
         $(".inventory").append("<img src='assets/images/musicbox.jpg'/>");
 
@@ -145,7 +164,7 @@ function consequencePage() {
         console.warn("need to add item to inventory");
         //need return to main map feature
         console.warn("need next steps");
-        
+
         updateDisplay();
 
     } else if (userSelect == "positiveChoice") {
@@ -156,29 +175,87 @@ function consequencePage() {
         //see if you can add a sidekick with the love compatibility API
         console.warn("need to add love compatiblity API")
         //need return to main map feature
-        
-
         updateDisplay();
-    } else if (userSelect == "nothingChoice"){
-        console.log ("nothing happens");
+
+        $(".continue").on("click", function () {
+            console.log("start sidekick function");
+            chooseSidekick();
+        });
+
+    } else if (userSelect == "nothingChoice") {
+        console.log("nothing happens");
         $(".gamePlay").append(": " + nothing);
         //add button to end interaction or give user a chance to try again
         console.warn("need next steps");
         //need return to main map feature
-        
+
 
         updateDisplay();
 
-    } if( userSelect == "negativeChoice"){
+    }
+    if (userSelect == "negativeChoice") {
         console.log("negative choice");
         $(".gamePlay").append(": " + negative);
         health -= 25;
         playerScore -= 25;
         console.warn("need next steps");
         //need return to main map feature
-        
+
 
         updateDisplay();
     }
 }
 
+function chooseSidekick() {
+    console.log("I am a function");
+    // $(".game-container").css("background-image", "url (null)");
+    //game background clears 
+
+
+    //user is presented with four sidekicks to choose from -- loop through the object
+    var x;
+
+    for (x in interaction.sidekicks) {
+        console.log("inside sidekick loop");
+        var newDiv = $("<div>");
+        newDiv.addClass("card-group");
+
+        $(".game-container").append(newDiv);
+
+        var sidekickImg = $("<img>");
+        var sidekickName = interaction.sidekicks[x].name;
+        sidekickImg.attr("src", interaction.sidekicks[x].image);
+        sidekickImg.addClass("card sidekickChoice");
+        newDiv.append(sidekickImg);
+        // $(".game-container").append(newDiv);
+
+    }
+
+    // for (i = 0; i> interaction.sidekicks.length; i++) {
+    //     console.log("inside loop");
+
+    //     var sidekickDiv = $("<div>");
+    //     sidekickDiv.addClass("card sidekickChoices");
+    //     var sidekickImage = $("<img>");
+
+    //     sidekickImage.addClass(" card-img-top mySidekick");
+
+    //     sidekickImage.attr("src", interaction.sidekicks[i].image);
+
+    //     newDiv.append(sidekickDiv);
+
+    //     console.log("choose from " + sidekickImage);
+
+    //     $(".sidekickChoices").append(sidekickImage);
+
+    // }
+
+    //the user clicks the potential sidekick
+    //the sidekicks name along with the user's name are put into the love calculator API and the compatability message and percentage is displayed
+    //user has a choice to select the sidekick based on the message and percentage
+    //percentage of 50% or less = no help, 10 points
+    //50% < 75% = increase of 35 hp, 25 points
+    //75% < 85% = increase of 50 hp, 50 points
+    //>85% = double the hp and double the score
+    //sidekick image is added to the .sidekick div
+}
