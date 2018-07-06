@@ -16,3 +16,38 @@
 #playerStats {
     border: 2px solid black;
 }
+
+/*Styling user interaction payne */
+.interactions {
+    background: black;
+    color: whitesmoke;
+    border: 5px outset gold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#scenarioRow {
+    border-bottom: solid 8px grey;
+}
+
+#userInteraction {
+    border-right: 3px outset gold;
+}
+
+.userChoices {
+    font-size: 24px;
+    color: darkred;
+    padding: 5px;
+}
+
+.thisChoice:hover {
+    background-color: gray;
+    color: darkmagenta;
+    cursor: pointer;
+}
+
+/*Styling the gamePlay payne*/
+.gamePlay {
+    background: black;
+    color: white;
+}

@@ -4,7 +4,7 @@
 //The sprite comes to the Ogden theater
 var scenario = "You cannot maintain clear thought while the music is playing. You are surrounded by people...at least they look like people, it is hard to tell."
 //Inside
-var interactionOgden = {
+var interaction = {
     question: "There is an empty container lying at the doorway. Do you:",
 
     answerChoices: {
@@ -23,24 +23,29 @@ var interactionOgden = {
 
 var currrentScenario;
 var userSelect;
+var playContinue = false;
 var playerScore = 0;
 var highScore = 0; //get high score from Firebase
 var health = 100;
+var sidekick = [];
+var inventory = [];
 
-console.log(interactionOgden.question);
-console.log(interactionOgden.answerChoices.idealChoice);
-console.log(interactionOgden.consequences.ideal);
+
+
+//need to hide continue button upon game start
+$("#continueButton").hide();
 
 function updateDisplay() {
     //Player Stats display --> create function upon game start
     $("#health").html("Player HP: " + health);
     $("#score").html("Score: " + playerScore);
     $("#highScore").html("High Score: " + highScore);
-    $(".consequence").html("Look here for the answers along your quest");
-    $(".inventory").html("You carry these items on your person.");
+    $(".interactions").hide();
+    
 }
-//create a rectangle for door -- id=door1
+
 updateDisplay();
+
 //create a function upon click of the door
 $("#door1").on('click', function doorExplore() {
     console.log("clicked");
@@ -48,6 +53,9 @@ $("#door1").on('click', function doorExplore() {
     //clicking the door 
     //clear the screen
     $("#door1").hide();
+    //hides the game play panel
+    $(".gamePlay").hide();
+    
     //changes the background 
     $(".game-container").css('background-image', 'url(assets/images/OgdenTheater.jpg');
 
@@ -57,19 +65,17 @@ $("#door1").on('click', function doorExplore() {
 });
 
 function beginInteraction() {
-
-
+    $(".interactions").show();
     $(".scenario").html("<h2>Scenario: " + scenario + "</h2>");
-    $(".question").html("<h3>" + interactionOgden.question + "</h3>");
+    $(".question").html("<h3>" + interaction.question + "</h3>");
 
-    var text = "";
     var x;
 
-    // for (var i = 0; i < interactionOgden.answerChoices.length; i++) 
-    for (x in interactionOgden.answerChoices) {
+    // for (var i = 0; i < interaction.answerChoices.length; i++) 
+    for (x in interaction.answerChoices) {
         var choices = $("<div>");
 
-        choices.text(interactionOgden.answerChoices[x]);
+        choices.text(interaction.answerChoices[x]);
         choices.attr({
             "data-index": x
         });
@@ -80,48 +86,58 @@ function beginInteraction() {
         console.log(choices);
     };
 
+//click events for each choice
     $(".thisChoice").on("click", function () {
 
         userSelect = $(this).data("index");
         console.log("Index" + userSelect);
-
+       
         consequencePage();
     })
 
 }
 
-// consequences: {
-//     ideal:"increase the users power", 
-//     nothing: "nothing happens", 
-//     negative: "Your drink is poisoned. You wake up the next day in the alley and you lose power.",
-//     positive: "Everyone starts laughing at you because your dancing is off beat. You use your new found notoriety to make a new friend."}
-
-// <div class="scenario"></div>
-// <div class="question"></div>
-// <div class="userChoices"></div>
-// <div id="health"></div>
-// <div id="score"></div>
-// <div class="consequences"></div>
 
 function consequencePage() {
     $(".question").empty();
     $(".userChoices").empty();
+    $(".gamePlay").show();
+    
 
-    $(".scenario").html("You decide to " + userSelect);
+    playContinue = true;
+
+    if(playContinue === true){
+        console.log("play Coninue = " + playContinue);
+        var next = $("<button>");
+        next.text("Continue");
+        next.addClass("btn btn-success continue");
+
+        $(".continue").append(next);
+        
+    }
+
+    $(".gamePlay").html("You decide to " + userSelect);
 
     //<-- need to print the user's choice
 
     console.warn("Need to make this string show" + userSelect);
 
-    var ideal = interactionOgden.consequences.ideal;
-    var positive = interactionOgden.consequences.positive;
-    var negative = interactionOgden.consequences.negative;
-    var nothing = interactionOgden.consequences.nothing;
+    var ideal = interaction.consequences.ideal;
+    var positive = interaction.consequences.positive;
+    var negative = interaction.consequences.negative;
+    var nothing = interaction.consequences.nothing;
 
+//if statements to add consequences for each choice
     if (userSelect == "idealChoice") {
-        console.log("Yes it works");
-        $(".scenario").append(" which " + ideal);
-        $(".inventory").append("Container of mesmerizing music");
+        console.log("ideal choice");
+        $(".gamePlay").append(" which " + ideal);
+        var container = "Container with mesmerizing music";
+        inventory.push(container);
+        console.log("inventory" + inventory)
+       
+        //update inventory
+        $(".inventory").append("<img src='assets/images/musicbox.jpg'/>");
+
         health += 50;
         playerScore += 100;
         console.log(health);
@@ -129,34 +145,40 @@ function consequencePage() {
         console.warn("need to add item to inventory");
         //need return to main map feature
         console.warn("need next steps");
+        
         updateDisplay();
 
     } else if (userSelect == "positiveChoice") {
         console.log("positive Choice");
-        $(".scenario").append(": " + positive);
+        $(".gamePlay").append(": " + positive);
         health += 25;
         playerScore += 50;
         //see if you can add a sidekick with the love compatibility API
         console.warn("need to add love compatiblity API")
         //need return to main map feature
+        
+
         updateDisplay();
     } else if (userSelect == "nothingChoice"){
         console.log ("nothing happens");
-        $(".scenario").append(": " + nothing);
+        $(".gamePlay").append(": " + nothing);
         //add button to end interaction or give user a chance to try again
         console.warn("need next steps");
         //need return to main map feature
+        
+
         updateDisplay();
 
     } if( userSelect == "negativeChoice"){
         console.log("negative choice");
-        $(".scenario").append(": " + negative);
+        $(".gamePlay").append(": " + negative);
         health -= 25;
         playerScore -= 25;
         console.warn("need next steps");
         //need return to main map feature
+        
+
         updateDisplay();
     }
 }
-//if statements to add consequences for each choice
-//click events for each choice
+
