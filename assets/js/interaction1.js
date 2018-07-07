@@ -1,43 +1,55 @@
+//add classes for background by interaction and a interaction counter iCounter
+//for each interaction, add and remove classes for the appropriate interactions
+
+//css will overlay the game-container class by using interaction+icounter
+
+//with continue click remove class (interaction +iCounter) iCounter ++, add class (game-container + counter)
+
 $(document).ready(function () {
     //create a function for the (x,y) of the ogden theater. Text pops up on the screen.
     //A band is playing and the music is intoxicating. The sprite goes inside.
 
     //The sprite comes to the Ogden theater
-    var scenario = "You cannot maintain clear thought while the music is playing. You are surrounded by people...at least they look like people, it is hard to tell."
-    //Inside
-    var interaction = {
-        question: "There is an empty container lying at the doorway. Do you:",
 
-        answerChoices: {
-            idealChoice: "Grab the container and capture the music",
-            nothingChoice: "Turn around and leave",
-            negativeChoice: "Go to the bar and get a drink",
-            positiveChoice: "You move towards the stage and start dancing."
-        },
-        consequences: {
-            ideal: "increases your health and adds the item to your inventory. Nice!",
-            nothing: "nothing happens. You are no closer to uncovering the truth.",
-            negative: "Your drink is poisoned. You wake up the next day in the alley and you lose health.",
-            positive: "Everyone starts laughing at you because your dancing is off beat. You use your new found notoriety to make a new friend."
-        },
-        sidekicks: [{
-                name: "Bob",
-                image: "assets/images/bobsidekick.png"
+    //Inside
+    var interaction =
+        {
+            scenario: "You cannot maintain clear thought while the music is playing. You are surrounded by people...at least they look like people, it is hard to tell.",
+
+            question: "There is an empty container lying at the doorway. Do you:",
+
+            answerChoices: {
+                idealChoice: "Grab the container and capture the music",
+                nothingChoice: "Turn around and leave",
+                negativeChoice: "Go to the bar and get a drink",
+                positiveChoice: "You move towards the stage and start dancing."
             },
-            {
-                name: "Jimmy",
-                image: "assets/images/jimmysidekick.png"
+            consequences: {
+                ideal: "increases your health and adds the item to your inventory. Nice!",
+                nothing: "nothing happens. You are no closer to uncovering the truth.",
+                negative: "Your drink is poisoned. You wake up the next day in the alley and you lose health.",
+                positive: "Everyone starts laughing at you because your dancing is off beat. You use your new found notoriety to make a new friend."
             },
-            {
-                name: "Maria",
-                image: "assets/images/mariasidekick.png"
-            },
-            {
-                name: "Terry",
-                image: "assets/images/terrysidekick.jpg"
-            }
-        ]
-    }
+            sidekicks: [{
+                    name: "Bob",
+                    image: "assets/images/bobsidekick.png"
+                },
+                {
+                    name: "Jimmy",
+                    image: "assets/images/jimmysidekick.png"
+                },
+                {
+                    name: "Maria",
+                    image: "assets/images/mariasidekick.png"
+                },
+                {
+                    name: "Terry",
+                    image: "assets/images/terrysidekick.jpg"
+                }
+            ]
+        }
+    
+    
 
     var currrentScenario;
     var userSelect;
@@ -48,7 +60,7 @@ $(document).ready(function () {
     var sidekick = [];
     var inventory = [];
     var sidekickChoice; //user selected sidekick
-
+    var iCounter = 1;
 
 
     //need to hide continue button upon game start
@@ -76,7 +88,7 @@ $(document).ready(function () {
         $(".gamePlay").hide();
 
         //changes the background 
-        $(".game-container").css('background-image', 'url(assets/images/OgdenTheater.jpg');
+        $(".game-container").addClass("interactions1");
 
         //Scenario and choices come up
 
@@ -85,8 +97,8 @@ $(document).ready(function () {
 
     function beginInteraction() {
         $(".interactions").show();
-        $(".scenario").html("<h2>Scenario: " + scenario + "</h2>");
-        $(".question").html("<h3>" + interaction.question + "</h3>");
+        $(".scenario").html("<h2>Scenario: " + interaction.scenario + "</h2>");
+        $(".question").html("<h3>" + interaction.interaction+iCounter.question + "</h3>");
 
         var x;
 
@@ -108,7 +120,9 @@ $(document).ready(function () {
         //click events for each choice
         $(".thisChoice").on("click", function () {
 
-            userSelect = $(this).data("index");
+            userSelect = $(this).attr("data-index");
+            //.data("index");
+
             console.log("Index" + userSelect);
 
             consequencePage();
@@ -136,7 +150,7 @@ $(document).ready(function () {
 
         }
 
-        $(".gamePlay").html("You decide to " + userSelect);
+        $(".gamePlay").html("You decide to " + interaction.answerChoices[userSelect]);
 
         //<-- need to print the user's choice
 
@@ -177,11 +191,9 @@ $(document).ready(function () {
             console.warn("need to add love compatiblity API")
             //need return to main map feature
             updateDisplay();
+            chooseSidekick();
 
-            $(".continue").on("click", function () {
-                console.log("start sidekick function");
-                chooseSidekick();
-            });
+
 
         } else if (userSelect == "nothingChoice") {
             console.log("nothing happens");
@@ -207,7 +219,22 @@ $(document).ready(function () {
         }
     }
 
+    $(".continue").on("click", function () {
+        console.log("start sidekick function");
+
+        playContinue = false;
+        $(".game-container").removeClass("interactions" + iCounter).addClass("game-container" + counter);
+
+        console.log("gamejs " + counter);
+
+        iCounter++;
+
+
+    });
+
+
     function chooseSidekick() {
+
         console.log("I am a function");
         // $(".game-container").css("background-image", "url (null)");
         //game background clears 
@@ -216,7 +243,8 @@ $(document).ready(function () {
         //user is presented with four sidekicks to choose from -- loop through the object
         var x;
 
-
+        // var sideImageArr = Object.keys(interaction.sidekicks.image);
+        // console.log(sideImageArr);
 
 
 
@@ -238,7 +266,7 @@ $(document).ready(function () {
 
         }
 
-        
+
         //the user clicks the potential sidekick
         //the sidekicks name along with the user's name are put into the love calculator API and the compatability message and percentage is displayed
         //user has a choice to select the sidekick based on the message and percentage
