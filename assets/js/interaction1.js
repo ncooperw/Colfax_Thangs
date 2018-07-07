@@ -218,15 +218,31 @@ function chooseSidekick() {
     for (x in interaction.sidekicks) {
         console.log("inside sidekick loop");
         var newDiv = $("<div>");
-        newDiv.addClass("card-group");
-
-        $(".game-container").append(newDiv);
+        newDiv.addClass("card-deck");
+        
+        $(".gamePlay").append(newDiv);
 
         var sidekickImg = $("<img>");
         var sidekickName = interaction.sidekicks[x].name;
         sidekickImg.attr("src", interaction.sidekicks[x].image);
-        sidekickImg.addClass("card sidekickChoice");
+        sidekickImg.addClass("card card-body sidekickChoice");
         newDiv.append(sidekickImg);
+
+
+        // console.log("inside sidekick loop");
+        // var newDiv = $("<div>");
+        // newDiv.addClass("card-deck");
+        
+        // var newNewDiv = $("<div>");
+        // newNewDiv.addClass("card");
+        // newDiv.append(newNewDiv);
+        // $(".game-container").append(newDiv);
+
+        // var sidekickImg = $("<img>");
+        // var sidekickName = interaction.sidekicks[x].name;
+        // sidekickImg.attr("src", interaction.sidekicks[x].image);
+        // sidekickImg.addClass("card-body sidekickChoice");
+        // newNewDiv.append(sidekickImg);
         // $(".game-container").append(newDiv);
 
     }
