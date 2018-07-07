@@ -2,6 +2,36 @@
 .game-container {
     width: 900px;
     height: 500px;
+
+    background-image: url("../images/p1-street2-bg.png");
+    /* background-size:; */
+    background-repeat: no-repeat;
+}
+.game-container2 {
+    width: 900px;
+    height: 500px;
+    background-image: url("../images/p1-street-bg.png");
+    /* background-size:; */
+    background-repeat: no-repeat;
+}
+.game-container3 {
+    width: 900px;
+    height: 500px;
+    background-image: url("../images/p1-ogden-bg.png");
+    /* background-size:; */
+    background-repeat: no-repeat;
+}
+/* .rectangle {
+    height: 100px;
+    width: 50px;
+    background-color: red;
+} */
+#van {
+    position: relative;
+    width: 50px;
+    height: 40px;
+    
+
     background-image: url("../images/p1-ogden-bg.png");
     /* background-size:; */
     background-repeat: no-repeat;
@@ -57,5 +87,6 @@
     height: 200px;
     width: 200px;
     border: 50 px solid black;
+
 
 }
