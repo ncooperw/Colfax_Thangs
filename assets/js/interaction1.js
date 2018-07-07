@@ -1,7 +1,22 @@
+//create a function for the (x,y) of the ogden theater. Text pops up on the screen.
+//A band is playing and the music is intoxicating. The sprite goes inside.
+
+//The sprite comes to the Ogden theater
+
+
+
 $(document).ready(function () {
     //create a function for the (x,y) of the ogden theater. Text pops up on the screen.
     //A band is playing and the music is intoxicating. The sprite goes inside.
-
+var config = {
+    apiKey: "AIzaSyAW4oe-QFXhUeCMs3WmYzl0EQL_qFqngHE",
+    authDomain: "group-project-1-7ad35.firebaseapp.com",
+    databaseURL: "https://group-project-1-7ad35.firebaseio.com",
+    projectId: "group-project-1-7ad35",
+    storageBucket: "group-project-1-7ad35.appspot.com",
+    messagingSenderId: "571501272814"
+  };
+  firebase.initializeApp(config);
     //The sprite comes to the Ogden theater
     var scenario = "You cannot maintain clear thought while the music is playing. You are surrounded by people...at least they look like people, it is hard to tell."
     //Inside
@@ -13,6 +28,7 @@ $(document).ready(function () {
             nothingChoice: "Turn around and leave",
             negativeChoice: "Go to the bar and get a drink",
             positiveChoice: "You move towards the stage and start dancing."
+
         },
         consequences: {
             ideal: "increases your health and adds the item to your inventory. Nice!",
