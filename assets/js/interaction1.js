@@ -2,6 +2,16 @@
 //A band is playing and the music is intoxicating. The sprite goes inside.
 
 //The sprite comes to the Ogden theater
+var config = {
+    apiKey: "AIzaSyAW4oe-QFXhUeCMs3WmYzl0EQL_qFqngHE",
+    authDomain: "group-project-1-7ad35.firebaseapp.com",
+    databaseURL: "https://group-project-1-7ad35.firebaseio.com",
+    projectId: "group-project-1-7ad35",
+    storageBucket: "group-project-1-7ad35.appspot.com",
+    messagingSenderId: "571501272814"
+  };
+  firebase.initializeApp(config);
+
 var scenario = "You cannot maintain clear thought while the music is playing. You are surrounded by people...at least they look like people, it is hard to tell."
 //Inside
 var interaction = {
