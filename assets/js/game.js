@@ -1,6 +1,11 @@
 
-//game start, title screen needs to go away
-=======
+//game start
+
+//user need to enter his/her name to use with the love compatability API to gain a side kick
+
+//title screen needs to go away
+//.gamePlay needs to be hidden upon game start and be shown during game play when necessary
+
 //game will be divided into instances
 
 //each instance will have a separate js file
