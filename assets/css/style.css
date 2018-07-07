@@ -30,11 +30,6 @@
     position: relative;
     width: 50px;
     height: 40px;
-    
-
-    background-image: url("../images/p1-ogden-bg.png");
-    /* background-size:; */
-    background-repeat: no-repeat;
 }
 
 .rectangle {
