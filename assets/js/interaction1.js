@@ -152,10 +152,6 @@ $(document).ready(function () {
 
         $(".gamePlay").html("You decide to " + interaction.answerChoices[userSelect]);
 
-        //<-- need to print the user's choice
-
-        console.warn("Need to make this string show" + userSelect);
-
         var ideal = interaction.consequences.ideal;
         var positive = interaction.consequences.positive;
         var negative = interaction.consequences.negative;
