@@ -26,6 +26,15 @@
     width: 50px;
     background-color: red;
 } */
+.boss-container {
+    width: 900px;
+    height: 500px;
+    background: black;
+    background-image: url("#");
+    /* background-size:; */
+    background-repeat: no-repeat;
+}
+
 #van {
     position: relative;
     width: 50px;
@@ -89,4 +98,11 @@
     border: 50 px solid black;
 
 
+}
+
+.player-card {
+    /* width: 200px; */
+    /* height: 300px; */
+    position: absolute;
+    top: 800px;
 }
