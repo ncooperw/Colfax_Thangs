@@ -14,6 +14,8 @@
 $(document).ready(function () {
     //create a function for the (x,y) of the ogden theater. Text pops up on the screen.
     //A band is playing and the music is intoxicating. The sprite goes inside.
+    //--------------------------------------------firebase & boss
+
     var config = {
         apiKey: "AIzaSyAW4oe-QFXhUeCMs3WmYzl0EQL_qFqngHE",
         authDomain: "group-project-1-7ad35.firebaseapp.com",
@@ -23,6 +25,157 @@ $(document).ready(function () {
         messagingSenderId: "571501272814"
     };
     firebase.initializeApp(config);
+    
+    var database = firebase.database();
+    
+    var ref = database.ref("game")
+    var playerRef = ref.child("player1");
+    var bossRef = ref.child("boss");
+    var bossAp = 0;
+    var bossHp = 0;
+    initializeDatabase();
+    
+    bossRef.on("value", function (snapshot) {
+        console.log(snapshot.val())
+        bossAp = snapshot.val().ap;
+        bossHp = snapshot.val().hp;
+    
+        // bossHp--;
+    
+        bossRef.update({
+            ap: bossAp,
+            hp: bossHp,
+        })
+    });
+    playerRef.on("value", function (snapshot) {
+        console.log(snapshot.val())
+        playerAp = snapshot.val().ap;
+        playerHp = snapshot.val().hp;
+    
+        // bossHp--;
+    
+        playerRef.update({
+            ap: playerAp,
+            hp: playerHp,
+        })
+    });
+    
+    
+    $(document).on("click", "#special", function(){
+        console.log("clicked")
+        bossHp = bossHp + 10;
+    
+        bossRef.update({
+            hp: bossHp,
+        })
+        console.log(bossHp)
+    })
+    
+    
+    
+    function initializeDatabase() {
+        playerRef.set({
+            hp: 400,
+            ap: 10,
+        })
+        bossRef.set({
+            hp: 1000,
+            ap: 25,
+        })
+    }
+     //play again button global variable
+     var playAgain = $("<button>");
+     playAgain.addClass("btn btn-seconadry play-again");
+     playAgain.text("Play Again?")
+    
+    
+     //function loads the player card and attack button
+     function bossFight() {
+         $(".game-container").empty();
+         $(".game-container").addClass("boss-container");
+         $(".boss-container").removeClass("game-container");
+         var bossDiv = $("<div>");
+         bossDiv.addClass("row");
+    
+         var p1card = $("<div>");
+         p1card.addClass("card player-card");
+    
+         var p1img = $("<img>");
+         p1img.addClass("card-img-top");
+         p1img.attr("src", "https://placekitten.com/g/200/150");
+         p1card.append(p1img);
+    
+         var p1 = $("<h5>")
+         p1.addClass("card-title");
+         p1.text("Player 1");
+         p1card.append(p1);
+    
+         var p1HP = $("<p>");
+         p1HP.addClass("card-text");
+         p1HP.attr("id", "p1hp")
+         p1HP.text("HP: " + playerHp);
+    
+         var p1AP = $("<p>");
+         p1AP.addClass("card-text");
+         p1AP.attr("id", "p1ap");
+         p1AP.text("AP: " + playerAp);
+         p1card.append(p1HP).append(p1AP);
+    
+         var attack = $("button");
+         attack.addClass("btn btn-primary attack");
+         attack.text("Attack!");
+         p1card.append(attack);
+    
+         bossDiv.append(p1card);
+    
+         $(".boss-container").append(bossDiv)
+     }
+    
+    function winning() {
+        $(".boss-container").empty();
+        $(".boss-container").html("<h1> Congradulations! You won with a score of: " + playerScore + "</h1>")
+    
+        $(".boss-container").append(playAgain);
+    }
+    
+    //game-over function runs when player loses all HP
+    function gameOver() {
+        //load game-over screen
+        $(".boss-container").empty();
+        $(".boss-container").html("<h1> Game Over </h1>")
+    
+        $(".boss-container").append(playAgain);
+    }
+        // $(document).on("click", "#fight-boss", function(){
+    // bossFight();
+    // })
+    
+    
+    //function runs when attack button is pushed
+    function attack() {
+        if (playerHp && bossHp > 0) {
+            bossHp -= playerAp;
+            if (bossHp > 0) {
+                playerHp -= bossAp;
+            } else {
+                console.log("you win")
+                console.log(bossHp)
+                winning();
+            }
+            $("#p1hp").text("HP: " + playerHp);
+        }
+        if (playerHp <= 0) {
+            console.log("you lose")
+            gameOver();
+        }
+    }
+    
+    $(document).on("click", ".attack", function () {
+        console.log("clicked")
+        attack();
+    })
+    
+    //--------------------------------------------firebase & boss
     //The sprite comes to the Ogden theater
 
     //Inside
@@ -268,4 +421,21 @@ $(document).ready(function () {
 
 
     }
+
+
+
+//firebase data for the start of a new game--does not include high score--only data we want to be kept consistnet from one game to another (not high scores and the like)
+
+    function initializeDatabase() {
+        playerRef.set({
+            hp: 400,
+            ap: 10,
+        })
+        bossRef.set({
+            hp: 1000,
+            ap: 25,
+        })
+    }
+
+
 });
