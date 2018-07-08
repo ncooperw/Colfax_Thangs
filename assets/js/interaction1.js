@@ -1,3 +1,9 @@
+//add classes for background by interaction and a interaction counter iCounter
+//for each interaction, add and remove classes for the appropriate interactions
+
+//css will overlay the game-container class by using interaction+icounter
+
+//with continue click remove class (interaction +iCounter) iCounter ++, add class (game-container + counter)
 //create a function for the (x,y) of the ogden theater. Text pops up on the screen.
 //A band is playing and the music is intoxicating. The sprite goes inside.
 
@@ -8,9 +14,6 @@
 $(document).ready(function () {
     //create a function for the (x,y) of the ogden theater. Text pops up on the screen.
     //A band is playing and the music is intoxicating. The sprite goes inside.
-
-
-
     var config = {
         apiKey: "AIzaSyAW4oe-QFXhUeCMs3WmYzl0EQL_qFqngHE",
         authDomain: "group-project-1-7ad35.firebaseapp.com",
@@ -20,52 +23,10 @@ $(document).ready(function () {
         messagingSenderId: "571501272814"
     };
     firebase.initializeApp(config);
-
-    var database = firebase.database();
-
-    var ref = database.ref("game")
-    var playerRef = ref.child("player1");
-    var bossRef = ref.child("boss");
-    var bossAp = 0;
-    var bossHp = 0;
-
-
-
-    //from the start screen, the "play" button is pushed which triggers the following fucntion:
-
-    //sets the initial values of hp and ap for the game
-    // $(document).on("click", "startButton", function(){
-    // initializeDatabase()
-    //load first map-page function
-    //})
-    initializeDatabase();
-
-    bossRef.on("value", function (snapshot) {
-        console.log(snapshot.val())
-        bossAp = snapshot.val().ap;
-        bossHp = snapshot.val().hp;
-
-        // bossHp--;
-
-        bossRef.update({
-            ap: bossAp,
-            hp: bossHp,
-        })
-    });
-
-    $(document).on("click", "#special", function(){
-        console.log("clicked")
-        bossHp = bossHp + 10;
-
-        bossRef.update({
-            hp: bossHp,
-        })
-        console.log(bossHp)
-    })
-
     //The sprite comes to the Ogden theater
-    var scenario = "You cannot maintain clear thought while the music is playing. You are surrounded by people...at least they look like people, it is hard to tell."
+
     //Inside
+
     var interaction = {
         question: "There is an empty container lying at the doorway. Do you:",
 
@@ -82,6 +43,7 @@ $(document).ready(function () {
             negative: "Your drink is poisoned. You wake up the next day in the alley and you lose health.",
             positive: "Everyone starts laughing at you because your dancing is off beat. You use your new found notoriety to make a new friend."
         },
+
         sidekicks: [{
                 name: "Bob",
                 image: "assets/images/bobsidekick.png"
@@ -101,6 +63,8 @@ $(document).ready(function () {
         ]
     }
 
+
+
     var currrentScenario;
     var userSelect;
     var playContinue = false;
@@ -110,7 +74,7 @@ $(document).ready(function () {
     var sidekick = [];
     var inventory = [];
     var sidekickChoice; //user selected sidekick
-
+    var iCounter = 1;
 
 
     //need to hide continue button upon game start
@@ -138,7 +102,7 @@ $(document).ready(function () {
         $(".gamePlay").hide();
 
         //changes the background 
-        $(".game-container").css('background-image', 'url(assets/images/OgdenTheater.jpg');
+        $(".game-container").addClass("interactions1");
 
         //Scenario and choices come up
 
@@ -147,8 +111,8 @@ $(document).ready(function () {
 
     function beginInteraction() {
         $(".interactions").show();
-        $(".scenario").html("<h2>Scenario: " + scenario + "</h2>");
-        $(".question").html("<h3>" + interaction.question + "</h3>");
+        $(".scenario").html("<h2>Scenario: " + interaction.scenario + "</h2>");
+        $(".question").html("<h3>" + interaction.interaction + iCounter.question + "</h3>");
 
         var x;
 
@@ -170,7 +134,9 @@ $(document).ready(function () {
         //click events for each choice
         $(".thisChoice").on("click", function () {
 
-            userSelect = $(this).data("index");
+            userSelect = $(this).attr("data-index");
+            //.data("index");
+
             console.log("Index" + userSelect);
 
             consequencePage();
@@ -197,12 +163,9 @@ $(document).ready(function () {
             $(".continue").append(next);
 
         }
+        // update and alert users choice
 
-        $(".gamePlay").html("You decide to " + userSelect);
-
-        //<-- need to print the user's choice
-
-        console.warn("Need to make this string show" + userSelect);
+        $(".gamePlay").html("You decide to " + interaction.answerChoices[userSelect]);
 
         var ideal = interaction.consequences.ideal;
         var positive = interaction.consequences.positive;
@@ -219,12 +182,14 @@ $(document).ready(function () {
 
             //update inventory
             $(".inventory").append("<img src='assets/images/musicbox.jpg'/>");
+            inventory.push("music box");
+            console.log(inventory);
 
             health += 50;
             playerScore += 100;
             console.log(health);
             console.log(score);
-            console.warn("need to add item to inventory");
+
             //need return to main map feature
             console.warn("need next steps");
 
@@ -235,15 +200,13 @@ $(document).ready(function () {
             $(".gamePlay").append(": " + positive);
             health += 25;
             playerScore += 50;
-            //see if you can add a sidekick with the love compatibility API
-            console.warn("need to add love compatiblity API")
+
+
             //need return to main map feature
             updateDisplay();
+            // chooseSidekick();
 
-            $(".continue").on("click", function () {
-                console.log("start sidekick function");
-                chooseSidekick();
-            });
+
 
         } else if (userSelect == "nothingChoice") {
             console.log("nothing happens");
@@ -269,46 +232,41 @@ $(document).ready(function () {
         }
     }
 
-    function chooseSidekick() {
+    $(".continue").on("click", function () {
+        console.log("start sidekick function");
+
+        playContinue = false;
+        $(".game-container").removeClass("interactions" + iCounter).addClass("game-container" + counter);
+
+        console.log("gamejs " + counter);
+
+        iCounter++;
+
+    });
+
+//sidekick function
+//----------------------------------------------------
+//being nice to a sidekick that you come across gives you a sidekick to use in battle.
+//sidekick can come from giphy api (bum, prostitute, mangie dog, drug dealer)
+
+    function gainSidekick() {
+
         console.log("I am a function");
-        // $(".game-container").css("background-image", "url (null)");
+        
+        //create a class for the side kick interaction
+        // $(".game-container").addClass
+
+
         //game background clears 
+        //see if you can add a sidekick with the love compatibility API
+
+        //user is presented with four sidekicks during a interaction 
+        //connect to the api
 
 
-        //user is presented with four sidekicks to choose from -- loop through the object
-        var x;
+        
 
 
-
-
-
-        for (x in interaction.sidekicks) {
-
-            console.log("inside sidekick loop");
-            var sidekickImg = $("<img>");
-            var newDiv = $("<div>");
-
-            newDiv.addClass("card-deck");
-
-            $(".gamePlay").append(newDiv);
-            // var sidekickName = interaction.sidekicks[i].name;
-
-            sidekickImg.attr("src", interaction.sidekicks[x].image);
-
-            sidekickImg.addClass("sidekickChoice");
-            newDiv.append(sidekickImg);
-
-        }
-
-
-        //the user clicks the potential sidekick
-        //the sidekicks name along with the user's name are put into the love calculator API and the compatability message and percentage is displayed
-        //user has a choice to select the sidekick based on the message and percentage
-        //percentage of 50% or less = no help, 10 points
-        //50% < 75% = increase of 35 hp, 25 points
-        //75% < 85% = increase of 50 hp, 50 points
-        //>85% = double the hp and double the score
-        //sidekick image is added to the .sidekick div
     }
 
 
