@@ -14,6 +14,12 @@
 $(document).ready(function () {
     //create a function for the (x,y) of the ogden theater. Text pops up on the screen.
     //A band is playing and the music is intoxicating. The sprite goes inside.
+//---------TTS--------------------------------
+    //Text to speech --does not use an ajax request---may just be new technoology?
+    // $(document).on("click", function () {
+    //     responsiveVoice.speak("Hello World");
+    // });
+    //------------TTS---------------------------
     //--------------------------------------------firebase & boss
 
     var config = {
