@@ -1,6 +1,6 @@
 
 .game-container {
-    width: 900px;
+    width: 900px !important;
     height: 500px;
 
     background-image: url("../images/p1-street2-bg.png");

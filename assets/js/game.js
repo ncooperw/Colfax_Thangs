@@ -49,7 +49,7 @@
 //instance 1--walking the sprite on the screen
 var counter = 1;
 var van = $("<img id='van' src=assets/images/carvan-sprite.png>");
-van.css({top: 320, left: 0});
+van.css({top: 200, left: 0});
 $(".game-container").append(van);
 $(document).keydown(function(e) {
     var pos = van.position();
@@ -60,7 +60,7 @@ $(document).keydown(function(e) {
             $(".game-container").removeClass("game-container" + counter);
             counter--;
             $(".game-container").addClass("game-container" + counter);
-            van.css({top: 320, left: 840});
+            van.css({top: 200, left: 840});
 
             } else {
                 van.css("left", "-=20px"); 
@@ -69,7 +69,7 @@ $(document).keydown(function(e) {
         van.css("left", "-=20px");  
     }
     if (e.keyCode == 38) {  
-        if (pos.top < 544){
+        if (pos.top < 350){
         van.css("top", "-=0px"); 
         } else {
             van.css("top", "-=20px"); 
@@ -80,14 +80,14 @@ $(document).keydown(function(e) {
             $(".game-container").removeClass("game-container" + counter);
             counter++;
             $(".game-container").addClass("game-container" + counter);
-            van.css({top: 320, left: 0});
+            van.css({top: 200, left: 0});
            
         } else {
         van.css("left", "+=20px"); 
         }
     }
     if (e.keyCode == 40) {
-        if (pos.top > 574){
+        if (pos.top > 420){
             van.css("top", "+=0px"); 
             } else {
                 van.css("top", "+=20px"); 
