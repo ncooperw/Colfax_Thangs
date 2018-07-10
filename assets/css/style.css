@@ -60,6 +60,12 @@
 .interactions0 {
     background-image: url("../images/OgdenTheater.jpg");
 }
+.interactions1 {
+    background-image: url("../images/petesKitchen.jpg");
+}
+.interactions2 {
+    background-image: url("../images/charlies.jpg");
+}
 
 #scenarioRow {
     border-bottom: solid 8px grey;

@@ -14,7 +14,7 @@
 $(document).ready(function () {
     //create a function for the (x,y) of the ogden theater. Text pops up on the screen.
     //A band is playing and the music is intoxicating. The sprite goes inside.
-//---------TTS--------------------------------
+    //---------TTS--------------------------------
     //Text to speech --does not use an ajax request---may just be new technoology?
     // $(document).on("click", function () {
     //     responsiveVoice.speak("Hello World");
@@ -184,9 +184,6 @@ $(document).ready(function () {
     //--------------------------------------------firebase & boss
 
     //-----------------------Interactions-----------------------------------
-    //The sprite comes to the Ogden theater
-
-    //Inside
 
     var interaction = [{
             story: "You hear a band playing and the music is intoxicating. Click the door to go inside.",
@@ -206,7 +203,8 @@ $(document).ready(function () {
                 nothing: "nothing happens. You are no closer to uncovering the truth.",
                 negative: "Your drink is poisoned. You wake up the next day in the alley and you lose health.",
                 positive: "Everyone starts laughing at you because your dancing is off beat. You use your new found notoriety to make a new friend."
-            }
+            },
+            item: "music+box"
         },
         {
             story: "The smell of bacon permeates the air. You see a line of people down the street and wonder what they are waiting for. When you look up, you see the sign, 'Pete's Kitchen'. Click the door to go inside.",
@@ -227,6 +225,8 @@ $(document).ready(function () {
                 negative: "Your are beat up so badly that you lose an entire day...you cannot remember anything. You wake up the next day in the alley and you lose health.",
                 positive: "The person you sat next to is so appreciative of the conversation that you share that they give you a hint. They say, 'be kind to people and they will help you.'"
             },
+            item: "Gold+Fork"
+
         },
         {
             story: "Charlies",
@@ -246,7 +246,8 @@ $(document).ready(function () {
                 nothing: "nothing happens. You are no closer to uncovering the truth.",
                 negative: "Your drink is poisoned. You wake up the next day in the alley and you lose health.",
                 positive: "Everyone starts laughing at you because your dancing is off beat. You use your new found notoriety to make a new friend."
-            }
+            },
+            item: "Cowboy+Hat"
         }
 
     ];
@@ -278,6 +279,92 @@ $(document).ready(function () {
 
     updateDisplay();
 
+    function itemsDisplay() {
+    }
+
+    //sidekick function
+        //----------------------------------------------------
+        //being nice to a sidekick that you come across gives you a sidekick to use in battle.
+        //sidekick can come from giphy api ()
+
+    function gainSidekick() {
+
+        console.log("I am a function");
+        var sidekicks = ["bum", "prostitute", "mangie+dog", "drug dealer"]
+        
+        
+        // [{
+        //         name: "Bob",
+        //         image: "assets/images/bobsidekick.png"
+        //     },
+        //     {
+        //         name: "Jimmy",
+        //         image: "assets/images/jimmysidekick.png"
+        //     },
+        //     {
+        //         name: "Maria",
+        //         image: "assets/images/mariasidekick.png"
+        //     },
+        //     {
+        //         name: "Terry",
+        //         image: "assets/images/terrysidekick.jpg"
+        //     }
+        // ]
+
+        //create a class for the side kick interaction
+        // $(".game-container").addClass
+
+
+        //game background clears 
+        //see if you can add a sidekick with the love compatibility API
+
+        //user is presented with four sidekicks during a interaction 
+        //connect to the api
+
+    
+        var limit = 1;
+        // $(".display").empty();
+        //var input = interaction[iCounter].item;
+        var input = sidekicks[iCounter];
+        //var limit = 1;
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + input + "&limit=" + limit + "&api_key=dc6zaTOxFJmzC";
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).done(function (response) {
+
+            for (var j = 0; j < limit; j++) {
+                console.log(response);
+
+                var displayDiv = $("<div>");
+                displayDiv.addClass("item");
+
+                var image = $("<img>");
+
+                image.attr("src", response.data[j].images.original_still.url);
+                image.attr("data-still", response.data[j].images.original_still.url);
+                image.attr("data-animate", response.data[j].images.original.url);
+                image.attr("data-state", "still");
+                image.attr("class", "gif img-thumbnail");
+                displayDiv.append(image);
+
+                // var stuff = {
+                //     item: ["music box with powerful music", "Golden fork", "cowboy hat and chaps", "Hyperdermic needle of destruction"],
+                //     image: "<img src='assets/images/musicbox.jpg'/>"
+                // }
+
+                //var itemsByIndex = ;
+
+                $(".sidekick").append(displayDiv);
+                // inventory.push(interaction[iCounter].item);
+                // console.log(inventory);
+
+                //$(".display").append(displayDiv);
+
+            }
+        })
+    }
+
     //create a function upon click of the door
     $("#door").on('click', function doorExplore() {
         console.log("clicked");
@@ -285,6 +372,7 @@ $(document).ready(function () {
         $("#door").hide();
         //hides the game play panel
         $(".gamePlay").hide();
+        console.log("gamePlay hidden");
 
         //changes the background 
         $(".game-container").addClass("interactions" + iCounter);
@@ -325,9 +413,9 @@ $(document).ready(function () {
             console.log("Index" + userSelect);
 
             consequencePage();
-       continueButton(); 
-    
-    })
+            continueButton();
+
+        })
 
     }
 
@@ -351,158 +439,121 @@ $(document).ready(function () {
         $(".question").empty();
         $(".userChoices").empty();
         $(".gamePlay").show();
-    }
-    // update and alert users choice
+        playContinue = true;
+        // update and alert users choice
 
-    $(".gamePlay").html("You decide to " + interaction[iCounter].answerChoices[userSelect]);
+        $(".gamePlay").html("You decide to " + interaction[iCounter].answerChoices[userSelect]);
 
-    var ideal = interaction[iCounter].consequences.ideal;
-    var positive = interaction[iCounter].consequences.positive;
-    var negative = interaction[iCounter].consequences.negative;
-    var nothing = interaction[iCounter].consequences.nothing;
+        var ideal = interaction[iCounter].consequences.ideal;
+        var positive = interaction[iCounter].consequences.positive;
+        var negative = interaction[iCounter].consequences.negative;
+        var nothing = interaction[iCounter].consequences.nothing;
 
-    //if statements to add consequences for each choice
-    if (userSelect == "idealChoice") {
-        console.log("ideal choice");
-        $(".gamePlay").append(" which " + ideal);
-        var container = "Container with mesmerizing music";
-        inventory.push(container);
-        console.log("inventory" + inventory)
+        //if statements to add consequences for each choice
+        if (userSelect == "idealChoice") {
+            console.log("ideal choice");
+            $(".gamePlay").append(" which " + ideal);
+            var container = "Container with mesmerizing music";
+            inventory.push(container);
+            console.log("inventory" + inventory)
 
-        //update inventory
+            //update inventory
+            itemsDisplay();
+            //need to create items for each scenario
+            // var stuff = {
+            //     item: ["music box with powerful music", "Golden fork", "cowboy hat and chaps", "Theyperdermic needle of destruction"],
+            //     image: "<img src='assets/images/musicbox.jpg'/>"
+            // }
+            // //var itemsByIndex = ;
+            // Console.warn("need items by interaction in the interaction object");
+            // $(".inventory").append(interaction);
+            // inventory.push("stuff.item[iCounter]");
+            // console.log(inventory);
 
-        //need to create items for each scenario
-        var stuff = {
-            item: ["music box with powerful music", "Golden fork", "cowboy hat and chaps", "Theyperdermic needle of destruction"],
-            image: "<img src='assets/images/musicbox.jpg'/>"
+            health += 50;
+            playerScore += 100;
+            console.log(health);
+            console.log(score);
+
+            //need return to main map feature
+            console.warn("need next steps");
+
+            updateDisplay();
+
+        } else if (userSelect == "positiveChoice") {
+            console.log("positive Choice");
+            $(".gamePlay").append(": " + positive);
+            health += 25;
+            playerScore += 50;
+
+
+            //need return to main map feature
+            updateDisplay();
+            // chooseSidekick();
+
+
+
+        } else if (userSelect == "nothingChoice") {
+            console.log("nothing happens");
+            $(".gamePlay").append(": " + nothing);
+            //add button to end interaction or give user a chance to try again
+            console.warn("need next steps");
+            //need return to main map feature
+
+
+            updateDisplay();
+
         }
-        //var itemsByIndex = ;
-        Console.warn("need items by interaction in the interaction object");
-        $(".inventory").append("<img src='assets/images/musicbox.jpg'/>");
-        inventory.push("stuff.item[iCounter]");
-        console.log(inventory);
-
-        health += 50;
-        playerScore += 100;
-        console.log(health);
-        console.log(score);
-
-        //need return to main map feature
-        console.warn("need next steps");
-
-        updateDisplay();
-
-    } else if (userSelect == "positiveChoice") {
-        console.log("positive Choice");
-        $(".gamePlay").append(": " + positive);
-        health += 25;
-        playerScore += 50;
+        if (userSelect == "negativeChoice") {
+            console.log("negative choice");
+            $(".gamePlay").append(": " + negative);
+            health -= 25;
+            playerScore -= 25;
+            console.warn("need next steps");
+            //need return to main map feature
 
 
-        //need return to main map feature
-        updateDisplay();
-        // chooseSidekick();
-
-
-
-    } else if (userSelect == "nothingChoice") {
-        console.log("nothing happens");
-        $(".gamePlay").append(": " + nothing);
-        //add button to end interaction or give user a chance to try again
-        console.warn("need next steps");
-        //need return to main map feature
-
-
-        updateDisplay();
-
-    }
-    if (userSelect == "negativeChoice") {
-        console.log("negative choice");
-        $(".gamePlay").append(": " + negative);
-        health -= 25;
-        playerScore -= 25;
-        console.warn("need next steps");
-        //need return to main map feature
-
-
-        updateDisplay();
-    }
-},
-
-$(".continue").on("click", function () {
-    console.log("continue was clicked");
-
-    playContinue = false;
-    $(".game-container").removeClass("interactions" + iCounter)
-
-    //.addClass("game-container" + counter);
-
-    console.log("gamejs " + counter);
-
-    iCounter++;
-    $("#door").show();
-    //hides the game play panel
-    $(".gamePlay").hide();
-
-    //$(".continue").hide();
-    console.warn("need to hide and show button");
-
-}));
-
-//sidekick function
-//----------------------------------------------------
-//being nice to a sidekick that you come across gives you a sidekick to use in battle.
-//sidekick can come from giphy api (bum, prostitute, mangie dog, drug dealer)
-
-function gainSidekick() {
-
-    console.log("I am a function");
-    var sidekicks = [{
-            name: "Bob",
-            image: "assets/images/bobsidekick.png"
-        },
-        {
-            name: "Jimmy",
-            image: "assets/images/jimmysidekick.png"
-        },
-        {
-            name: "Maria",
-            image: "assets/images/mariasidekick.png"
-        },
-        {
-            name: "Terry",
-            image: "assets/images/terrysidekick.jpg"
+            updateDisplay();
         }
-    ]
-    //create a class for the side kick interaction
-    // $(".game-container").addClass
+    }
 
 
-    //game background clears 
-    //see if you can add a sidekick with the love compatibility API
+    $(".continue").on("click", function () {
+            console.log("continue was clicked");
 
-    //user is presented with four sidekicks during a interaction 
-    //connect to the api
+            playContinue = false;
+            $(".game-container").removeClass("interactions" + iCounter);
 
+            //.addClass("game-container" + counter);
 
+            console.log("gamejs " + counter);
 
+            iCounter++;
+            $("#door").show();
+            //hides the game play panel
+            $(".gamePlay").hide();
 
+            $(".continue").hide();
+            console.warn("need to hide and show button");
 
-}
+        }),
 
+        
 
-
-//firebase data for the start of a new game--does not include high score--only data we want to be kept consistnet from one game to another (not high scores and the like)
-
-function initializeDatabase() {
-    playerRef.set({
-        hp: 400,
-        ap: 10,
-    })
-    bossRef.set({
-        hp: 1000,
-        ap: 25,
-    })
-}
+    
 
 
+
+        //firebase data for the start of a new game--does not include high score--only data we want to be kept consistnet from one game to another (not high scores and the like)
+
+        function initializeDatabase() {
+            playerRef.set({
+                hp: 400,
+                ap: 10,
+            })
+            bossRef.set({
+                hp: 1000,
+                ap: 25,
+            })
+        }
+});
