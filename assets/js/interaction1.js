@@ -258,7 +258,7 @@ $(document).ready(function () {
 
     var currrentScenario;
     var userSelect;
-    var playContinue = false;
+    //var playContinue = false;
     var playerScore = 0;
     var highScore = 0; //get high score from Firebase
     var highPlayer = "No one";
@@ -272,6 +272,8 @@ $(document).ready(function () {
     //need to hide continue button upon game start
     $(".continue").hide();
     $(".gamePlay").hide();
+
+    
 database.ref().on("value", function(snapshot){
     //If Firebase has a highscore and a highPlayer, update our client-side variables
     if (snapshot.child("highScore").exists() && snapshot.child("highPlayer").exists()){
@@ -286,8 +288,16 @@ database.ref().on("value", function(snapshot){
     function highScore(){
         var playerName = $("#player-name").val().trim();
         var playerScore = parseInt($("#score").val().trim());
+        console.log(playerName);
+        console.log(playerScore);
+        if (playerScore > highScore){
+            console.warn("new high Score");
+            database.ref().set({
+                highPlayer: playerName,
+                highScore : playerScore,
+            });
+        }
 
-        
     }
 
     function updateDisplay() {
@@ -303,7 +313,7 @@ database.ref().on("value", function(snapshot){
         //push to Firebase
         database.ref().push({
             highScore: highScore,
-            inventory: inventory,
+            
             sidekick: sidekick,
 
         })
@@ -327,6 +337,11 @@ database.ref().on("value", function(snapshot){
 
         $(".inventory").append(imgDiv);
         inventory.push(interaction[iCounter].item);
+       //push inventory to Firebase
+       database.ref().push({
+           inventory: inventory
+       })
+       
         console.log(inventory);
     }
 
@@ -464,7 +479,7 @@ database.ref().on("value", function(snapshot){
         // playContinue = true;
 
         //if (playContinue === true) {
-            console.log("play Coninue = " + playContinue);
+            //console.log("play Coninue = " + playContinue);
             var next = $("<button>");
             next.text("Continue");
             next.addClass("btn btn-success continue");
@@ -479,7 +494,7 @@ database.ref().on("value", function(snapshot){
         $(".question").empty();
         $(".userChoices").empty();
         $(".gamePlay").show();
-        playContinue = true;
+        //playContinue = true;
         // update and alert users choice
 
         $(".gamePlay").html("You decide to " + interaction[iCounter].answerChoices[userSelect]);
@@ -506,8 +521,7 @@ database.ref().on("value", function(snapshot){
             console.log(health);
             console.log(score);
 
-            //need return to main map feature
-            console.warn("need next steps");
+            //return to map feature
 
             updateDisplay();
             $(".continue").show();
@@ -563,15 +577,16 @@ database.ref().on("value", function(snapshot){
             console.log("gamejs " + counter);
 
             iCounter++;
-            console.log("gamejs " + counter);
+           
             console.log("interaction # " + iCounter);
+            
             $("#door").show();
 
             //hides the game play panel
             $(".gamePlay").hide();
 
             $(".continue").hide();
-            console.warn("need to hide and show button");
+           
 
         }),
 
