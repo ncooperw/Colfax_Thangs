@@ -204,7 +204,8 @@ $(document).ready(function () {
                 negative: "Your drink is poisoned. You wake up the next day in the alley and you lose health.",
                 positive: "Everyone starts laughing at you because your dancing is off beat. You use your new found notoriety to make a new friend."
             },
-            item: "music+box"
+            item: "music box with hypnotic music",
+            itemImg: "assets/images/musicbox.jpg",
         },
         {
             story: "The smell of bacon permeates the air. You see a line of people down the street and wonder what they are waiting for. When you look up, you see the sign, 'Pete's Kitchen'. Click the door to go inside.",
@@ -225,29 +226,31 @@ $(document).ready(function () {
                 negative: "Your are beat up so badly that you lose an entire day...you cannot remember anything. You wake up the next day in the alley and you lose health.",
                 positive: "The person you sat next to is so appreciative of the conversation that you share that they give you a hint. They say, 'be kind to people and they will help you.'"
             },
-            item: "Gold+Fork"
+            item: "Golden Fork",
+            itemImg: "assets/images/goldFork.jpg",
 
         },
         {
-            story: "Charlies",
+            story: "You find yourself outside of a quaint little country bar. You decide to go inside.",
 
-            scenario: "Charlies",
+            scenario: "Once you are inside the bar, you realize that this is not your typical, run of the mill country bar. There are shirtless men EVERYWHERE and many of the women are extremely tall. As you make your way further into the bar you",
 
-            question: "Charlies",
+            question: "As you make your way further into the bar you realize that this place is really fun. People seem happy to be themselves. Do you: ",
 
             answerChoices: {
-                negativeChoice: "Bad Charlies",
-                nothingChoice: "NOthing",
-                idealChoice: "Ideal",
-                positiveChoice: "Good"
+                negativeChoice: "Upon further observation, you are extremely uncomfortable. You try to walk towards the door in an easy, smooth manner.  ",
+                nothingChoice: "Stand in the middle of the room and observe the situation.",
+                idealChoice: "Go up to the bar and order a drink from a bar tender who is wearing a rainbow cowboy hat.",
+                positiveChoice: "You spy an attractive person across the bar and wink at them."
             },
             consequences: {
-                ideal: "increases your health and adds the item to your inventory. Nice!",
+                ideal: "You strike up a conversation with the bartender and comment on the awesome hat he is wearing. He decides to give you the hat.",
                 nothing: "nothing happens. You are no closer to uncovering the truth.",
-                negative: "Your drink is poisoned. You wake up the next day in the alley and you lose health.",
-                positive: "Everyone starts laughing at you because your dancing is off beat. You use your new found notoriety to make a new friend."
+                negative: "In your quest to make a hasty exit you trip over your own feet completely shattering your ankle in the process. You lose health.",
+                positive: "Your master winkery causes the person to walk over to you. As they come closer, you see that you have just winked at...RuPaul! You spend the rest of the evening talking candidly and learning the drag queen secrets."
             },
-            item: "Cowboy+Hat"
+            item: "Cowboy Hat",
+            itemImg: "assets/images/cowboyHat.jpg"
         }
 
     ];
@@ -258,6 +261,7 @@ $(document).ready(function () {
     var playContinue = false;
     var playerScore = 0;
     var highScore = 0; //get high score from Firebase
+    var highPlayer = "No one";
     var health = 100;
     var sidekick = [];
     var inventory = [];
@@ -266,33 +270,77 @@ $(document).ready(function () {
 
 
     //need to hide continue button upon game start
-    //$("#continueButton").hide();
+    $(".continue").hide();
+    $(".gamePlay").hide();
+database.ref().on("value", function(snapshot){
+    //If Firebase has a highscore and a highPlayer, update our client-side variables
+    if (snapshot.child("highScore").exists() && snapshot.child("highPlayer").exists()){
+        //set the variables for highScore/highPlayer equal to the stored values.
+        highPlayer = snapshot.val().highPlayer;
+        highScore = snapshot.val().highScore;
+        console.log(highPlayer);
+        console.log(highScore);
+
+    }
+})
+    function highScore(){
+        var playerName = $("#player-name").val().trim();
+        var playerScore = parseInt($("#score").val().trim());
+
+        
+    }
 
     function updateDisplay() {
         //Player Stats display --> create function upon game start
         $("#health").html("Player HP: " + health);
         $("#score").html("Score: " + playerScore);
+
+        var newDiv = $("<div>");
+        newDiv.append(highPlayer);
+        $("#highScore").append("High Player: " + newDiv);
         $("#highScore").html("High Score: " + highScore);
         $(".interactions").hide();
+        //push to Firebase
+        database.ref().push({
+            highScore: highScore,
+            inventory: inventory,
+            sidekick: sidekick,
 
+        })
     }
 
     updateDisplay();
 
     function itemsDisplay() {
+        //need to create items for each scenario
+        var image = $("<img>")
+        var imgDiv = $("<div>");
+        imgDiv.addClass("item");
+
+        var image = $("<img>")
+        image.attr("src", interaction[iCounter].itemImg);
+        console.log(image);
+        imgDiv.append(image);
+
+
+
+
+        $(".inventory").append(imgDiv);
+        inventory.push(interaction[iCounter].item);
+        console.log(inventory);
     }
 
     //sidekick function
-        //----------------------------------------------------
-        //being nice to a sidekick that you come across gives you a sidekick to use in battle.
-        //sidekick can come from giphy api ()
+    //----------------------------------------------------
+    //being nice to a sidekick that you come across gives you a sidekick to use in battle.
+    //sidekick can come from giphy api ()
 
     function gainSidekick() {
 
         console.log("I am a function");
         var sidekicks = ["bum", "prostitute", "mangie+dog", "drug dealer"]
-        
-        
+
+
         // [{
         //         name: "Bob",
         //         image: "assets/images/bobsidekick.png"
@@ -321,7 +369,7 @@ $(document).ready(function () {
         //user is presented with four sidekicks during a interaction 
         //connect to the api
 
-    
+
         var limit = 1;
         // $(".display").empty();
         //var input = interaction[iCounter].item;
@@ -348,18 +396,10 @@ $(document).ready(function () {
                 image.attr("class", "gif img-thumbnail");
                 displayDiv.append(image);
 
-                // var stuff = {
-                //     item: ["music box with powerful music", "Golden fork", "cowboy hat and chaps", "Hyperdermic needle of destruction"],
-                //     image: "<img src='assets/images/musicbox.jpg'/>"
-                // }
 
-                //var itemsByIndex = ;
 
                 $(".sidekick").append(displayDiv);
-                // inventory.push(interaction[iCounter].item);
-                // console.log(inventory);
 
-                //$(".display").append(displayDiv);
 
             }
         })
@@ -413,7 +453,7 @@ $(document).ready(function () {
             console.log("Index" + userSelect);
 
             consequencePage();
-            continueButton();
+
 
         })
 
@@ -421,19 +461,19 @@ $(document).ready(function () {
 
     function continueButton() {
 
-        playContinue = true;
+        // playContinue = true;
 
-        if (playContinue === true) {
+        //if (playContinue === true) {
             console.log("play Coninue = " + playContinue);
             var next = $("<button>");
             next.text("Continue");
             next.addClass("btn btn-success continue");
 
             $(".continue").append(next);
-        }
+        //}
     }
 
-
+    continueButton();
 
     function consequencePage() {
         $(".question").empty();
@@ -453,22 +493,13 @@ $(document).ready(function () {
         if (userSelect == "idealChoice") {
             console.log("ideal choice");
             $(".gamePlay").append(" which " + ideal);
-            var container = "Container with mesmerizing music";
-            inventory.push(container);
-            console.log("inventory" + inventory)
+            //var container = "Container with mesmerizing music";
+            //inventory.push(container);
+            //console.log("inventory" + inventory)
 
             //update inventory
             itemsDisplay();
-            //need to create items for each scenario
-            // var stuff = {
-            //     item: ["music box with powerful music", "Golden fork", "cowboy hat and chaps", "Theyperdermic needle of destruction"],
-            //     image: "<img src='assets/images/musicbox.jpg'/>"
-            // }
-            // //var itemsByIndex = ;
-            // Console.warn("need items by interaction in the interaction object");
-            // $(".inventory").append(interaction);
-            // inventory.push("stuff.item[iCounter]");
-            // console.log(inventory);
+
 
             health += 50;
             playerScore += 100;
@@ -479,6 +510,7 @@ $(document).ready(function () {
             console.warn("need next steps");
 
             updateDisplay();
+            $(".continue").show();
 
         } else if (userSelect == "positiveChoice") {
             console.log("positive Choice");
@@ -486,11 +518,12 @@ $(document).ready(function () {
             health += 25;
             playerScore += 50;
 
+            
 
             //need return to main map feature
             updateDisplay();
             // chooseSidekick();
-
+            $(".continue").show();
 
 
         } else if (userSelect == "nothingChoice") {
@@ -502,7 +535,7 @@ $(document).ready(function () {
 
 
             updateDisplay();
-
+            $(".continue").show();
         }
         if (userSelect == "negativeChoice") {
             console.log("negative choice");
@@ -512,6 +545,7 @@ $(document).ready(function () {
             console.warn("need next steps");
             //need return to main map feature
 
+            $(".continue").show();
 
             updateDisplay();
         }
@@ -521,7 +555,7 @@ $(document).ready(function () {
     $(".continue").on("click", function () {
             console.log("continue was clicked");
 
-            playContinue = false;
+           // playContinue = false;
             $(".game-container").removeClass("interactions" + iCounter);
 
             //.addClass("game-container" + counter);
@@ -529,7 +563,10 @@ $(document).ready(function () {
             console.log("gamejs " + counter);
 
             iCounter++;
+            console.log("gamejs " + counter);
+            console.log("interaction # " + iCounter);
             $("#door").show();
+
             //hides the game play panel
             $(".gamePlay").hide();
 
@@ -538,9 +575,9 @@ $(document).ready(function () {
 
         }),
 
-        
 
-    
+
+
 
 
 
