@@ -364,7 +364,7 @@ $(document).ready(function () {
             }
         })
     }
-
+    $("#door").hide();
     //create a function upon click of the door
     $("#door").on('click', function doorExplore() {
         console.log("clicked");
