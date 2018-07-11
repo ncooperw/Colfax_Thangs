@@ -82,7 +82,14 @@
     color: darkmagenta;
     cursor: pointer;
 }
-
+.thisChoice{
+    padding: 2px 6px 2px 6px;
+            border-top: 1px solid #CCCCCC;
+            border-right: 1px solid #333333;
+            border-bottom: 1px solid #333333;
+            border-left: 1px solid #CCCCCC;
+            border-radius: 8px;
+}
 /*Styling the gamePlay payne*/
 .gamePlay {
     background: black;
@@ -97,8 +104,9 @@
     float: right;
 
 }
-/* .item {
-    width: 100px;
+.item {
+    width: 150px;
     height: auto;
+    float: left;
 
-} */
+}
