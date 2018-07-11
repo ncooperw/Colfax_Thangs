@@ -21,11 +21,7 @@
     /* background-size:; */
     background-repeat: no-repeat;
 }
-/* .rectangle {
-    height: 100px;
-    width: 50px;
-    background-color: red;
-} */
+
 #van {
     position: relative;
     width: 50px;
@@ -101,3 +97,8 @@
     float: right;
 
 }
+/* .item {
+    width: 100px;
+    height: auto;
+
+} */
