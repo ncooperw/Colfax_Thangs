@@ -21,6 +21,10 @@ $(document).ready(function () {
     // });
     //------------TTS---------------------------
     //--------------------------------------------firebase & boss
+    mystery()
+    $("#mystery").on("click", function(){
+        startPage();
+    })
 
     var config = {
         apiKey: "AIzaSyAW4oe-QFXhUeCMs3WmYzl0EQL_qFqngHE",
@@ -34,6 +38,49 @@ $(document).ready(function () {
 
     var database = firebase.database();
 
+    //------------authenitcation---------------------------
+    // Initialize the FirebaseUI Widget using Firebase.
+    var ui = new firebaseui.auth.AuthUI(firebase.auth());
+    ui.start('#firebaseui-auth-container', {
+        signInOptions: [
+            firebase.auth.EmailAuthProvider.PROVIDER_ID,
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+            firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+        ],
+    });
+
+    var uiConfig = {
+        callbacks: {
+            signInSuccessWithAuthResult: function (authResult, redirectUrl) {
+                // User successfully signed in.
+                // Return type determines whether we continue the redirect automatically
+                // or whether we leave that to developer to handle.
+                return true;
+            },
+            uiShown: function () {
+                // The widget is rendered.
+                // Hide the loader.
+                document.getElementById('loader').style.display = 'none';
+            }
+        },
+        // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+        signInFlow: 'popup',
+        signInSuccessUrl: '<url-to-redirect-to-on-success>',
+        signInOptions: [
+            // Leave the lines as is for the providers you want to offer your users.
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+            firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+            //   firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+            //   firebase.auth.GithubAuthProvider.PROVIDER_ID,
+            firebase.auth.EmailAuthProvider.PROVIDER_ID,
+            //   firebase.auth.PhoneAuthProvider.PROVIDER_ID
+        ],
+        // Terms of service url.
+        tosUrl: '<your-tos-url>'
+    };
+    // The start method will wait until the DOM is loaded.
+    ui.start('#firebaseui-auth-container', uiConfig);
+    //--------------------authentication-----------------------
     var ref = database.ref("game")
     var playerRef = ref.child("player1");
     var bossRef = ref.child("boss");
@@ -182,6 +229,31 @@ $(document).ready(function () {
     })
 
     //--------------------------------------------firebase & boss
+
+    //------------first page--game start------------------
+    // var newSound = document.createElement("audio");
+
+    function mystery(){
+
+        $("body").empty();
+        var mystery = $("<button>");
+        mystery.attr("id", "mystery");
+        mystery.text("?");
+        $("body").append(mystery);
+    } 
+    function startPage(){
+        var newSound = document.createElement("audio");
+        newSound.src = "theme.mp3";
+        newSound.play();
+        var openGif = $("<img>");
+        openGif.attr("src", "Colfax Thangs Open.gif");
+        $("body").append(openGif);
+       
+    }
+    
+
+    //------------first page --game start----------------
+
 
     //-----------------------Interactions-----------------------------------
 
