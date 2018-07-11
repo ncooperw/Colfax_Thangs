@@ -13,14 +13,15 @@
     /* margin-left: 20%; */
     /* margin-right: 20%; */
 }
-.game-container2 {
+
+.game-container1 {
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-street8-bg.png");
     /* background-size:; */
     background-repeat: no-repeat;
 }
-.game-container3 {
+.game-container2 {
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-ogden-bg.png");
@@ -28,56 +29,56 @@
     background-repeat: no-repeat;
 }
 
-.game-container4 {
+.game-container3 {
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-street4-bg.png");
     /* background-size:; */
     background-repeat: no-repeat;
 }
-.game-container5 {
+.game-container4 {
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-street5b-bg.png");
     /* background-size:; */
     background-repeat: no-repeat;
 }
-.game-container6 {
+.game-container5 {
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-charlies-bg.png");
     /* background-size:; */
     background-repeat: no-repeat;
 }
-.game-container7 {
+.game-container6 {
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-street7-bg.png");
     /* background-size:; */
     background-repeat: no-repeat;
 }
-.game-container8 {
+.game-container7 {
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-street-bg.png");
     /* background-size:; */
     background-repeat: no-repeat;
 }
-.game-container9 {
+.game-container8 {
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-petes-bg.png");
     /* background-size:; */
     background-repeat: no-repeat;
 }
-.game-container10 {
+.game-container9 {
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-street9-bg.png");
     /* background-size:; */
     background-repeat: no-repeat;
 }
-.game-container11 {
+.game-container10 {
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-street11-bg.png");
@@ -97,6 +98,18 @@
 .carUpDown {
     width: 50px;
     height: 60px;
+}
+
+.trash {
+    position: absolute;
+    width: 20px;
+    height: 40px;
+}
+
+.trashOpened {
+    position: absolute;
+    width: 70px;
+    height: 20px;
 }
 
 /*door*/
