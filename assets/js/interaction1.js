@@ -427,11 +427,11 @@ $(document).ready(function () {
     function gainSidekick() {
         var sparkleDiv = $("<div>");
         sparkleDiv.addClass("sparkle");
-
+        
         var sparkleImage = "<img src='assets/images/sparkle.gif'/>";
-
+        
         sparkleDiv.append(sparkleImage);
-
+        sparkleDiv.hide();
         $("#buttonSpot").append(sparkleDiv);
         $(".sparkle").on("click", function () {
 
@@ -474,7 +474,11 @@ $(document).ready(function () {
             })
         })
     }
+
+    $("#door").hide();
+
     gainSidekick();
+
 
     //create a function upon click of the door
     $("#door").on('click', function doorExplore() {
@@ -620,7 +624,7 @@ $(document).ready(function () {
         $("#buttonSpot").append(next);
         //}
     }
-    continueButton();
+    // continueButton();
 
     $(".continue").on("click", function () {
             console.log("continue was clicked");
