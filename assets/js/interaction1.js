@@ -271,6 +271,8 @@ $(document).ready(function () {
 
     //need to hide continue button upon game start
     $(".continue").hide();
+    console.log("continue button should be hidden");
+
     $(".gamePlay").hide();
 
     
@@ -285,10 +287,10 @@ database.ref().on("value", function(snapshot){
 
     }
 })
-    function highScore(){
-        var playerName = $("#player-name").val().trim();
+    function storeHighScore(){
+        //var playerName = $("#player-name").val().trim();
         var playerScore = parseInt($("#score").val().trim());
-        console.log(playerName);
+        //console.log(playerName);
         console.log(playerScore);
         if (playerScore > highScore){
             console.warn("new high Score");
@@ -299,6 +301,7 @@ database.ref().on("value", function(snapshot){
         }
 
     }
+    storeHighScore();
 
     function updateDisplay() {
         //Player Stats display --> create function upon game start
@@ -325,7 +328,7 @@ database.ref().on("value", function(snapshot){
         //need to create items for each scenario
         var image = $("<img>")
         var imgDiv = $("<div>");
-        imgDiv.addClass("item");
+        imgDiv.addClass("item img-thumbnail");
 
         var image = $("<img>")
         image.attr("src", interaction[iCounter].itemImg);
@@ -474,21 +477,6 @@ database.ref().on("value", function(snapshot){
 
     }
 
-    function continueButton() {
-
-        // playContinue = true;
-
-        //if (playContinue === true) {
-            //console.log("play Coninue = " + playContinue);
-            var next = $("<button>");
-            next.text("Continue");
-            next.addClass("btn btn-success continue");
-
-            $(".continue").append(next);
-        //}
-    }
-
-    continueButton();
 
     function consequencePage() {
         $(".question").empty();
@@ -565,6 +553,20 @@ database.ref().on("value", function(snapshot){
         }
     }
 
+    function continueButton() {
+
+        // playContinue = true;
+
+        //if (playContinue === true) {
+            //console.log("play Coninue = " + playContinue);
+            var next = $("<button>");
+            next.text("Continue");
+            next.addClass("btn btn-success continue");
+
+            $("#buttonSpot").append(next);
+        //}
+    }
+    continueButton();
 
     $(".continue").on("click", function () {
             console.log("continue was clicked");
