@@ -275,28 +275,29 @@ $(document).ready(function () {
 
     $(".gamePlay").hide();
 
-    
-database.ref().on("value", function(snapshot){
-    //If Firebase has a highscore and a highPlayer, update our client-side variables
-    if (snapshot.child("highScore").exists() && snapshot.child("highPlayer").exists()){
-        //set the variables for highScore/highPlayer equal to the stored values.
-        highPlayer = snapshot.val().highPlayer;
-        highScore = snapshot.val().highScore;
-        console.log(highPlayer);
-        console.log(highScore);
 
-    }
-})
-    function storeHighScore(){
+    database.ref().on("value", function (snapshot) {
+        //If Firebase has a highscore and a highPlayer, update our client-side variables
+        if (snapshot.child("highScore").exists() && snapshot.child("highPlayer").exists()) {
+            //set the variables for highScore/highPlayer equal to the stored values.
+            highPlayer = snapshot.val().highPlayer;
+            highScore = snapshot.val().highScore;
+            console.log(highPlayer);
+            console.log(highScore);
+
+        }
+    })
+
+    function storeHighScore() {
         //var playerName = $("#player-name").val().trim();
         var playerScore = parseInt($("#score").val().trim());
         //console.log(playerName);
         console.log(playerScore);
-        if (playerScore > highScore){
+        if (playerScore > highScore) {
             console.warn("new high Score");
             database.ref().set({
                 highPlayer: playerName,
-                highScore : playerScore,
+                highScore: playerScore,
             });
         }
 
@@ -316,7 +317,7 @@ database.ref().on("value", function(snapshot){
         //push to Firebase
         database.ref().push({
             highScore: highScore,
-            
+
             sidekick: sidekick,
 
         })
@@ -340,94 +341,75 @@ database.ref().on("value", function(snapshot){
 
         $(".inventory").append(imgDiv);
         inventory.push(interaction[iCounter].item);
-       //push inventory to Firebase
-       database.ref().push({
-           inventory: inventory
-       })
-       
+        //push inventory to Firebase
+        database.ref().push({
+            inventory: inventory
+        })
+
         console.log(inventory);
     }
 
     //sidekick function
     //----------------------------------------------------
-    //being nice to a sidekick that you come across gives you a sidekick to use in battle.
-    //sidekick can come from giphy api ()
-
+    
     function gainSidekick() {
+        var sparkleDiv = $("<div>");
+        sparkleDiv.addClass("sparkle");
 
-        console.log("I am a function");
-        var sidekicks = ["bum", "prostitute", "mangie+dog", "drug dealer"]
+        var sparkleImage = "<img src='assets/images/sparkle.gif'/>";
 
+        sparkleDiv.append(sparkleImage);
 
-        // [{
-        //         name: "Bob",
-        //         image: "assets/images/bobsidekick.png"
-        //     },
-        //     {
-        //         name: "Jimmy",
-        //         image: "assets/images/jimmysidekick.png"
-        //     },
-        //     {
-        //         name: "Maria",
-        //         image: "assets/images/mariasidekick.png"
-        //     },
-        //     {
-        //         name: "Terry",
-        //         image: "assets/images/terrysidekick.jpg"
-        //     }
-        // ]
+        $("#buttonSpot").append(sparkleDiv);
+        $(".sparkle").on("click", function () {
 
-        //create a class for the side kick interaction
-        // $(".game-container").addClass
+            $(".sparkle").hide();
+
+            var sidekicks = ["bum", "prostitute", "mangie+dog", "drug dealer"]
 
 
-        //game background clears 
-        //see if you can add a sidekick with the love compatibility API
+            var limit = 1;
+        
+            var input = sidekicks[iCounter];
+            
+            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + input + "&limit=" + limit + "&api_key=dc6zaTOxFJmzC";
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).done(function (response) {
 
-        //user is presented with four sidekicks during a interaction 
-        //connect to the api
+                for (var j = 0; j < limit; j++) {
+                    console.log(response);
 
+                    var displayDiv = $("<div>");
+                    displayDiv.addClass("item");
 
-        var limit = 1;
-        // $(".display").empty();
-        //var input = interaction[iCounter].item;
-        var input = sidekicks[iCounter];
-        //var limit = 1;
-        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + input + "&limit=" + limit + "&api_key=dc6zaTOxFJmzC";
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-        }).done(function (response) {
+                    var image = $("<img>");
 
-            for (var j = 0; j < limit; j++) {
-                console.log(response);
-
-                var displayDiv = $("<div>");
-                displayDiv.addClass("item");
-
-                var image = $("<img>");
-
-                image.attr("src", response.data[j].images.original_still.url);
-                image.attr("data-still", response.data[j].images.original_still.url);
-                image.attr("data-animate", response.data[j].images.original.url);
-                image.attr("data-state", "still");
-                image.attr("class", "gif img-thumbnail");
-                displayDiv.append(image);
+                    image.attr("src", response.data[j].images.original_still.url);
+                    image.attr("data-still", response.data[j].images.original_still.url);
+                    image.attr("data-animate", response.data[j].images.original.url);
+                    image.attr("data-state", "still");
+                    image.attr("class", "gif img-thumbnail");
+                    displayDiv.append(image);
 
 
 
-                $(".sidekick").append(displayDiv);
+                    $(".sidekick").append(displayDiv);
 
 
-            }
+                }
+            })
         })
     }
+gainSidekick();
 
     //create a function upon click of the door
     $("#door").on('click', function doorExplore() {
         console.log("clicked");
         //clear the screen
         $("#door").hide();
+        $(".continue").hide();
         //hides the game play panel
         $(".gamePlay").hide();
         console.log("gamePlay hidden");
@@ -520,9 +502,9 @@ database.ref().on("value", function(snapshot){
             health += 25;
             playerScore += 50;
 
-            
 
-            //need return to main map feature
+
+            //return to main map feature
             updateDisplay();
             // chooseSidekick();
             $(".continue").show();
@@ -532,8 +514,8 @@ database.ref().on("value", function(snapshot){
             console.log("nothing happens");
             $(".gamePlay").append(": " + nothing);
             //add button to end interaction or give user a chance to try again
-            console.warn("need next steps");
-            //need return to main map feature
+            
+            // return to main map feature
 
 
             updateDisplay();
@@ -544,8 +526,8 @@ database.ref().on("value", function(snapshot){
             $(".gamePlay").append(": " + negative);
             health -= 25;
             playerScore -= 25;
-            console.warn("need next steps");
-            //need return to main map feature
+            
+            //return to main map feature
 
             $(".continue").show();
 
@@ -558,12 +540,12 @@ database.ref().on("value", function(snapshot){
         // playContinue = true;
 
         //if (playContinue === true) {
-            //console.log("play Coninue = " + playContinue);
-            var next = $("<button>");
-            next.text("Continue");
-            next.addClass("btn btn-success continue");
+        //console.log("play Coninue = " + playContinue);
+        var next = $("<button>");
+        next.text("Continue");
+        next.addClass("btn btn-success continue");
 
-            $("#buttonSpot").append(next);
+        $("#buttonSpot").append(next);
         //}
     }
     continueButton();
@@ -571,7 +553,7 @@ database.ref().on("value", function(snapshot){
     $(".continue").on("click", function () {
             console.log("continue was clicked");
 
-           // playContinue = false;
+            // playContinue = false;
             $(".game-container").removeClass("interactions" + iCounter);
 
             //.addClass("game-container" + counter);
@@ -579,16 +561,16 @@ database.ref().on("value", function(snapshot){
             console.log("gamejs " + counter);
 
             iCounter++;
-           
+
             console.log("interaction # " + iCounter);
-            
+
             $("#door").show();
 
             //hides the game play panel
             $(".gamePlay").hide();
 
             $(".continue").hide();
-           
+
 
         }),
 
