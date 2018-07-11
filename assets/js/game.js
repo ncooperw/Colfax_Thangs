@@ -5,7 +5,7 @@
 //
 
 
-var counter = 10;
+var counter = 1;
 var car = $("<img class='car' src=assets/images/p1-carRight.png>");
 car.css({top: 200, left: 0});
 $(".game-container").append(car);
