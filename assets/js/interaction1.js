@@ -351,7 +351,7 @@ $(document).ready(function () {
 
     //sidekick function
     //----------------------------------------------------
-    
+
     function gainSidekick() {
         var sparkleDiv = $("<div>");
         sparkleDiv.addClass("sparkle");
@@ -369,9 +369,9 @@ $(document).ready(function () {
 
 
             var limit = 1;
-        
+
             var input = sidekicks[iCounter];
-            
+
             var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + input + "&limit=" + limit + "&api_key=dc6zaTOxFJmzC";
             $.ajax({
                 url: queryURL,
@@ -402,7 +402,7 @@ $(document).ready(function () {
             })
         })
     }
-gainSidekick();
+    gainSidekick();
 
     //create a function upon click of the door
     $("#door").on('click', function doorExplore() {
@@ -514,7 +514,7 @@ gainSidekick();
             console.log("nothing happens");
             $(".gamePlay").append(": " + nothing);
             //add button to end interaction or give user a chance to try again
-            
+
             // return to main map feature
 
 
@@ -526,7 +526,7 @@ gainSidekick();
             $(".gamePlay").append(": " + negative);
             health -= 25;
             playerScore -= 25;
-            
+
             //return to main map feature
 
             $(".continue").show();
