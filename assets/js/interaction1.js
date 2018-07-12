@@ -21,9 +21,17 @@ $(document).ready(function () {
     // });
     //------------TTS---------------------------
     //--------------------------------------------firebase & boss
+    $("#game-box").hide();
     mystery()
-    $("#mystery").on("click", function(){
+    $("#mysteryButt").on("click", function () {
+        $("#mysteryButt").remove();
         startPage();
+    })
+
+    $(document).on("click", "#play-game", function () {
+        $(".mDiv").remove();
+        $(".gif-div").remove();
+        $("#game-box").show();
     })
 
     var config = {
@@ -233,24 +241,49 @@ $(document).ready(function () {
     //------------first page--game start------------------
     // var newSound = document.createElement("audio");
 
-    function mystery(){
+    function mystery() {
 
-        $("body").empty();
+        var mysteryDiv = $("<div>");
+        mysteryDiv.addClass("mDiv")
+        $("body").append(mysteryDiv);
+
         var mystery = $("<button>");
-        mystery.attr("id", "mystery");
+        mystery.addClass("mystery");
+        mystery.attr("id", "mysteryButt")
         mystery.text("?");
-        $("body").append(mystery);
-    } 
-    function startPage(){
+        $(mysteryDiv).append(mystery);
+    }
+
+    function startPage() {
+        var buttDiv = $("<div>");
+        buttDiv.addClass("pButt");
+
+        var playGame = $("<button>");
+        playGame.attr("id", "play-game");
+        playGame.addClass("btn btn-danger");
+        playGame.text("Begin?");
+        buttDiv.append(playGame)
+
         var newSound = document.createElement("audio");
         newSound.src = "theme.mp3";
         newSound.play();
+
+        var gifDiv = $("<div>");
+        gifDiv.addClass("gif-div");
+        $("body").append(gifDiv);
+
         var openGif = $("<img>");
+        openGif.addClass("thangsIntro");
         openGif.attr("src", "Colfax Thangs Open.gif");
-        $("body").append(openGif);
-       
+
+        $(".gif-div").append(openGif)
+
+        setTimeout(function () {
+            openGif.attr("src", "colfax_thangs_static.gif");
+            $(".gif-div").append(buttDiv);
+        }, 14000);
     }
-    
+
 
     //------------first page --game start----------------
 
@@ -427,9 +460,9 @@ $(document).ready(function () {
     function gainSidekick() {
         var sparkleDiv = $("<div>");
         sparkleDiv.addClass("sparkle");
-        
+
         var sparkleImage = "<img src='assets/images/sparkle.gif'/>";
-        
+
         sparkleDiv.append(sparkleImage);
         sparkleDiv.hide();
         $("#buttonSpot").append(sparkleDiv);
