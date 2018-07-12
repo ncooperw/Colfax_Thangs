@@ -13,8 +13,8 @@ $(document).keydown(function(e) {
     // car = $("<img id='car' src=assets/images/p1-carRight.png>");
     var pos = car.position();
     var carYAxis = parseInt(pos.top)-1;
-    console.log(pos);
-    console.log(counter);
+    // console.log(pos);
+    // console.log(counter);
     //drive left
     if (e.keyCode == 37) {
         $(car).attr("src", "assets/images/p1-carLeft.png").removeClass("carUpDown");
