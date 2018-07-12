@@ -444,7 +444,7 @@ $(document).ready(function () {
 
     function storeHighScore() {
         //var playerName = $("#player-name").val().trim();
-        playerScore = parseInt($("#score").val().trim());
+        //playerScore = parseInt($("#score").val().trim());
         //console.log(playerName);
         console.log(playerScore);
         if (playerScore > highScore) {
@@ -456,7 +456,7 @@ $(document).ready(function () {
         }
 
     }
-    // storeHighScore();
+    storeHighScore();
 
     function updateDisplay() {
         //Player Stats display --> create function upon game start
@@ -596,6 +596,7 @@ $(document).ready(function () {
         //showing the text with the story and the user choices
         $(".interactions").show();
         $(".scenario").html("<h2>Scenario: " + interaction[iCounter].scenario + "</h2>");
+        responsiveVoice.speak(interaction[iCounter].scenario);
         $(".question").html("<h3>" + interaction[iCounter].question + "</h3>");
         console.log(iCounter);
         var x;
@@ -639,6 +640,7 @@ $(document).ready(function () {
         // update and alert users choice
 
         $(".gamePlay").html("You decide to " + interaction[iCounter].answerChoices[userSelect]);
+        responsiveVoice.speak("You decide to " + interaction[iCounter].answerChoices[userSelect]);
 
         var ideal = interaction[iCounter].consequences.ideal;
         var positive = interaction[iCounter].consequences.positive;
@@ -660,7 +662,7 @@ $(document).ready(function () {
             health += 50;
             playerScore += 100;
             console.log(health);
-            console.log(score);
+            console.log(playerScore);
             console.log(highScore);
             //return to map feature
 
@@ -714,6 +716,7 @@ $(document).ready(function () {
         // playContinue = false;
         $("#gameId").addClass("game-container");
         $(".game-container").removeClass("interactions" + iCounter);
+        $(".userStuff").hide();
 
         //.addClass("game-container" + counter);
 
