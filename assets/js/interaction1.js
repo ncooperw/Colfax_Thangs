@@ -413,37 +413,13 @@ $(document).ready(function () {
 
 
     //need to hide continue button upon game start
-    $(".continue").hide();
+   
     console.log("continue button should be hidden");
 
     $(".gamePlay").hide();
+    $("#door").hide();
 
-function gameStart(){
-    //hot spot for sparkle based on game-container #
-    //hot spot for door based on game-container #
-   console.log("counter = " + counter);
-    if (counter === 1) {
-        console.log("show door");
-        $("#door").show();
-    } else {
-        $("#door").hide();
-        console.log("hide door");
-    }
-    //door will be made transparent once it is overlayed in the appropriate spot
-    
-    
-    //continue button gets made 
-    
-        var next = $("<button>");
-        next.text("Continue");
-        next.addClass("btn btn-success continue");
 
-        $("#buttonSpot").append(next);
-        
-        $(".continue").hide();
-       
-}
-gameStart();
 
     database.ref().on("value", function (snapshot) {
         //If Firebase has a highscore and a highPlayer, update our client-side variables
@@ -529,7 +505,7 @@ gameStart();
 
         sparkleDiv.append(sparkleImage);
         sparkleDiv.hide();
-        $("#buttonSpot").append(sparkleDiv);
+        $(".sidekickSparkle").append(sparkleDiv);
         $(".sparkle").on("click", function () {
 
             $(".sparkle").hide();
@@ -721,7 +697,7 @@ gameStart();
         }
     }
 
-    
+
 
     $(".continue").on("click", function () {
         console.log("continue was clicked");
@@ -756,13 +732,42 @@ gameStart();
 
 //firebase data for the start of a new game--does not include high score--only data we want to be kept consistnet from one game to another (not high scores and the like)
 
-// function initializeDatabase() {
-//     playerRef.set({
-//         hp: 400,
-//         ap: 10,
-//     })
-//     bossRef.set({
-//         hp: 1000,
-//         ap: 25,
-//     })
-// }
+        function initializeDatabase() {
+            playerRef.set({
+                hp: 400,
+                ap: 10,
+            })
+            bossRef.set({
+                hp: 1000,
+                ap: 25,
+            })
+        }
+
+    // function gameStart() {
+    //     //hot spot for sparkle based on game-container #
+    //     //hot spot for door based on game-container #
+    //     console.log("counter = " + counter);
+    //     if (counter === 1) {
+    //         console.log("show door");
+    //         $("#door").show();
+    //     } else {
+    //         $("#door").hide();
+    //         console.log("hide door");
+    //     }
+    //     //door will be made transparent once it is overlayed in the appropriate spot
+
+
+
+    //     //continue button gets made 
+
+    //     var next = $("<button>");
+    //     next.text("Continue");
+    //     next.addClass("btn btn-success continue");
+
+    //     $("#buttonSpot").append(next);
+
+    //     $(".continue").hide();
+
+    // }
+    // gameStart();
+});
