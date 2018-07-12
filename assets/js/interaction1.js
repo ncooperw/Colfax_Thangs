@@ -380,7 +380,16 @@ $(document).ready(function () {
 
     $(".gamePlay").hide();
     $("#door").hide();
+    
+    //continue button gets made 
 
+        var next = $("<button>");
+        next.text("Continue");
+        next.addClass("btn btn-success continue");
+
+        $("#buttonSpot").append(next);
+
+        $(".continue").hide();
 
 
     database.ref().on("value", function (snapshot) {
@@ -459,60 +468,60 @@ $(document).ready(function () {
     //sidekick function
     //----------------------------------------------------
 
-    function gainSidekick() {
-        var sparkleDiv = $("<div>");
-        sparkleDiv.addClass("sparkle");
+    // function gainSidekick() {
+    //     var sparkleDiv = $("<div>");
+    //     sparkleDiv.addClass("sparkle");
 
-        var sparkleImage = "<img src='assets/images/sparkle.gif'/>";
+    //     var sparkleImage = "<img src='assets/images/sparkle.gif'/>";
 
-        sparkleDiv.append(sparkleImage);
-        sparkleDiv.hide();
-        $(".sidekickSparkle").append(sparkleDiv);
-        $(".sparkle").on("click", function () {
+    //     sparkleDiv.append(sparkleImage);
+    //     sparkleDiv.hide();
+    //     $(".sidekickSparkle").append(sparkleDiv);
+    //     $(".sparkle").on("click", function () {
 
-            $(".sparkle").hide();
+    //         $(".sparkle").hide();
 
-            var sidekicks = ["bum", "prostitute", "mangie+dog", "drug dealer"]
-
-
-            var limit = 1;
-
-            var input = sidekicks[iCounter];
-
-            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + input + "&limit=" + limit + "&api_key=dc6zaTOxFJmzC";
-            $.ajax({
-                url: queryURL,
-                method: "GET"
-            }).done(function (response) {
-
-                for (var j = 0; j < limit; j++) {
-                    console.log(response);
-
-                    var displayDiv = $("<div>");
-                    displayDiv.addClass("item");
-
-                    var image = $("<img>");
-
-                    image.attr("src", response.data[j].images.original_still.url);
-                    image.attr("data-still", response.data[j].images.original_still.url);
-                    image.attr("data-animate", response.data[j].images.original.url);
-                    image.attr("data-state", "still");
-                    image.attr("class", "gif img-thumbnail");
-                    displayDiv.append(image);
+    //         var sidekicks = ["bum", "prostitute", "mangie+dog", "drug dealer"]
 
 
+    //         var limit = 1;
 
-                    $(".sidekick").append(displayDiv);
+    //         var input = sidekicks[iCounter];
+
+    //         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + input + "&limit=" + limit + "&api_key=dc6zaTOxFJmzC";
+    //         $.ajax({
+    //             url: queryURL,
+    //             method: "GET"
+    //         }).done(function (response) {
+
+    //             for (var j = 0; j < limit; j++) {
+    //                 console.log(response);
+
+    //                 var displayDiv = $("<div>");
+    //                 displayDiv.addClass("item");
+
+    //                 var image = $("<img>");
+
+    //                 image.attr("src", response.data[j].images.original_still.url);
+    //                 image.attr("data-still", response.data[j].images.original_still.url);
+    //                 image.attr("data-animate", response.data[j].images.original.url);
+    //                 image.attr("data-state", "still");
+    //                 image.attr("class", "gif img-thumbnail");
+    //                 displayDiv.append(image);
 
 
-                }
-            })
-        })
-    }
 
-    //$("#door").hide();
+    //                 $(".sidekick").append(displayDiv);
 
-    gainSidekick();
+
+    //             }
+    //         })
+    //     })
+    // }
+
+    // //$("#door").hide();
+
+    // gainSidekick();
 
 
     //create a function upon click of the door
@@ -520,7 +529,7 @@ $(document).ready(function () {
         console.log("clicked");
         //clear the screen
         $("#door").hide();
-        $(".continue").hide();
+        
         //hides the game play panel
         $(".gamePlay").hide();
         console.log("gamePlay hidden");
@@ -608,7 +617,7 @@ $(document).ready(function () {
             playerScore += 100;
             console.log(health);
             console.log(score);
-
+            console.log(highScore);
             //return to map feature
 
             updateDisplay();
@@ -619,7 +628,7 @@ $(document).ready(function () {
             $(".gamePlay").append(": " + positive);
             health += 25;
             playerScore += 50;
-
+            console.log(highScore);
 
 
             //return to main map feature
@@ -632,9 +641,9 @@ $(document).ready(function () {
             console.log("nothing happens");
             $(".gamePlay").append(": " + nothing);
             //add button to end interaction or give user a chance to try again
-
+            console.log(highScore);
             // return to main map feature
-
+            
 
             updateDisplay();
             $(".continue").show();
@@ -648,7 +657,7 @@ $(document).ready(function () {
             //return to main map feature
 
             $(".continue").show();
-
+            console.log(highScore);
             updateDisplay();
         }
     }
@@ -659,6 +668,7 @@ $(document).ready(function () {
             console.log("continue was clicked");
 
             // playContinue = false;
+            $("#gameId").addClass("game-container");
             $(".game-container").removeClass("interactions" + iCounter);
 
             //.addClass("game-container" + counter);
