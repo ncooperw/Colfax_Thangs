@@ -103,13 +103,13 @@
 .trash {
     position: absolute;
     width: 20px;
-    height: 40px;
+    height: 30px;
 }
 
 .trashOpened {
     position: absolute;
-    width: 70px;
-    height: 20px;
+    width: 50px;
+    height: 25px;
 }
 
 /*door*/

@@ -4,10 +4,9 @@
 
 //
 var progressTotal = 0;
-// var progress = true;
 var counter = 0;
 var t;
-// var trash;
+
 var spawnX;
 var spawnY;
 var car = $("<img class='car' src='assets/images/p1-carRight.png'>");
@@ -75,7 +74,7 @@ var trashSpawnPoints = [
     ],
     [
         {
-            streetY: 90,
+            streetY: 100,
             streetX: 40,
             state: "closed"
         },
@@ -137,7 +136,7 @@ var trashSpawnPoints = [
             state: "closed"
         },
         {
-            streetY: 80,
+            streetY: 95,
             streetX: 880,
             state: "closed"
 
@@ -226,70 +225,9 @@ var trashSpawnPoints = [
         }
     ],
 ];
-// var trashSpawnPoints = [
-//     {
-//         streetY:[100, 150, 150],
-//         streetX:[350, 400, 600],
-//         state: ["closed","closed","closed"]
-//     },
-//     {
-//         streetY:[100, 150, 150],
-//         streetX:[350, 400, 600],
-//         state: ["closed","closed","closed"]
-//     },
-//     {
-//         streetY:[100, 100, 420],
-//         streetX:[80, 200, 300],
-//         state: ["closed","closed","closed"]
-//     },
-//     {
-//         streetY:[160, 180, 190],
-//         streetX:[300, 410, 500],
-//         state: ["closed","closed","closed"]
-//     },
-//     {
-//         streetY:[50, 150, 200],
-//         streetX:[30, 600, 700],
-//         state: ["closed","closed","closed"]
 
-//     },
-//     {
-//         streetY:[100, 150, 150],
-//         streetX:[350, 400, 600],
-//         state: ["closed","closed","closed"]
-//     },
-//     {
-//         streetY:[100, 150, 150],
-//         streetX:[350, 400, 600],
-//         state: ["closed","closed","closed"]
-//     },
-//     {
-//         streetY:[100, 150, 150],
-//         streetX:[350, 400, 600],
-//         state: ["closed","closed","closed"]
-
-//     },
-//     {
-//         streetY:[100, 150, 150],
-//         streetX:[350, 400, 600],
-//         state: ["closed","closed","closed"]
-
-//     },
-//     {
-//         streetY:[100, 150, 150],
-//         streetX:[350, 400, 600],
-//         state: ["closed","closed","closed"]
-
-//     },
-//     {
-//         streetY:[100, 150, 150],
-//         streetX:[350, 400, 600],
-//         state: ["closed","closed","closed"]
-
-//     },
-// ]
 trashcanStates = {
-    "open" :  "<img class='trash' src='assets/images/p1-trashcan-opened.png'>",
+    "open" :  "<img class='trashOpened' src='assets/images/p1-trashcan-opened.png'>",
     "closed" :  "<img class='trash' src='assets/images/p1-trashcan-unopened.png'>"
 };
 
@@ -299,40 +237,38 @@ trashcanStates = {
         $(".game-container").empty();
         car.css({top: carYAxis, left: 0});
         $(".game-container").append(car);
-
-
-    
-
+        var trashCan;
+        var trashHtml;
         for (xT = 0; xT < trashSpawnPoints[counter].length; xT++) {
-            // if (progressTotal <= counter){
-
-                var trashCan = trashSpawnPoints[counter][xT];
-                var trashHtml = $(trashcanStates[trashCan.state]);
+            
+                trashCan = trashSpawnPoints[counter][xT];
+                trashHtml = $(trashcanStates[trashCan.state]);
+                // trashHtml.trashCanIndex = xT;
+                trashHtml.attr("data", xT);
                 trashHtml.css({top: trashCan.streetY, left: trashCan.streetX});
                 $(".game-container").append(trashHtml);
-
-                // var trash = $(trashcanStates[trashSpawnPoints[counter].state[xT]]);
-                // var spawnX = trashSpawnPoints[counter].streetY[xT];
-                // var spawnY = trashSpawnPoints[counter].streetX[xT];
-                // trash.css({top: spawnX, left: spawnY});
-                // $(".game-container").append(trash); 
-
-
-
-            // } else if (progress===false) {
-            //     trash = $("<img class='trashOpened' src='assets/images/p1-trashcan-opened.png'>");
-            //     var spawnX = trashSpawnPoints[counter].streetY[xT];
-            //     var spawnY = trashSpawnPoints[counter].streetX[xT];
-            //     trash.css({top: spawnX, left: spawnY});
-            //     $(".game-container").append(trash); 
-            // } else {
-            //     trash = $("<img class='trashOpened' src='assets/images/p1-trashcan-opened.png'>");
-            //     var spawnX = trashSpawnPoints[counter].streetY[xT];
-            //     var spawnY = trashSpawnPoints[counter].streetX[xT];
-            //     trash.css({top: spawnX, left: spawnY});
-            //     $(".game-container").append(trash); 
-            // }
         }
+        $(".trash").click(function() {
+            
+                var pp1 =  $(this)[0].offsetLeft - car.position().left
+                var pp2 = $(this)[0].offsetTop  - car.position().top
+                var distanceCheck = Math.sqrt((pp1 * pp1) + (pp2 * pp2));
+
+            if(distanceCheck < 120) {
+            trashSpawnPoints[counter][$(this).attr("data")].state = "open";
+            // trashSpawnPoints[counter][$(this).attr("data")].streetX = (trashSpawnPoints[counter][$(this).attr("data")].streetX - 40);
+            // trashHtml.css({top: trashCan.streetY, left: trashCan.streetX});
+            $(this).attr("src", "assets/images/p1-trashcan-opened.png").addClass("trashOpened").animate({left:"-=15px"}, 100);
+            // trashSpawnPoints[counter][$(this).attr("data")].streetX = (trashSpawnPoints[counter][$(this).attr("data")].streetX -40); 
+            // $(".game-container").append(trashHtml);
+            console.log($(this)[0].offsetLeft);
+            console.log(car.position().left);
+            } else {
+                //audio "drive closer"
+            }
+            console.log(distanceCheck);
+            // console.log((trashSpawnPoints[counter][$(this).attr("data")].streetX));
+        })
 
     }
         // for (let yT = 0; yT < trashSpawnPoints[j].streetX.length; yT++) {
@@ -365,7 +301,7 @@ $(document).keydown(function(e) {
     console.log(pos);
     console.log(counter);
     //drive left
-    if (e.keyCode == 37) {
+    if (e.keyCode == 37 || e.keyCode == 65) {
         $(car).attr("src", "assets/images/p1-carLeft.png").removeClass("carUpDown");
         if (counter === 10 && pos.top < 180){
             if (pos.left < 715) {
@@ -394,7 +330,7 @@ $(document).keydown(function(e) {
     }
 
     //drive up
-    else if (e.keyCode == 38) {
+    else if (e.keyCode == 38 || e.keyCode == 87) {
         $(car).attr("src", "assets/images/p1-carUp.png").addClass("carUpDown");
         if (counter === 10 && pos.left > 615){
             car.css("top", "-=20px");
@@ -409,13 +345,13 @@ $(document).keydown(function(e) {
     }
 
     //drive right
-    else if (e.keyCode == 39) {
+    else if (e.keyCode == 39 || e.keyCode == 68) {
         $(car).attr("src", "assets/images/p1-carRight.png").removeClass("carUpDown");
-        if (counter === 10 && pos.top < 180){
+        if (counter === 10){
             if (pos.left > 755) {
                 car.css("left", "-=0px");
             } else {
-                car.css("left", "+=20px"); 
+                car.css("left", "+=50px"); 
             }
         } else if (pos.left > 800) {
             $(".game-container").removeClass("game-container" + counter);
@@ -427,36 +363,20 @@ $(document).keydown(function(e) {
             trashCanGenerator();
             $(".game-container").addClass("game-container" + counter);
             console.log("progress total "+progressTotal);
-            // console.log("progress "+progress);
-
-            // console.log("progress "+progress);
-
-
-            
-            
-            trashCanGenerator();
-            $(".game-container").addClass("game-container" + counter);
-            // console.warn(carYAxis)
-            // console.log("progress "+progress);
-
-
             car.css({top: carYAxis, left: 0});
            
         } else {
-            // $(car).attr("src", "assets/images/p1-carRight.png");
             car.css("left", "+=50px");
-        // car.animate("left", "+=20px"); 
- 
         }
     }
 
     //drive down
-    else if (e.keyCode == 40) {
+    else if (e.keyCode == 40 || e.keyCode == 83) {
         $(car).attr("src", "assets/images/p1-carDown.png").addClass("carUpDown");
         if (pos.top > 360){
             car.css("top", "+=0px"); 
             } else {
-                // $(car).attr("src", "assets/images/p1-carDown.png");
+               
                 car.css("top", "+=20px"); 
             }
     }
