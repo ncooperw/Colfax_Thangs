@@ -21,6 +21,18 @@ $(document).ready(function () {
     // });
     //------------TTS---------------------------
     //--------------------------------------------firebase & boss
+    $("#game-box").hide();
+    mystery()
+    $("#mysteryButt").on("click", function () {
+        $("#mysteryButt").remove();
+        startPage();
+    })
+
+    $(document).on("click", "#play-game", function () {
+        $(".mDiv").remove();
+        $(".gif-div").remove();
+        $("#game-box").show();
+    })
 
     var config = {
         apiKey: "AIzaSyAW4oe-QFXhUeCMs3WmYzl0EQL_qFqngHE",
@@ -34,6 +46,49 @@ $(document).ready(function () {
 
     var database = firebase.database();
 
+    //------------authenitcation---------------------------
+    // Initialize the FirebaseUI Widget using Firebase.
+    var ui = new firebaseui.auth.AuthUI(firebase.auth());
+    ui.start('#firebaseui-auth-container', {
+        signInOptions: [
+            firebase.auth.EmailAuthProvider.PROVIDER_ID,
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+            firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+        ],
+    });
+
+    var uiConfig = {
+        callbacks: {
+            signInSuccessWithAuthResult: function (authResult, redirectUrl) {
+                // User successfully signed in.
+                // Return type determines whether we continue the redirect automatically
+                // or whether we leave that to developer to handle.
+                return true;
+            },
+            uiShown: function () {
+                // The widget is rendered.
+                // Hide the loader.
+                document.getElementById('loader').style.display = 'none';
+            }
+        },
+        // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+        signInFlow: 'popup',
+        signInSuccessUrl: '<url-to-redirect-to-on-success>',
+        signInOptions: [
+            // Leave the lines as is for the providers you want to offer your users.
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+            firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+            //   firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+            //   firebase.auth.GithubAuthProvider.PROVIDER_ID,
+            firebase.auth.EmailAuthProvider.PROVIDER_ID,
+            //   firebase.auth.PhoneAuthProvider.PROVIDER_ID
+        ],
+        // Terms of service url.
+        tosUrl: '<your-tos-url>'
+    };
+    // The start method will wait until the DOM is loaded.
+    ui.start('#firebaseui-auth-container', uiConfig);
+    //--------------------authentication-----------------------
     var ref = database.ref("game")
     var playerRef = ref.child("player1");
     var bossRef = ref.child("boss");
@@ -182,6 +237,56 @@ $(document).ready(function () {
     })
 
     //--------------------------------------------firebase & boss
+
+    //------------first page--game start------------------
+    // var newSound = document.createElement("audio");
+
+    function mystery() {
+
+        var mysteryDiv = $("<div>");
+        mysteryDiv.addClass("mDiv")
+        $("body").append(mysteryDiv);
+
+        var mystery = $("<button>");
+        mystery.addClass("mystery");
+        mystery.attr("id", "mysteryButt")
+        mystery.text("?");
+        $(mysteryDiv).append(mystery);
+    }
+
+    function startPage() {
+        var buttDiv = $("<div>");
+        buttDiv.addClass("pButt");
+
+        var playGame = $("<button>");
+        playGame.attr("id", "play-game");
+        playGame.addClass("btn btn-danger");
+        playGame.text("Begin?");
+        buttDiv.append(playGame)
+
+        var newSound = document.createElement("audio");
+        newSound.src = "theme.mp3";
+        newSound.play();
+
+        var gifDiv = $("<div>");
+        gifDiv.addClass("gif-div");
+        $("body").append(gifDiv);
+
+        var openGif = $("<img>");
+        openGif.addClass("thangsIntro");
+        openGif.attr("src", "Colfax Thangs Open.gif");
+
+        $(".gif-div").append(openGif)
+
+        setTimeout(function () {
+            openGif.attr("src", "colfax_thangs_static.gif");
+            $(".gif-div").append(buttDiv);
+        }, 14000);
+    }
+
+
+    //------------first page --game start----------------
+
 
     //-----------------------Interactions-----------------------------------
 
@@ -355,9 +460,9 @@ $(document).ready(function () {
     function gainSidekick() {
         var sparkleDiv = $("<div>");
         sparkleDiv.addClass("sparkle");
-        
+
         var sparkleImage = "<img src='assets/images/sparkle.gif'/>";
-        
+
         sparkleDiv.append(sparkleImage);
         sparkleDiv.hide();
         $("#buttonSpot").append(sparkleDiv);
