@@ -113,11 +113,15 @@
 /*door*/
 
 .rectangle {
-    height: 100px;
-    width: 50px;
-    background-color: red;
+    height: 150px;
+   width: 300px;
+   background-color: rgba(255, 0, 0, 0);
 }
 
+rectangle:hover {
+    border: solid 2px red;  
+ }
+ 
 #playerStats {
     border: 2px solid black;
 }
