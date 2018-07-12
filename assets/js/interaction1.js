@@ -33,6 +33,10 @@ $(document).ready(function () {
     //     $("#auth").show();
     // })
   
+    //     $(".mDiv").remove();
+    //     $(".gif-div").remove();
+    //     $("#game-box").show();
+    // })
 
     var config = {
         apiKey: "AIzaSyAW4oe-QFXhUeCMs3WmYzl0EQL_qFqngHE",
@@ -414,6 +418,32 @@ $(document).ready(function () {
 
     $(".gamePlay").hide();
 
+function gameStart(){
+    //hot spot for sparkle based on game-container #
+    //hot spot for door based on game-container #
+   console.log("counter = " + counter);
+    if (counter === 1) {
+        console.log("show door");
+        $("#door").show();
+    } else {
+        $("#door").hide();
+        console.log("hide door");
+    }
+    //door will be made transparent once it is overlayed in the appropriate spot
+    
+    
+    //continue button gets made 
+    
+        var next = $("<button>");
+        next.text("Continue");
+        next.addClass("btn btn-success continue");
+
+        $("#buttonSpot").append(next);
+        
+        $(".continue").hide();
+       
+}
+gameStart();
 
     database.ref().on("value", function (snapshot) {
         //If Firebase has a highscore and a highPlayer, update our client-side variables
@@ -542,7 +572,7 @@ $(document).ready(function () {
         })
     }
 
-    // $("#door").hide();
+    $("#door").hide();
 
     gainSidekick();
 
@@ -572,6 +602,13 @@ $(document).ready(function () {
     });
 
     function beginInteraction() {
+
+        //removing game screen
+        $("#gameId").removeClass("game-container");
+        //$("#gameId").addClass("")
+
+
+        //showing the text with the story and the user choices
         $(".interactions").show();
         $(".scenario").html("<h2>Scenario: " + interaction[iCounter].scenario + "</h2>");
         $(".question").html("<h3>" + interaction[iCounter].question + "</h3>");
@@ -684,20 +721,7 @@ $(document).ready(function () {
         }
     }
 
-    function continueButton() {
-
-        // playContinue = true;
-
-        //if (playContinue === true) {
-        //console.log("play Coninue = " + playContinue);
-        var next = $("<button>");
-        next.text("Continue");
-        next.addClass("btn btn-success continue");
-
-        $("#buttonSpot").append(next);
-        //}
-    }
-    // continueButton();
+    
 
     $(".continue").on("click", function () {
         console.log("continue was clicked");

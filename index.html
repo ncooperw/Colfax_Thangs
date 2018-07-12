@@ -43,16 +43,23 @@
             </div>
         </div>
         <br>
-        <div class="container game-container">
+        <div id="gameId" class="container game-container">
 
             <!--add game mode here-->
             <div class="row">
-                <div class="gamePlay col-sm-9"></div>
-                <div id="buttonSpot" class="col-sm-3"></div>
+                <div class="col-lg-4"></div>
+                <div class="col-lg-4">
+                    <div class="rectangle" id="door"></div>
+                </div>
+                <div class="col-lg-4"></div>
             </div>
-            <div class="rectangle" id="door"></div>
-        </div>
+            <div class="gamePlay col-sm-9"></div>
+            <div id="buttonSpot" class="col-sm-3"></div>
 
+
+        </div>
+        <!-- tester button for firebase -->
+        <!-- <button class"btn" id="special">Click me</button> -->
         <div class="container userStuff">
             <div class="row">
                 <div class="col-md-6">
@@ -64,27 +71,24 @@
                     <div class="sidekick"></div>
                 </div>
             </div>
-        </div>
-        <!-- tester button for firebase -->
-        <!-- <button class"btn" id="special">Click me</button> -->
-        <div class="container interactions">
-            <div id="scenarioRow" class="row">
-                <div class="col-sm-12">
-                    <div class="scenario"></div>
+            <div class="container interactions">
+                <div id="scenarioRow" class="row">
+                    <div class="col-sm-12">
+                        <div class="scenario"></div>
+                    </div>
+
                 </div>
+                <div class="row">
+                    <div id="userInteraction" class="col-sm-12 col-md-6">
+                        <div class="question"></div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="userChoices"></div>
+                    </div>
+                </div>
+
 
             </div>
-            <div class="row">
-                <div id="userInteraction" class="col-sm-12 col-md-6">
-                    <div class="question"></div>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                    <div class="userChoices"></div>
-                </div>
-            </div>
-
-
-        </div>
     </container>
     <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
