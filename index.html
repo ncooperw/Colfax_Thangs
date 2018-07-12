@@ -28,7 +28,7 @@
     <div class="container header-container">
         <div class="jumbotron title-image">
             <!--Need to add art effects to title, ie CSS Animate-->
-            <!--<img src="assets/images/title.png">
+    <!--<img src="assets/images/title.png">
 
             <button id="start" class="btn btn-primary">Start</button>
         </div>
@@ -53,14 +53,16 @@
     <div class="container game-container">
 
         <!--add game mode here-->
-        <div class="row">
-            <div class="gamePlay col-sm-9"></div>
-            <div id="buttonSpot" class="col-sm-3"></div>
-        </div>
-        <div class="rectangle" id="door"></div>
     </div>
 
     <div class="container userStuff">
+        <div class="container gamePlay">
+            <div class="row">
+                <div class="col-sm-9"></div>
+                <div id="buttonSpot" class="col-sm-3"></div>
+            </div>
+            <div class="rectangle" id="door"></div>
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <h6 class="text-center">Inventory</h6>
@@ -89,12 +91,12 @@
                 <div class="userChoices"></div>
             </div>
         </div>
-      
+
 
     </div>
     <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src='https://code.responsivevoice.org/responsivevoice.js'></script> 
+    <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
     <script src="assets/js/interaction1.js"></script>
     <script src="assets/js/game.js"></script>
 </body>
