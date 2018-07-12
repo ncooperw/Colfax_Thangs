@@ -542,7 +542,7 @@ $(document).ready(function () {
         })
     }
 
-    $("#door").hide();
+    // $("#door").hide();
 
     gainSidekick();
 
@@ -559,6 +559,12 @@ $(document).ready(function () {
 
         //changes the background 
         $(".game-container").addClass("interactions" + iCounter);
+
+        var choices = $("<div>");
+        choices.addClass("interactions" + iCounter);
+        choices.attr("id", "int");
+
+        $("#game").append(choices)
 
         //Scenario and choices come up
 
