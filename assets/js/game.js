@@ -249,7 +249,9 @@ function trashCanGenerator() {
 
     $(".trash").click(function () {
         //clicking trash can makes a sidekick pop up
+        //if ((this).data() == 0){
         gainSidekick();
+        //}
 
         var pp1 = $(this)[0].offsetLeft - car.position().left
         var pp2 = $(this)[0].offsetTop - car.position().top
@@ -392,6 +394,7 @@ $(document).keydown(function (e) {
 })
 
 
+
     function gainSidekick() {
         // var sidekickDiv = $("<div>");
         // //sparkleDiv.addClass("sparkle");
@@ -405,8 +408,9 @@ $(document).keydown(function (e) {
         //     sparkleDiv.hide();
         // }
         //$("#gameId").append(sidekickDiv);
-
+        
         var sidekicks = ["hobo", "bum", "prostitute", "mangie+dog", "drug+dealer", "angel", "drag+queen", "cute+boy", "cute+girl", "trash", "captain+america", "iron+man", "hulk"]
+
 
 
         var limit = 1;
