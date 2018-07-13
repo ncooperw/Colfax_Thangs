@@ -4,16 +4,10 @@
 //css will overlay the game-container class by using interaction+icounter
 
 //with continue click remove class (interaction +iCounter) iCounter ++, add class (game-container + counter)
-//create a function for the (x,y) of the ogden theater. Text pops up on the screen.
-//A band is playing and the music is intoxicating. The sprite goes inside.
-
-//The sprite comes to the Ogden theater
-
 
 
 $(document).ready(function () {
-    //create a function for the (x,y) of the ogden theater. Text pops up on the screen.
-    //A band is playing and the music is intoxicating. The sprite goes inside.
+     
     //---------TTS--------------------------------
     //Text to speech --does not use an ajax request---may just be new technoology?
     // $(document).on("click", function () {
@@ -339,7 +333,7 @@ $(document).ready(function () {
                 idealChoice: "Grab the container and capture the music",
                 nothingChoice: "Turn around and leave, you want no part of whatever is going on here.",
                 negativeChoice: "Go to the bar and get a drink",
-                positiveChoice: "You move towards the stage and start dancing."
+                positiveChoice: "move towards the stage and start dancing."
             },
             consequences: {
                 ideal: "increases your health and adds the item to your inventory. Nice!",
@@ -358,10 +352,10 @@ $(document).ready(function () {
             question: "As you cut the line to enter the diner, you notice the cramped space is full of people. A person behind you yells, 'Hey, you can't cut!' Do you:",
 
             answerChoices: {
-                nothingChoice: "You turn around and realize that you did indeed cut. You apologize and walk to the end of the line to wait your turn.",
-                idealChoice: "You look around as you attempt to form a plan. You see a golden fork lying on a table that is waiting to be bussed. You pick up the fork.",
-                positiveChoice: "You see a table with one person. You go over to them and ask to sit with them. They are delighted that you asked and invite you to eat thier left over breakfast burrito.",
-                negativeChoice: "The person sounds angry and you are in no mood to deal with them. You turn around and punch them."
+                nothingChoice: "turn around and realize that you did indeed cut. You apologize and walk to the end of the line to wait your turn.",
+                idealChoice: "look around as you attempt to form a plan. You see a golden fork lying on a table that is waiting to be bussed. You pick up the fork.",
+                positiveChoice: "go over to a table with a lone person and ask to sit with them. They are delighted that you asked and invite you to eat thier left over breakfast burrito.",
+                negativeChoice: "turn around and punch the person; they sound angry and you are in no mood to deal with them."
             },
             consequences: {
                 ideal: "increases your health and adds the item to your inventory. Nice!",
@@ -381,10 +375,10 @@ $(document).ready(function () {
             question: "As you make your way further into the bar you realize that this place is really fun. People seem happy to be themselves. Do you: ",
 
             answerChoices: {
-                negativeChoice: "Upon further observation, you are extremely uncomfortable. You try to walk towards the door in an easy, smooth manner.  ",
+                negativeChoice: "walk towards the door in an easy, smooth manner. Upon further observation, you are extremely uncomfortable.",
                 nothingChoice: "Stand in the middle of the room and observe the situation.",
                 idealChoice: "Go up to the bar and order a drink from a bar tender who is wearing a rainbow cowboy hat.",
-                positiveChoice: "You spy an attractive person across the bar and wink at them."
+                positiveChoice: " wink at the attractive person you see at the bar."
             },
             consequences: {
                 ideal: "You strike up a conversation with the bartender and comment on the awesome hat he is wearing. He decides to give you the hat.",
@@ -485,7 +479,7 @@ $(document).ready(function () {
         var imgDiv = $("<div>");
         imgDiv.addClass("item img-thumbnail");
 
-        var image = $("<img>")
+        //var image = $("<img>")
         image.attr("src", interaction[iCounter].itemImg);
         console.log(image);
         imgDiv.append(image);
@@ -506,65 +500,62 @@ $(document).ready(function () {
     //sidekick function
     //----------------------------------------------------
 
-    // function gainSidekick() {
-    //     var sparkleDiv = $("<div>");
-    //     sparkleDiv.addClass("sparkle");
+    function gainSidekick() {
+        var sparkleDiv = $("<div>");
+        sparkleDiv.addClass("sparkle");
 
-    //     var sparkleImage = "<img src='assets/images/sparkle.gif'/>";
+        var sparkleImage = "<img src='assets/images/sparkle.gif'/>";
 
-    //     sparkleDiv.append(sparkleImage);
-    //     sparkleDiv.hide();
-    //     $(".sidekickSparkle").append(sparkleDiv);
-    //     $(".sparkle").on("click", function () {
+        sparkleDiv.append(sparkleImage);
+        sparkleDiv.hide();
+        $(".sidekickSparkle").append(sparkleDiv);
+        $(".sparkle").on("click", function () {
 
-    //         $(".sparkle").hide();
+            $(".sparkle").hide();
 
-    //         var sidekicks = ["bum", "prostitute", "mangie+dog", "drug dealer"]
-
-
-    //         var limit = 1;
-
-    //         var input = sidekicks[iCounter];
-
-    //         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + input + "&limit=" + limit + "&api_key=dc6zaTOxFJmzC";
-    //         $.ajax({
-    //             url: queryURL,
-    //             method: "GET"
-    //         }).done(function (response) {
-
-    //             for (var j = 0; j < limit; j++) {
-    //                 console.log(response);
-
-    //                 var displayDiv = $("<div>");
-    //                 displayDiv.addClass("item");
-
-    //                 var image = $("<img>");
-
-    //                 image.attr("src", response.data[j].images.original_still.url);
-    //                 image.attr("data-still", response.data[j].images.original_still.url);
-    //                 image.attr("data-animate", response.data[j].images.original.url);
-    //                 image.attr("data-state", "still");
-    //                 image.attr("class", "gif img-thumbnail");
-    //                 displayDiv.append(image);
+            var sidekicks = ["bum", "prostitute", "mangie+dog", "drug dealer"]
 
 
+            var limit = 1;
 
-    //                 $(".sidekick").append(displayDiv);
+            var input = sidekicks[iCounter];
+
+            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + input + "&limit=" + limit + "&api_key=dc6zaTOxFJmzC";
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).done(function (response) {
+
+                for (var j = 0; j < limit; j++) {
+                    console.log(response);
+
+                    var displayDiv = $("<div>");
+                    displayDiv.addClass("item");
+
+                    var image = $("<img>");
+
+                    image.attr("src", response.data[j].images.original_still.url);
+                    image.attr("data-still", response.data[j].images.original_still.url);
+                    image.attr("data-animate", response.data[j].images.original.url);
+                    image.attr("data-state", "still");
+                    image.attr("class", "gif img-thumbnail");
+                    displayDiv.append(image);
 
 
-    //             }
-    //         })
-    //     })
-    // }
 
-    // //$("#door").hide();
+                    $(".sidekick").append(displayDiv);
 
-    // gainSidekick();
 
+                }
+            })
+        })
+    }
 
     //create a function upon click of the door
     $("#door").on('click', function doorExplore() {
         console.log("clicked");
+        //as door is clicked, read story
+        responsiveVoice.speak(interaction[iCounter].story);
         //clear the screen
         $("#door").hide();
 
@@ -674,8 +665,27 @@ $(document).ready(function () {
             $(".gamePlay").append(": " + positive);
             health += 25;
             playerScore += 50;
+            
+            database.ref().push({
+                playerScore: playerScore
+            })
+            
+            highScore();
+
             console.log(highScore);
 
+            if (userSelect == interaction[2].answerChoices.positiveChoice) {
+                var image = $("<img>")
+                var imgDiv = $("<div>");
+                imgDiv.addClass("item img-thumbnail");
+                image.attr("src", "assets/images/rupaul.gif");
+                $(".sidekick").append(imgDiv);
+                sidekick.push("RuPaul");
+
+                database.ref().push ({
+                    sidekick: sidekick
+                });
+            }
 
             //return to main map feature
             updateDisplay();

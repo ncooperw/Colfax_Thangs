@@ -7,155 +7,179 @@
 
 var counter = 1;
 var car = $("<img class='car' src=assets/images/p1-carRight.png>");
-car.css({top: 200, left: 0});
+car.css({
+    top: 200,
+    left: 0
+});
 $(".game-container").append(car);
-$(document).keydown(function(e) {
+$(document).keydown(function (e) {
     // car = $("<img id='car' src=assets/images/p1-carRight.png>");
     var pos = car.position();
-    var carYAxis = parseInt(pos.top)-1;
+    var carYAxis = parseInt(pos.top) - 1;
     //console.log(pos);
     //console.log(counter);
     //drive left
     if (e.keyCode == 37) {
         $(car).attr("src", "assets/images/p1-carLeft.png").removeClass("carUpDown");
-        if (counter === 11 && pos.top < 180){
+        if (counter === 11 && pos.top < 180) {
             if (pos.left < 715) {
                 car.css("left", "-=0px");
             } else {
-                car.css("left", "-=20px"); 
+                car.css("left", "-=20px");
             }
-        }
-        else if (pos.left < 10) {
+        } else if (pos.left < 10) {
             $(".game-container").removeClass("game-container" + counter);
             counter--;
             $(".game-container").addClass("game-container" + counter);
-            car.css({top: carYAxis, left: 800});
+            car.css({
+                top: carYAxis,
+                left: 800
+            });
 
-            } else {
-                // $(car).attr("src", "assets/images/p1-carLeft.png");
-                car.css("left", "-=20px"); 
-            }
-            
+        } else {
+            // $(car).attr("src", "assets/images/p1-carLeft.png");
+            car.css("left", "-=20px");
+        }
+
         // car.css("left", "-=20px");  
     }
 
     //drive up
     else if (e.keyCode == 38) {
         $(car).attr("src", "assets/images/p1-carUp.png").addClass("carUpDown");
-        if (counter === 11 && pos.left > 615){
+        if (counter === 11 && pos.left > 615) {
             car.css("top", "-=10px");
-        } 
-        else if (pos.top < 200){
-        car.css("top", "-=0px"); 
+        } else if (pos.top < 200) {
+            car.css("top", "-=0px");
         } else {
             // $(car).attr("src", "assets/images/p1-carUp.png");
             car.css("top", "-=10px");
-            console.log(carYAxis); 
+            console.log(carYAxis);
         }
     }
 
     //drive right
     else if (e.keyCode == 39) {
         $(car).attr("src", "assets/images/p1-carRight.png").removeClass("carUpDown");
-        if (counter === 11 && pos.top < 180){
+        if (counter === 11 && pos.top < 180) {
             if (pos.left > 755) {
                 car.css("left", "-=0px");
             } else {
-                car.css("left", "+=20px"); 
+                car.css("left", "+=20px");
             }
         } else if (pos.left > 800) {
             $(".game-container").removeClass("game-container" + counter);
             counter++;
             $(".game-container").addClass("game-container" + counter);
             console.warn(carYAxis)
-            car.css({top: carYAxis, left: 0});
-           
+            car.css({
+                top: carYAxis,
+                left: 0
+            });
+
         } else {
             // $(car).attr("src", "assets/images/p1-carRight.png");
             car.css("left", "+=20px");
-        // car.animate("left", "+=20px"); 
- 
+            // car.animate("left", "+=20px"); 
+
         }
     }
 
     //drive down
     else if (e.keyCode == 40) {
         $(car).attr("src", "assets/images/p1-carDown.png").addClass("carUpDown");
-        if (pos.top > 360){
-            car.css("top", "+=0px"); 
-            } else {
-                // $(car).attr("src", "assets/images/p1-carDown.png");
-                car.css("top", "+=10px"); 
-            }
+        if (pos.top > 360) {
+            car.css("top", "+=0px");
+        } else {
+            // $(car).attr("src", "assets/images/p1-carDown.png");
+            car.css("top", "+=10px");
+        }
     }
+
+
+
     //door show and hide
+    //setting the story on the street prior to interaction
+    //random sidekicks
 
-    if (counter % 3 == 0) {
-        console.log("show door");
-        $("#door").show();
-    } else {
-        $("#door").hide();
-        console.log("hide door");
-    }
+    function prepareForInteraction() {
+        // var colfaxStories = ["You hear a band playing and the music is intoxicating. Click the door to go inside.", "The smell of bacon permeates the air. You see a line of people down the street and wonder what they are waiting for. When you look up, you see the sign, 'Pete's Kitchen'. Click the door to go inside.", "The smell of bacon permeates the air. You see a line of people down the street and wonder what they are waiting for. When you look up, you see the sign, 'Pete's Kitchen'. Click the door to go inside."]
 
-    //sidekicks come up
-    
-    if (counter % 2 == 0) {
-        console.log("sidekick time");
-        gainSidekick();
-    }
-    
-});    
+        if (counter % 3 == 0) {
+            console.log("show door");
+            $("#door").show();
+            //responsiveVoice.speak(colfaxStories);
+        } else {
+            $("#door").hide();
+            console.log("hide door");
+        }
 
-function gainSidekick() {
-    var sparkleDiv = $("<div>");
-    sparkleDiv.addClass("sparkle");
+        //sidekicks come up
 
-    var sparkleImage = "<img src='assets/images/sparkle.gif'/>";
+        if ((counter % 2 == 0) && (sidekick == true)){
+            console.log("sidekick time");
+            gainSidekick();
+        }
 
-    sparkleDiv.append(sparkleImage);
-    sparkleDiv.hide();
-    $("#buttonSpot").append(sparkleDiv);
-    $(".sparkle").on("click", function () {
+    };
 
-        $(".sparkle").hide();
-
-        var sidekicks = ["bum", "prostitute", "mangie+dog", "drug dealer"]
+    prepareForInteraction();
 
 
-        var limit = 1;
+    function gainSidekick() {
+        var sparkleDiv = $("<div>");
+        sparkleDiv.addClass("sparkle");
 
-        var input = sidekicks[iCounter];
+        var sparkleImage = "<img src='assets/images/sparkle.gif'/>";
 
-        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + input + "&limit=" + limit + "&api_key=dc6zaTOxFJmzC";
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-        }).done(function (response) {
+        sparkleDiv.append(sparkleImage);
+        //sparkleDiv.hide();
+        var sidekick = false;
+        if (sidekick == true){
+            sparkleDiv.hide();
+        }
+        $("#buttonSpot").append(sparkleDiv);
+        $(".sparkle").on("click", function () {
+            sidekick = true;
 
-            for (var j = 0; j < limit; j++) {
-                console.log(response);
+            $(".sparkle").hide();
 
-                var displayDiv = $("<div>");
-                displayDiv.addClass("item");
-
-                var image = $("<img>");
-
-                image.attr("src", response.data[j].images.original_still.url);
-                image.attr("data-still", response.data[j].images.original_still.url);
-                image.attr("data-animate", response.data[j].images.original.url);
-                image.attr("data-state", "still");
-                image.attr("class", "gif img-thumbnail");
-                displayDiv.append(image);
+            var sidekicks = ["bum", "prostitute", "mangie+dog", "drug dealer"]
 
 
+            var limit = 1;
 
-                $(".sidekick").append(displayDiv);
+            var input = sidekicks[iCounter];
+
+            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + input + "&limit=" + limit + "&api_key=dc6zaTOxFJmzC";
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).done(function (response) {
+
+                for (var j = 0; j < limit; j++) {
+                    console.log(response);
+
+                    var displayDiv = $("<div>");
+                    displayDiv.addClass("item");
+
+                    var image = $("<img>");
+
+                    image.attr("src", response.data[j].images.original_still.url);
+                    image.attr("data-still", response.data[j].images.original_still.url);
+                    image.attr("data-animate", response.data[j].images.original.url);
+                    image.attr("data-state", "still");
+                    image.attr("class", "gif img-thumbnail");
+                    displayDiv.append(image);
 
 
-            }
+
+                    $(".sidekick").append(displayDiv);
+
+
+                }
+            })
         })
-    })
-}
 
-
+    }
+})
