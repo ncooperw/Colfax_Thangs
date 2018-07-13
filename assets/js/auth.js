@@ -116,5 +116,5 @@ $(document).ready(function () {
             $("#gif-div").append(buttDiv);
         }, 13000);
     }
-    console.log(user)
+    // console.log(user)
 });
