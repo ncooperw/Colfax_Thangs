@@ -20,9 +20,9 @@ $(document).ready(function () {
     //lisener for new user    
     firebase.auth().onAuthStateChanged(function (user) { /**************** */
       
-     newUserID = user.uid;
-        console.log(user.uid);
-        console.log(newUserID)
+    //  newUserID = user.uid;
+        // console.log(user.uid);
+        // console.log(newUserID)
         // newUser = ref.child(newUserID)
     })
 
@@ -36,8 +36,8 @@ $(document).ready(function () {
 
     var playerRef = ref.child("player1");
     var bossRef = ref.child("boss");
-    var userRef = ref.child(newUserID)
-    console.log(userRef);
+    // var userRef = ref.child(newUserID)
+    // console.log(userRef);
     var bossAp = 0;
     var bossHp = 0;
     initializeDatabase();
@@ -248,7 +248,7 @@ $(document).ready(function () {
                 idealChoice: "Grab the container and capture the music",
                 nothingChoice: "Turn around and leave, you want no part of whatever is going on here.",
                 negativeChoice: "Go to the bar and get a drink",
-                positiveChoice: "You move towards the stage and start dancing."
+                positiveChoice: "move towards the stage and start dancing."
             },
             consequences: {
                 ideal: "increases your health and adds the item to your inventory. Nice!",
@@ -258,29 +258,6 @@ $(document).ready(function () {
             },
             item: "music box with hypnotic music",
             itemImg: "assets/images/musicbox.jpg",
-        },
-        {
-            story: "The smell of bacon permeates the air. You see a line of people down the street and wonder what they are waiting for. When you look up, you see the sign, 'Pete's Kitchen'. Click the door to go inside.",
-
-            scenario: "The smell is the best smell that you have ever encountered. It makees you hungry and satisfied at the same time.",
-
-            question: "As you cut the line to enter the diner, you notice the cramped space is full of people. A person behind you yells, 'Hey, you can't cut!' Do you:",
-
-            answerChoices: {
-                nothingChoice: "You turn around and realize that you did indeed cut. You apologize and walk to the end of the line to wait your turn.",
-                idealChoice: "You look around as you attempt to form a plan. You see a golden fork lying on a table that is waiting to be bussed. You pick up the fork.",
-                positiveChoice: "You see a table with one person. You go over to them and ask to sit with them. They are delighted that you asked and invite you to eat thier left over breakfast burrito.",
-                negativeChoice: "The person sounds angry and you are in no mood to deal with them. You turn around and punch them."
-            },
-            consequences: {
-                ideal: "increases your health and adds the item to your inventory. Nice!",
-                nothing: "nothing happens. You are no closer to uncovering the truth.",
-                negative: "Your are beat up so badly that you lose an entire day...you cannot remember anything. You wake up the next day in the alley and you lose health.",
-                positive: "The person you sat next to is so appreciative of the conversation that you share that they give you a hint. They say, 'be kind to people and they will help you.'"
-            },
-            item: "Golden Fork",
-            itemImg: "assets/images/goldFork.jpg",
-
         },
         {
             story: "You find yourself outside of a quaint little country bar. You decide to go inside.",
@@ -303,7 +280,30 @@ $(document).ready(function () {
             },
             item: "Cowboy Hat",
             itemImg: "assets/images/cowboyHat.jpg"
-        }
+        },
+        {
+            story: "The smell of bacon permeates the air. You see a line of people down the street and wonder what they are waiting for. When you look up, you see the sign, 'Pete's Kitchen'. Click the door to go inside.",
+
+            scenario: "The smell is the best smell that you have ever encountered. It makees you hungry and satisfied at the same time.",
+
+            question: "As you cut the line to enter the diner, you notice the cramped space is full of people. A person behind you yells, 'Hey, you can't cut!' Do you:",
+
+            answerChoices: {
+                nothingChoice: "turn around and realize that you did indeed cut. You apologize and walk to the end of the line to wait your turn.",
+                idealChoice: "look around as you attempt to form a plan. You see a golden fork lying on a table that is waiting to be bussed. You pick up the fork.",
+                positiveChoice: "go over to a table with a lone person and ask to sit with them. They are delighted that you asked and invite you to eat thier left over breakfast burrito.",
+                negativeChoice: "turn around and punch the person; they sound angry and you are in no mood to deal with them."
+            },
+            consequences: {
+                ideal: "increases your health and adds the item to your inventory. Nice!",
+                nothing: "nothing happens. You are no closer to uncovering the truth.",
+                negative: "Your are beat up so badly that you lose an entire day...you cannot remember anything. You wake up the next day in the alley and you lose health.",
+                positive: "The person you sat next to is so appreciative of the conversation that you share that they give you a hint. They say, 'be kind to people and they will help you.'"
+            },
+            item: "Golden Fork",
+            itemImg: "assets/images/goldFork.jpg",
+
+        },
 
     ];
 
@@ -322,12 +322,21 @@ $(document).ready(function () {
 
 
     //need to hide continue button upon game start
-   
+
     console.log("continue button should be hidden");
 
     $(".gamePlay").hide();
     $("#door").hide();
 
+    //continue button gets made 
+
+    var next = $("<button>");
+    next.text("Continue");
+    next.addClass("btn btn-success continue");
+
+    $("#buttonSpot").append(next);
+
+    $(".continue").hide();
 
 
     database.ref().on("value", function (snapshot) {
@@ -344,7 +353,7 @@ $(document).ready(function () {
 
     function storeHighScore() {
         //var playerName = $("#player-name").val().trim();
-        playerScore = parseInt($("#score").val().trim());
+        //playerScore = parseInt($("#score").val().trim());
         //console.log(playerName);
         console.log(playerScore);
         if (playerScore > highScore) {
@@ -356,7 +365,7 @@ $(document).ready(function () {
         }
 
     }
-    // storeHighScore();
+    storeHighScore();
 
     function updateDisplay() {
         //Player Stats display --> create function upon game start
@@ -385,7 +394,7 @@ $(document).ready(function () {
         var imgDiv = $("<div>");
         imgDiv.addClass("item img-thumbnail");
 
-        var image = $("<img>")
+        //var image = $("<img>")
         image.attr("src", interaction[iCounter].itemImg);
         console.log(image);
         imgDiv.append(image);
@@ -457,17 +466,14 @@ $(document).ready(function () {
         })
     }
 
-    $("#door").hide();
-
-    gainSidekick();
-
-
     //create a function upon click of the door
     $("#door").on('click', function doorExplore() {
         console.log("clicked");
+        //as door is clicked, read story
+        responsiveVoice.speak(interaction[iCounter].story);
         //clear the screen
         $("#door").hide();
-        $(".continue").hide();
+
         //hides the game play panel
         $(".gamePlay").hide();
         console.log("gamePlay hidden");
@@ -496,6 +502,7 @@ $(document).ready(function () {
         //showing the text with the story and the user choices
         $(".interactions").show();
         $(".scenario").html("<h2>Scenario: " + interaction[iCounter].scenario + "</h2>");
+        responsiveVoice.speak(interaction[iCounter].scenario);
         $(".question").html("<h3>" + interaction[iCounter].question + "</h3>");
         console.log(iCounter);
         var x;
@@ -539,6 +546,7 @@ $(document).ready(function () {
         // update and alert users choice
 
         $(".gamePlay").html("You decide to " + interaction[iCounter].answerChoices[userSelect]);
+        responsiveVoice.speak("You decide to " + interaction[iCounter].answerChoices[userSelect]);
 
         var ideal = interaction[iCounter].consequences.ideal;
         var positive = interaction[iCounter].consequences.positive;
@@ -560,8 +568,8 @@ $(document).ready(function () {
             health += 50;
             playerScore += 100;
             console.log(health);
-            console.log(score);
-
+            console.log(playerScore);
+            console.log(highScore);
             //return to map feature
 
             updateDisplay();
@@ -573,7 +581,26 @@ $(document).ready(function () {
             health += 25;
             playerScore += 50;
 
+            database.ref().push({
+                playerScore: playerScore
+            })
 
+            highScore();
+
+            console.log(highScore);
+
+            if (userSelect == interaction[2].answerChoices.positiveChoice) {
+                var image = $("<img>")
+                var imgDiv = $("<div>");
+                imgDiv.addClass("item img-thumbnail");
+                image.attr("src", "assets/images/rupaul.gif");
+                $(".sidekick").append(imgDiv);
+                sidekick.push("RuPaul");
+
+                database.ref().push({
+                    sidekick: sidekick
+                });
+            }
 
             //return to main map feature
             updateDisplay();
@@ -585,7 +612,7 @@ $(document).ready(function () {
             console.log("nothing happens");
             $(".gamePlay").append(": " + nothing);
             //add button to end interaction or give user a chance to try again
-
+            console.log(highScore);
             // return to main map feature
 
 
@@ -601,7 +628,7 @@ $(document).ready(function () {
             //return to main map feature
 
             $(".continue").show();
-
+            console.log(highScore);
             updateDisplay();
         }
     }
@@ -612,7 +639,9 @@ $(document).ready(function () {
         console.log("continue was clicked");
 
         // playContinue = false;
+        $("#gameId").addClass("game-container");
         $(".game-container").removeClass("interactions" + iCounter);
+        $(".userStuff").hide();
 
         //.addClass("game-container" + counter);
 
@@ -631,40 +660,25 @@ $(document).ready(function () {
 
 
     });
+
+
+
+
+
+
+
+
+    //firebase data for the start of a new game--does not include high score--only data we want to be kept consistnet from one game to another (not high scores and the like)
+
+    function initializeDatabase() {
+        playerRef.set({
+            hp: 400,
+            ap: 10,
+        })
+        bossRef.set({
+            hp: 1000,
+            ap: 25,
+        })
+    }
+
 });
-
-
-
-
-
-
-
-//firebase data for the start of a new game--does not include high score--only data we want to be kept consistnet from one game to another (not high scores and the like)
-    // function gameStart() {
-    //     //hot spot for sparkle based on game-container #
-    //     //hot spot for door based on game-container #
-    //     console.log("counter = " + counter);
-    //     if (counter === 1) {
-    //         console.log("show door");
-    //         $("#door").show();
-    //     } else {
-    //         $("#door").hide();
-    //         console.log("hide door");
-    //     }
-    //     //door will be made transparent once it is overlayed in the appropriate spot
-
-
-
-    //     //continue button gets made 
-
-    //     var next = $("<button>");
-    //     next.text("Continue");
-    //     next.addClass("btn btn-success continue");
-
-    //     $("#buttonSpot").append(next);
-
-    //     $(".continue").hide();
-
-    // }
-    // gameStart();
-
