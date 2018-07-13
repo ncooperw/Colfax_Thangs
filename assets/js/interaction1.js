@@ -12,6 +12,7 @@
 
 
 $(document).ready(function () {
+    // responsiveVoice.speak("Hello World");   
     //create a function for the (x,y) of the ogden theater. Text pops up on the screen.
     //A band is playing and the music is intoxicating. The sprite goes inside.
     //---------TTS--------------------------------
@@ -742,7 +743,7 @@ $(document).ready(function () {
                 ap: 25,
             })
         }
-
+    ;
     // function gameStart() {
     //     //hot spot for sparkle based on game-container #
     //     //hot spot for door based on game-container #
@@ -770,4 +771,4 @@ $(document).ready(function () {
 
     // }
     // gameStart();
-});
+
