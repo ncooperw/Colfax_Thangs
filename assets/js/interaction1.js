@@ -345,6 +345,28 @@ $(document).ready(function () {
             itemImg: "assets/images/musicbox.jpg",
         },
         {
+            story: "You find yourself outside of a quaint little country bar. You decide to go inside.",
+
+            scenario: "Once you are inside the bar, you realize that this is not your typical, run of the mill country bar. There are shirtless men EVERYWHERE and many of the women are extremely tall. As you make your way further into the bar you",
+
+            question: "As you make your way further into the bar you realize that this place is really fun. People seem happy to be themselves. Do you: ",
+
+            answerChoices: {
+                negativeChoice: "Upon further observation, you are extremely uncomfortable. You try to walk towards the door in an easy, smooth manner.  ",
+                nothingChoice: "Stand in the middle of the room and observe the situation.",
+                idealChoice: "Go up to the bar and order a drink from a bar tender who is wearing a rainbow cowboy hat.",
+                positiveChoice: "You spy an attractive person across the bar and wink at them."
+            },
+            consequences: {
+                ideal: "You strike up a conversation with the bartender and comment on the awesome hat he is wearing. He decides to give you the hat.",
+                nothing: "nothing happens. You are no closer to uncovering the truth.",
+                negative: "In your quest to make a hasty exit you trip over your own feet completely shattering your ankle in the process. You lose health.",
+                positive: "Your master winkery causes the person to walk over to you. As they come closer, you see that you have just winked at...RuPaul! You spend the rest of the evening talking candidly and learning the drag queen secrets."
+            },
+            item: "Cowboy Hat",
+            itemImg: "assets/images/cowboyHat.jpg"
+        },
+        {
             story: "The smell of bacon permeates the air. You see a line of people down the street and wonder what they are waiting for. When you look up, you see the sign, 'Pete's Kitchen'. Click the door to go inside.",
 
             scenario: "The smell is the best smell that you have ever encountered. It makees you hungry and satisfied at the same time.",
@@ -367,28 +389,6 @@ $(document).ready(function () {
             itemImg: "assets/images/goldFork.jpg",
 
         },
-        {
-            story: "You find yourself outside of a quaint little country bar. You decide to go inside.",
-
-            scenario: "Once you are inside the bar, you realize that this is not your typical, run of the mill country bar. There are shirtless men EVERYWHERE and many of the women are extremely tall. As you make your way further into the bar you",
-
-            question: "As you make your way further into the bar you realize that this place is really fun. People seem happy to be themselves. Do you: ",
-
-            answerChoices: {
-                negativeChoice: "walk towards the door in an easy, smooth manner. Upon further observation, you are extremely uncomfortable.",
-                nothingChoice: "Stand in the middle of the room and observe the situation.",
-                idealChoice: "Go up to the bar and order a drink from a bar tender who is wearing a rainbow cowboy hat.",
-                positiveChoice: " wink at the attractive person you see at the bar."
-            },
-            consequences: {
-                ideal: "You strike up a conversation with the bartender and comment on the awesome hat he is wearing. He decides to give you the hat.",
-                nothing: "nothing happens. You are no closer to uncovering the truth.",
-                negative: "In your quest to make a hasty exit you trip over your own feet completely shattering your ankle in the process. You lose health.",
-                positive: "Your master winkery causes the person to walk over to you. As they come closer, you see that you have just winked at...RuPaul! You spend the rest of the evening talking candidly and learning the drag queen secrets."
-            },
-            item: "Cowboy Hat",
-            itemImg: "assets/images/cowboyHat.jpg"
-        }
 
     ];
 
@@ -793,4 +793,6 @@ $(document).ready(function () {
 
     // }
     // gameStart();
+
 });
+
