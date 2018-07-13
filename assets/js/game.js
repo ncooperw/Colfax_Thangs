@@ -409,7 +409,7 @@ $(document).keydown(function (e) {
         var sidekicks = ["hobo", "bum", "prostitute", "mangie+dog", "drug+dealer", "angel", "drag+queen", "cute+boy", "cute+girl", "trash", "captain+america", "iron+man", "hulk"]
 
 
-        var limit = 10;
+        var limit = 1;
 
         var input = sidekicks[counter];
 
