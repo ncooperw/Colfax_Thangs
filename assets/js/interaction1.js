@@ -770,4 +770,4 @@ $(document).ready(function () {
 
     // }
     // gameStart();
-});
+

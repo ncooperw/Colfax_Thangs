@@ -4,14 +4,14 @@
 
 //
 var progressTotal = 0;
-var counter = 0;
+var counter = 8;
 var t;
 
 var spawnX;
 var spawnY;
 var car = $("<img class='car' src='assets/images/p1-carRight.png'>");
 car.css({top: 200, left: 0});
-$(".game-container").append(car);
+$("#gameId").append(car);
 var pos;
 var carYAxis;
 var trashSpawnPoints = [
@@ -234,9 +234,9 @@ trashcanStates = {
 // for (j = 0; j < trashSpawnPoints.length; j++) {
     // trash = $("<img class='trash' src='assets/images/p1-trashcan-unopened.png'>")
     function trashCanGenerator() {
-        $(".game-container").empty();
+        $("#gameId").empty();
         car.css({top: carYAxis, left: 0});
-        $(".game-container").append(car);
+        $("#gameId").append(car);
         var trashCan;
         var trashHtml;
         for (xT = 0; xT < trashSpawnPoints[counter].length; xT++) {
@@ -246,7 +246,7 @@ trashcanStates = {
                 // trashHtml.trashCanIndex = xT;
                 trashHtml.attr("data", xT);
                 trashHtml.css({top: trashCan.streetY, left: trashCan.streetX});
-                $(".game-container").append(trashHtml);
+                $("#gameId").append(trashHtml);
         }
         $(".trash").click(function() {
             
@@ -310,12 +310,12 @@ $(document).keydown(function(e) {
             }
         }
         else if (pos.left < 10) {
-            $(".game-container").removeClass("game-container" + counter);
+            $("#gameId").removeClass("game-container" + counter);
             counter--;
             // progress = false;
             // progressTotal = false;
             trashCanGenerator();
-            $(".game-container").addClass("game-container" + counter);
+            $("#gameId").addClass("game-container" + counter);
             car.css({top: carYAxis, left: 800});
             // console.log("progress "+progress);
             console.log("progress total "+progressTotal);
@@ -353,19 +353,21 @@ $(document).keydown(function(e) {
                 car.css("left", "+=50px"); 
             }
         } else if (pos.left > 800) {
-            $(".game-container").removeClass("game-container" + counter);
+            $("#gameId").removeClass("game-container" + counter);
             counter++;
             if (counter > progressTotal) {
                 progressTotal++;
             }
             
             trashCanGenerator();
-            $(".game-container").addClass("game-container" + counter);
+            $("#gameId").addClass("game-container" + counter);
             console.log("progress total "+progressTotal);
+            console.log("counter " + counter);
             car.css({top: carYAxis, left: 0});
            
         } else {
             car.css("left", "+=50px");
+        
         }
     }
 
@@ -381,20 +383,20 @@ $(document).keydown(function(e) {
     }
     //door show and hide
 
-    if (counter % 3 == 0) {
-        console.log("show door");
-        $("#door").show();
-    } else {
-        $("#door").hide();
-        console.log("hide door");
-    }
+    // if (counter % 3 == 0) {
+    //     console.log("show door");
+    //     $("#door").show();
+    // } else {
+    //     $("#door").hide();
+    //     console.log("hide door");
+    // }
 
     //sidekicks come up
     
-    if (counter % 2 == 0) {
-        console.log("sidekick time");
-        gainSidekick();
-    }
+    // if (counter % 2 == 0) {
+    //     console.log("sidekick time");
+    //     gainSidekick();
+    // }
     
 });    
 
