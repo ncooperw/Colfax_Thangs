@@ -21,6 +21,22 @@ $(document).ready(function () {
     // });
     //------------TTS---------------------------
     //--------------------------------------------firebase & boss
+    // $("#game-box").hide();
+    // mystery()
+    // $("#mysteryButt").on("click", function () {
+    //     $("#mysteryButt").remove();
+    //     startPage();
+    // })
+
+    // $(document).on("click", "#play-game", function () {
+    //     $("#game-box").remove();
+    //     $("#auth").show();
+    // })
+  
+    //     $(".mDiv").remove();
+    //     $(".gif-div").remove();
+    //     $("#game-box").show();
+    // })
 
     var config = {
         apiKey: "AIzaSyAW4oe-QFXhUeCMs3WmYzl0EQL_qFqngHE",
@@ -33,10 +49,86 @@ $(document).ready(function () {
     firebase.initializeApp(config);
 
     var database = firebase.database();
+    // var newUserID;
 
-    var ref = database.ref("game")
-    var playerRef = ref.child("player1");
-    var bossRef = ref.child("boss");
+    //------------authenitcation---------------------------
+    // var auth = firebase.auth(); /************************* */
+    // Initialize the FirebaseUI Widget using Firebase.
+    // var ui = new firebaseui.auth.AuthUI(auth); /*********************** */
+
+    // var uiConfig = {
+    //     callbacks: {
+    //         signInSuccessWithAuthResult: function (authResult, redirectUrl) {
+    //             // User successfully signed in.
+    //             // Return type determines whether we continue the redirect automatically
+    //             // or whether we leave that to developer to handle.
+    //             console.log(user)
+    //             return true;
+    //         },
+    //         uiShown: function () {
+    //             // The widget is rendered.
+    //             // Hide the loader.
+
+    //             document.getElementById('loader').style.display = 'none';
+
+    //         }
+    //     },
+    //     // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+    //     signInFlow: 'popup',
+    //     signInSuccessUrl: "index.html",
+    //     //will need git pages url once finied
+    //     signInOptions: [{
+    //         provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    //         provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+    //         provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    //         requireDisplayName: true,
+    //     }
+    //     ],
+    //     tosUrl: 'terms.html'
+    // };
+
+    // ui.start('#firebaseui-auth-container', {
+    //     signInOptions: [
+    //       {
+    //         provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    //         requireDisplayName: true,
+    //       }
+    //     ]
+    //   });
+    // ui.start('#firebaseui-auth-container', uiConfig);
+
+    //lisener for new user    
+    firebase.auth().onAuthStateChanged(function (user) { /**************** */
+        // newUserID = database.ref(user.uid);
+        // var newUserID = firebase.auth().user.uid
+        console.log(user.uid);
+        console.log(newUserID)
+    })
+
+    // firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
+    //     // Handle Errors here.
+    //     var errorCode = error.code;
+    //     console.log(error.Message);
+
+    // });
+    // firebase.auth().onAuthStateChanged(user => {
+    //     if (user) {
+    //         // $("#firebaseui-auth-container").hide();
+    //         window.location = 'index.html'; //After successful login, user will be redirected to home.html
+    //     }
+    // });
+
+    //if !user null---then hide sign in page?
+    //--------------------authentication-----------------------
+    var ref = database.ref("user")
+
+
+    //temporary--------------------
+    var newUser = ref.child("soi4WGAaOEWaOrVltR8E4eZ5Eaf1");
+    //temproary----------------------
+
+    var playerRef = newUser.child("player1");
+    var bossRef = newUser.child("boss");
     var bossAp = 0;
     var bossHp = 0;
     initializeDatabase();
@@ -83,6 +175,7 @@ $(document).ready(function () {
         playerRef.set({
             hp: 400,
             ap: 10,
+            highScore: null,
         })
         bossRef.set({
             hp: 1000,
@@ -183,6 +276,56 @@ $(document).ready(function () {
 
     //--------------------------------------------firebase & boss
 
+    //------------first page--game start------------------
+    // var newSound = document.createElement("audio");
+
+    // function mystery() {
+
+    //     var mysteryDiv = $("<div>");
+    //     mysteryDiv.addClass("mDiv")
+    //     $("#game-box").append(mysteryDiv);
+
+    //     var mystery = $("<button>");
+    //     mystery.addClass("mystery");
+    //     mystery.attr("id", "mysteryButt")
+    //     mystery.text("?");
+    //     $(mysteryDiv).append(mystery);
+    // }
+
+    // function startPage() {
+    //     var buttDiv = $("<div>");
+    //     buttDiv.addClass("pButt");
+
+    //     var playGame = $("<button>");
+    //     playGame.attr("id", "play-game");
+    //     playGame.addClass("btn btn-danger");
+    //     playGame.text("Begin?");
+    //     buttDiv.append(playGame)
+
+    //     var newSound = document.createElement("audio");
+    //     newSound.src = "theme.mp3";
+    //     newSound.play();
+
+    //     var gifDiv = $("<div>");
+    //     gifDiv.addClass("gif-div");
+    //     $("game-box").append(gifDiv);
+
+    //     var openGif = $("<img>");
+    //     openGif.addClass("thangsIntro");
+    //     openGif.attr("src", "Colfax Thangs Open.gif");
+
+    //     $(".gif-div").append(openGif)
+
+    //     setTimeout(function () {
+    //         openGif.attr("src", "colfax_thangs_static.gif");
+    //         $(".gif-div").append(buttDiv);
+    //     }, 1000);
+    // }
+
+
+    //------------first page --game start----------------
+
+
     //-----------------------Interactions-----------------------------------
 
     var interaction = [{
@@ -270,10 +413,12 @@ $(document).ready(function () {
 
 
     //need to hide continue button upon game start
-    $(".continue").hide();
+   
     console.log("continue button should be hidden");
 
     $(".gamePlay").hide();
+    $("#door").hide();
+
 
 
     database.ref().on("value", function (snapshot) {
@@ -290,7 +435,7 @@ $(document).ready(function () {
 
     function storeHighScore() {
         //var playerName = $("#player-name").val().trim();
-        var playerScore = parseInt($("#score").val().trim());
+        playerScore = parseInt($("#score").val().trim());
         //console.log(playerName);
         console.log(playerScore);
         if (playerScore > highScore) {
@@ -302,23 +447,23 @@ $(document).ready(function () {
         }
 
     }
-    storeHighScore();
+    // storeHighScore();
 
     function updateDisplay() {
         //Player Stats display --> create function upon game start
         $("#health").html("Player HP: " + health);
         $("#score").html("Score: " + playerScore);
-
+        if (playerScore <= highScore) {
+            playerScore = highScore;
+        }
         var newDiv = $("<div>");
         newDiv.append(highPlayer);
         $("#highScore").append("High Player: " + newDiv);
         $("#highScore").html("High Score: " + highScore);
         $(".interactions").hide();
         //push to Firebase
-        database.ref().push({
+        ref.update({
             highScore: highScore,
-
-            sidekick: sidekick,
 
         })
     }
@@ -355,12 +500,12 @@ $(document).ready(function () {
     function gainSidekick() {
         var sparkleDiv = $("<div>");
         sparkleDiv.addClass("sparkle");
-        
+
         var sparkleImage = "<img src='assets/images/sparkle.gif'/>";
-        
+
         sparkleDiv.append(sparkleImage);
         sparkleDiv.hide();
-        $("#buttonSpot").append(sparkleDiv);
+        $(".sidekickSparkle").append(sparkleDiv);
         $(".sparkle").on("click", function () {
 
             $(".sparkle").hide();
@@ -421,12 +566,25 @@ $(document).ready(function () {
         //changes the background 
         $(".game-container").addClass("interactions" + iCounter);
 
+        var choices = $("<div>");
+        choices.addClass("interactions" + iCounter);
+        choices.attr("id", "int");
+
+        $("#game").append(choices)
+
         //Scenario and choices come up
 
         beginInteraction();
     });
 
     function beginInteraction() {
+
+        //removing game screen
+        $("#gameId").removeClass("game-container");
+        //$("#gameId").addClass("")
+
+
+        //showing the text with the story and the user choices
         $(".interactions").show();
         $(".scenario").html("<h2>Scenario: " + interaction[iCounter].scenario + "</h2>");
         $(".question").html("<h3>" + interaction[iCounter].question + "</h3>");
@@ -539,52 +697,40 @@ $(document).ready(function () {
         }
     }
 
-    function continueButton() {
 
-        // playContinue = true;
-
-        //if (playContinue === true) {
-        //console.log("play Coninue = " + playContinue);
-        var next = $("<button>");
-        next.text("Continue");
-        next.addClass("btn btn-success continue");
-
-        $("#buttonSpot").append(next);
-        //}
-    }
-    // continueButton();
 
     $(".continue").on("click", function () {
-            console.log("continue was clicked");
+        console.log("continue was clicked");
 
-            // playContinue = false;
-            $(".game-container").removeClass("interactions" + iCounter);
+        // playContinue = false;
+        $(".game-container").removeClass("interactions" + iCounter);
 
-            //.addClass("game-container" + counter);
+        //.addClass("game-container" + counter);
 
-            console.log("gamejs " + counter);
+        console.log("gamejs " + counter);
 
-            iCounter++;
+        iCounter++;
 
-            console.log("interaction # " + iCounter);
+        console.log("interaction # " + iCounter);
 
-            $("#door").show();
+        $("#door").show();
 
-            //hides the game play panel
-            $(".gamePlay").hide();
+        //hides the game play panel
+        $(".gamePlay").hide();
 
-            $(".continue").hide();
-
-
-        }),
+        $(".continue").hide();
 
 
-
+    });
+});
 
 
 
 
-        //firebase data for the start of a new game--does not include high score--only data we want to be kept consistnet from one game to another (not high scores and the like)
+
+
+
+//firebase data for the start of a new game--does not include high score--only data we want to be kept consistnet from one game to another (not high scores and the like)
 
         function initializeDatabase() {
             playerRef.set({
@@ -596,4 +742,32 @@ $(document).ready(function () {
                 ap: 25,
             })
         }
+
+    // function gameStart() {
+    //     //hot spot for sparkle based on game-container #
+    //     //hot spot for door based on game-container #
+    //     console.log("counter = " + counter);
+    //     if (counter === 1) {
+    //         console.log("show door");
+    //         $("#door").show();
+    //     } else {
+    //         $("#door").hide();
+    //         console.log("hide door");
+    //     }
+    //     //door will be made transparent once it is overlayed in the appropriate spot
+
+
+
+    //     //continue button gets made 
+
+    //     var next = $("<button>");
+    //     next.text("Continue");
+    //     next.addClass("btn btn-success continue");
+
+    //     $("#buttonSpot").append(next);
+
+    //     $(".continue").hide();
+
+    // }
+    // gameStart();
 });

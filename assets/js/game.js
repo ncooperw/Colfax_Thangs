@@ -295,11 +295,10 @@ trashcanStates = {
 
 $(document).keydown(function(e) {
     // car = $("<img id='car' src=assets/images/p1-carRight.png>");
-    // progressTotal = counter;
-    pos = car.position();
-    carYAxis = parseInt(pos.top)-1;
-    console.log(pos);
-    console.log(counter);
+    var pos = car.position();
+    var carYAxis = parseInt(pos.top)-1;
+    //console.log(pos);
+    //console.log(counter);
     //drive left
     if (e.keyCode == 37 || e.keyCode == 65) {
         $(car).attr("src", "assets/images/p1-carLeft.png").removeClass("carUpDown");
@@ -380,6 +379,74 @@ $(document).keydown(function(e) {
                 car.css("top", "+=20px"); 
             }
     }
+    //door show and hide
+
+    if (counter % 3 == 0) {
+        console.log("show door");
+        $("#door").show();
+    } else {
+        $("#door").hide();
+        console.log("hide door");
+    }
+
+    //sidekicks come up
+    
+    if (counter % 2 == 0) {
+        console.log("sidekick time");
+        gainSidekick();
+    }
     
 });    
+
+function gainSidekick() {
+    var sparkleDiv = $("<div>");
+    sparkleDiv.addClass("sparkle");
+
+    var sparkleImage = "<img src='assets/images/sparkle.gif'/>";
+
+    sparkleDiv.append(sparkleImage);
+    sparkleDiv.hide();
+    $("#buttonSpot").append(sparkleDiv);
+    $(".sparkle").on("click", function () {
+
+        $(".sparkle").hide();
+
+        var sidekicks = ["bum", "prostitute", "mangie+dog", "drug dealer"]
+
+
+        var limit = 1;
+
+        var input = sidekicks[iCounter];
+
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + input + "&limit=" + limit + "&api_key=dc6zaTOxFJmzC";
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).done(function (response) {
+
+            for (var j = 0; j < limit; j++) {
+                console.log(response);
+
+                var displayDiv = $("<div>");
+                displayDiv.addClass("item");
+
+                var image = $("<img>");
+
+                image.attr("src", response.data[j].images.original_still.url);
+                image.attr("data-still", response.data[j].images.original_still.url);
+                image.attr("data-animate", response.data[j].images.original.url);
+                image.attr("data-state", "still");
+                image.attr("class", "gif img-thumbnail");
+                displayDiv.append(image);
+
+
+
+                $(".sidekick").append(displayDiv);
+
+
+            }
+        })
+    })
+}
+
 
