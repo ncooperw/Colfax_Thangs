@@ -244,4 +244,38 @@ body {
    border-color: rgb(158, 16, 6);
 }
 
+.boss-container {
+    width: 900px;
+    height: 500px;
+    background-color: black;
+    border: solid red 2px;
+}
+
+.card {
+    height: 320px;
+    color: black;
+    border: red solid 4px;
+    background: lightslategray;
+    margin: 20px;
+    padding: 3px;
+    position: relative;
+    top: 150px;
+}
+
+.btn-primary {
+    background-color: red;
+    color: black;
+    border-color: black;
+}
+
+#invent {
+    clear: both;
+
+}
+
+.img-thumbnail {
+    width: 50px;
+    height: 50px;
+}
+
 /* megan's styling */

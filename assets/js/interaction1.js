@@ -1,43 +1,6 @@
-//add classes for background by interaction and a interaction counter iCounter
-//for each interaction, add and remove classes for the appropriate interactions
-
-//css will overlay the game-container class by using interaction+icounter
-
-//with continue click remove class (interaction +iCounter) iCounter ++, add class (game-container + counter)
-//create a function for the (x,y) of the ogden theater. Text pops up on the screen.
-//A band is playing and the music is intoxicating. The sprite goes inside.
-
-//The sprite comes to the Ogden theater
-
 
 
 $(document).ready(function () {
-    // responsiveVoice.speak("Hello World");   
-    //create a function for the (x,y) of the ogden theater. Text pops up on the screen.
-    //A band is playing and the music is intoxicating. The sprite goes inside.
-    //---------TTS--------------------------------
-    //Text to speech --does not use an ajax request---may just be new technoology?
-    // $(document).on("click", function () {
-    //     responsiveVoice.speak("Hello World");
-    // });
-    //------------TTS---------------------------
-    //--------------------------------------------firebase & boss
-    // $("#game-box").hide();
-    // mystery()
-    // $("#mysteryButt").on("click", function () {
-    //     $("#mysteryButt").remove();
-    //     startPage();
-    // })
-
-    // $(document).on("click", "#play-game", function () {
-    //     $("#game-box").remove();
-    //     $("#auth").show();
-    // })
-  
-    //     $(".mDiv").remove();
-    //     $(".gif-div").remove();
-    //     $("#game-box").show();
-    // })
 
     var config = {
         apiKey: "AIzaSyAW4oe-QFXhUeCMs3WmYzl0EQL_qFqngHE",
@@ -50,86 +13,31 @@ $(document).ready(function () {
     firebase.initializeApp(config);
 
     var database = firebase.database();
-    // var newUserID;
-
-    //------------authenitcation---------------------------
-    // var auth = firebase.auth(); /************************* */
-    // Initialize the FirebaseUI Widget using Firebase.
-    // var ui = new firebaseui.auth.AuthUI(auth); /*********************** */
-
-    // var uiConfig = {
-    //     callbacks: {
-    //         signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-    //             // User successfully signed in.
-    //             // Return type determines whether we continue the redirect automatically
-    //             // or whether we leave that to developer to handle.
-    //             console.log(user)
-    //             return true;
-    //         },
-    //         uiShown: function () {
-    //             // The widget is rendered.
-    //             // Hide the loader.
-
-    //             document.getElementById('loader').style.display = 'none';
-
-    //         }
-    //     },
-    //     // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
-    //     signInFlow: 'popup',
-    //     signInSuccessUrl: "index.html",
-    //     //will need git pages url once finied
-    //     signInOptions: [{
-    //         provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    //         provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-    //         provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    //         requireDisplayName: true,
-    //     }
-    //     ],
-    //     tosUrl: 'terms.html'
-    // };
-
-    // ui.start('#firebaseui-auth-container', {
-    //     signInOptions: [
-    //       {
-    //         provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    //         requireDisplayName: true,
-    //       }
-    //     ]
-    //   });
-    // ui.start('#firebaseui-auth-container', uiConfig);
-
+  
+    var newUserID;
+    var ref = database.ref("user")
+    var newUser;
     //lisener for new user    
     firebase.auth().onAuthStateChanged(function (user) { /**************** */
-        // newUserID = database.ref(user.uid);
-        // var newUserID = firebase.auth().user.uid
+      
+     newUserID = user.uid;
         console.log(user.uid);
         console.log(newUserID)
+        // newUser = ref.child(newUserID)
     })
 
-    // firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
-    //     // Handle Errors here.
-    //     var errorCode = error.code;
-    //     console.log(error.Message);
+   
 
-    // });
-    // firebase.auth().onAuthStateChanged(user => {
-    //     if (user) {
-    //         // $("#firebaseui-auth-container").hide();
-    //         window.location = 'index.html'; //After successful login, user will be redirected to home.html
-    //     }
-    // });
-
-    //if !user null---then hide sign in page?
-    //--------------------authentication-----------------------
-    var ref = database.ref("user")
 
 
     //temporary--------------------
-    var newUser = ref.child("soi4WGAaOEWaOrVltR8E4eZ5Eaf1");
+   
     //temproary----------------------
 
-    var playerRef = newUser.child("player1");
-    var bossRef = newUser.child("boss");
+    var playerRef = ref.child("player1");
+    var bossRef = ref.child("boss");
+    var userRef = ref.child(newUserID)
+    console.log(userRef);
     var bossAp = 0;
     var bossHp = 0;
     initializeDatabase();
@@ -221,7 +129,7 @@ $(document).ready(function () {
         p1AP.text("AP: " + playerAp);
         p1card.append(p1HP).append(p1AP);
 
-        var attack = $("button");
+        var attack = $("<button>");
         attack.addClass("btn btn-primary attack");
         attack.text("Attack!");
         p1card.append(attack);
@@ -732,18 +640,6 @@ $(document).ready(function () {
 
 
 //firebase data for the start of a new game--does not include high score--only data we want to be kept consistnet from one game to another (not high scores and the like)
-
-        function initializeDatabase() {
-            playerRef.set({
-                hp: 400,
-                ap: 10,
-            })
-            bossRef.set({
-                hp: 1000,
-                ap: 25,
-            })
-        }
-    ;
     // function gameStart() {
     //     //hot spot for sparkle based on game-container #
     //     //hot spot for door based on game-container #

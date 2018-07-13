@@ -114,7 +114,7 @@ $(document).ready(function () {
         setTimeout(function () {
             openGif.attr("src", "colfax_thangs_static.gif");
             $("#gif-div").append(buttDiv);
-        }, 14000);
+        }, 13000);
     }
     console.log(user)
 });

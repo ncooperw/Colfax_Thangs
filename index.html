@@ -27,9 +27,7 @@
 
     <container id="game">
         <div id="playerStats" class="container">
-            <h1>Colfax Thangs</h1>
-            <div id="firebaseui-auth-container"></div>
-            <div id="loader">Loading...</div>
+
             <div class="row">
                 <div class="col-sm-4">
                     <div class="text-center" id="health"></div>
@@ -61,16 +59,7 @@
         <!-- tester button for firebase -->
         <!-- <button class"btn" id="special">Click me</button> -->
         <div class="container userStuff">
-            <div class="row">
-                <div class="col-md-6">
-                    <h6 class="text-center">Inventory</h6>
-                    <div class="inventory"></div>
-                </div>
-                <div class="col-md-6">
-                    <h6 class="text-center">Sidekicks</h6>
-                    <div class="sidekick"></div>
-                </div>
-            </div>
+
             <div class="container interactions">
                 <div id="scenarioRow" class="row">
                     <div class="col-sm-12">
@@ -89,6 +78,17 @@
 
 
             </div>
+        </div>
+        <div class="row" id="invent">
+            <div class="col-md-6">
+                <h6 class="text-center">Inventory</h6>
+                <div class="inventory"></div>
+            </div>
+            <div class="col-md-6">
+                <h6 class="text-center">Sidekicks</h6>
+                <div class="sidekick"></div>
+            </div>
+        </div>
     </container>
     <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
