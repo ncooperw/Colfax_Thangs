@@ -26,6 +26,7 @@
     <!-- users stats -->
 
     <container id="game">
+
         <div id="playerStats" class="container">
 
             <div class="row">
@@ -44,13 +45,13 @@
         <div id="gameId" class="container game-container">
 
             <!--add game mode here-->
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-lg-4"></div>
                 <div class="col-lg-4">
                     <div class="rectangle" id="door"></div>
                 </div>
                 <div class="col-lg-4"></div>
-            </div>
+            </div> -->
             <div class="gamePlay col-sm-9"></div>
             <div id="buttonSpot" class="col-sm-3"></div>
 
@@ -58,14 +59,26 @@
         </div>
         <!-- tester button for firebase -->
         <!-- <button class"btn" id="special">Click me</button> -->
-        <div class="container userStuff">
 
-            <div class="container interactions">
+        <div class="row">
+            <div class="container userStuff">
+
+
+                <div class="row" id="invent">
+                    <div class="col-md-6">
+                        <h6 class="text-center">Inventory</h6>
+                        <div class="inventory"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-center">Sidekicks</h6>
+                        <div class="sidekick"></div>
+                    </div>
+                </div>
+                <div class="container interactions">
                 <div id="scenarioRow" class="row">
                     <div class="col-sm-12">
                         <div class="scenario"></div>
                     </div>
-
                 </div>
                 <div class="row">
                     <div id="userInteraction" class="col-sm-12 col-md-6">
@@ -75,19 +88,11 @@
                         <div class="userChoices"></div>
                     </div>
                 </div>
-
-
+                </div>
             </div>
+
+
         </div>
-        <div class="row" id="invent">
-            <div class="col-md-6">
-                <h6 class="text-center">Inventory</h6>
-                <div class="inventory"></div>
-            </div>
-            <div class="col-md-6">
-                <h6 class="text-center">Sidekicks</h6>
-                <div class="sidekick"></div>
-            </div>
         </div>
     </container>
     <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>

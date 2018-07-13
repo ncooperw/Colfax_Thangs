@@ -16,23 +16,19 @@ $(document).ready(function () {
   
     var newUserID;
     var ref = database.ref("user")
+   
     var newUser;
-    //lisener for new user    
+  
+    
+    
     firebase.auth().onAuthStateChanged(function (user) { /**************** */
       
     //  newUserID = user.uid;
-        // console.log(user.uid);
-        // console.log(newUserID)
+    //  console.log(user.uid);
+    //  console.log(newUserID)
         // newUser = ref.child(newUserID)
     })
 
-   
-
-
-
-    //temporary--------------------
-   
-    //temproary----------------------
 
     var playerRef = ref.child("player1");
     var bossRef = ref.child("boss");
@@ -326,7 +322,7 @@ $(document).ready(function () {
     console.log("continue button should be hidden");
 
     $(".gamePlay").hide();
-    $("#door").hide();
+    
 
     //continue button gets made 
 
@@ -479,7 +475,7 @@ $(document).ready(function () {
         console.log("gamePlay hidden");
 
         //changes the background 
-        $(".game-container").addClass("interactions" + iCounter);
+        $("#gameId").addClass("interactions" + iCounter);
 
         var choices = $("<div>");
         choices.addClass("interactions" + iCounter);
@@ -492,10 +488,17 @@ $(document).ready(function () {
         beginInteraction();
     });
 
+    // doorExplore();
+
+   
+
+
     function beginInteraction() {
 
         //removing game screen
         $("#gameId").removeClass("game-container");
+        $(".car").hide();
+        $(".userStuff").show();
         //$("#gameId").addClass("")
 
 
@@ -642,6 +645,8 @@ $(document).ready(function () {
         $("#gameId").addClass("game-container");
         $(".game-container").removeClass("interactions" + iCounter);
         $(".userStuff").hide();
+        $(".car").show()
+      
 
         //.addClass("game-container" + counter);
 
@@ -661,6 +666,8 @@ $(document).ready(function () {
 
     });
 
+ 
+
 
 
 
@@ -670,15 +677,5 @@ $(document).ready(function () {
 
     //firebase data for the start of a new game--does not include high score--only data we want to be kept consistnet from one game to another (not high scores and the like)
 
-    function initializeDatabase() {
-        playerRef.set({
-            hp: 400,
-            ap: 10,
-        })
-        bossRef.set({
-            hp: 1000,
-            ap: 25,
-        })
-    }
 
 });
