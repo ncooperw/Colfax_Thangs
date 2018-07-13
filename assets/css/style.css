@@ -209,13 +209,17 @@ rectangle:hover {
     border-radius: 8px;
 }
 
-/*Styling the gamePlay payne*/
+/*Styling the gamePlay panel*/
 
 .gamePlay {
     background: black;
     color: white;
 }
 
+.userStuff {
+    top: 647px;
+    position: absolute;
+}
 /*Styling sidekick function */
 
 .sidekickChoice {
