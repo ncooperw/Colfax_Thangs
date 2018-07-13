@@ -783,4 +783,6 @@ $(document).ready(function () {
 
     // }
     // gameStart();
+
 });
+
