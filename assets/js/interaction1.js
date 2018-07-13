@@ -7,7 +7,7 @@
 
 
 $(document).ready(function () {
-     
+
     //---------TTS--------------------------------
     //Text to speech --does not use an ajax request---may just be new technoology?
     // $(document).on("click", function () {
@@ -665,11 +665,11 @@ $(document).ready(function () {
             $(".gamePlay").append(": " + positive);
             health += 25;
             playerScore += 50;
-            
+
             database.ref().push({
                 playerScore: playerScore
             })
-            
+
             highScore();
 
             console.log(highScore);
@@ -682,7 +682,7 @@ $(document).ready(function () {
                 $(".sidekick").append(imgDiv);
                 sidekick.push("RuPaul");
 
-                database.ref().push ({
+                database.ref().push({
                     sidekick: sidekick
                 });
             }
@@ -766,33 +766,4 @@ $(document).ready(function () {
         })
     }
 
-    // function gameStart() {
-    //     //hot spot for sparkle based on game-container #
-    //     //hot spot for door based on game-container #
-    //     console.log("counter = " + counter);
-    //     if (counter === 1) {
-    //         console.log("show door");
-    //         $("#door").show();
-    //     } else {
-    //         $("#door").hide();
-    //         console.log("hide door");
-    //     }
-    //     //door will be made transparent once it is overlayed in the appropriate spot
-
-
-
-    //     //continue button gets made 
-
-    //     var next = $("<button>");
-    //     next.text("Continue");
-    //     next.addClass("btn btn-success continue");
-
-    //     $("#buttonSpot").append(next);
-
-    //     $(".continue").hide();
-
-    // }
-    // gameStart();
-
 });
-
