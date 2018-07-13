@@ -4,11 +4,12 @@
 
 //
 var progressTotal = 0;
-var counter = 8;
+var counter = 0;
 var t;
 
 var spawnX;
 var spawnY;
+var door = $("<img id='door' src='assets/images/p1-door.png'>");
 var car = $("<img class='car' src='assets/images/p1-carRight.png'>");
 car.css({top: 200, left: 0});
 $("#gameId").append(car);
@@ -230,6 +231,22 @@ trashcanStates = {
     "open" :  "<img class='trashOpened' src='assets/images/p1-trashcan-opened.png'>",
     "closed" :  "<img class='trash' src='assets/images/p1-trashcan-unopened.png'>"
 };
+// doorGenerator();
+function doorGenerator() {
+    console.log(counter);
+    if(counter === 2) {
+        door.css({top:100,left:400});
+        $("#gameId").append(door);
+    } else if(counter === 5) {
+        door.css({top:57,left:400});
+        $("#gameId").append(door);
+    } else if(counter === 8) {
+        door.css({top:115,left:380});
+        $("#gameId").append(door);
+    }
+    // door.css({top:100,left:100});
+    // $("#gameId").append(door);
+}
 
 // for (j = 0; j < trashSpawnPoints.length; j++) {
     // trash = $("<img class='trash' src='assets/images/p1-trashcan-unopened.png'>")
@@ -291,7 +308,7 @@ trashcanStates = {
 //     trash.css({top: 100, left: 400});
 //     $(".game-container").append(trash); 
 // }
-
+// doorGenerator();
 
 $(document).keydown(function(e) {
     // car = $("<img id='car' src=assets/images/p1-carRight.png>");
@@ -312,9 +329,9 @@ $(document).keydown(function(e) {
         else if (pos.left < 10) {
             $("#gameId").removeClass("game-container" + counter);
             counter--;
-            // progress = false;
-            // progressTotal = false;
+            
             trashCanGenerator();
+            doorGenerator();
             $("#gameId").addClass("game-container" + counter);
             car.css({top: carYAxis, left: 800});
             // console.log("progress "+progress);
@@ -331,8 +348,16 @@ $(document).keydown(function(e) {
     //drive up
     else if (e.keyCode == 38 || e.keyCode == 87) {
         $(car).attr("src", "assets/images/p1-carUp.png").addClass("carUpDown");
-        if (counter === 10 && pos.left > 615){
+        if (counter === 10 && pos.left > 615) {
             car.css("top", "-=20px");
+            if(pos.top < 20){
+                $("#gameId").empty();
+                $("#gameId").removeClass("game-container" + counter);
+                counter++;
+                $("#gameId").addClass("game-container" + counter);
+
+            }
+            console.log(car.position());
         } 
         else if (pos.top < 200){
         car.css("top", "-=0px"); 
@@ -355,19 +380,22 @@ $(document).keydown(function(e) {
         } else if (pos.left > 800) {
             $("#gameId").removeClass("game-container" + counter);
             counter++;
+            $("#gameId").addClass("game-container" + counter);
             if (counter > progressTotal) {
                 progressTotal++;
             }
             
             trashCanGenerator();
-            $("#gameId").addClass("game-container" + counter);
+            doorGenerator();
             console.log("progress total "+progressTotal);
             console.log("counter " + counter);
             car.css({top: carYAxis, left: 0});
-           
+            
         } else {
             car.css("left", "+=50px");
+          
         
+            
         }
     }
 

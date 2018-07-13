@@ -563,13 +563,14 @@ $(document).ready(function () {
 
 
     //create a function upon click of the door
-    $("#door").on('click', function doorExplore() {
+    $("#gameId").on('click', "#door", function doorExplore() {
+        $("#gameId").empty();
         console.log("clicked");
         //clear the screen
-        $("#door").hide();
+        // $("#door").hide();
 
         //hides the game play panel
-        $(".gamePlay").hide();
+        // $(".gamePlay").hide();
         console.log("gamePlay hidden");
 
         //changes the background 
@@ -710,12 +711,12 @@ $(document).ready(function () {
 
 
 
-    $(".continue").on("click", function () {
+    $("#gameId").on("click", ".continue", function () {
         console.log("continue was clicked");
 
         // playContinue = false;
         $("#gameId").addClass("game-container");
-        $(".game-container").removeClass("interactions" + iCounter);
+        $("#gameId").removeClass("interactions" + iCounter);
         $(".userStuff").hide();
 
         //.addClass("game-container" + counter);
