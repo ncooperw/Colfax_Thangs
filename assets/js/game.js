@@ -4,7 +4,7 @@
 
 //
 var progressTotal = 0;
-var counter = 8;
+var counter = 0;
 var t;
 
 var spawnX;
@@ -383,20 +383,19 @@ $(document).keydown(function(e) {
     }
     //door show and hide
 
-    // if (counter % 3 == 0) {
-    //     console.log("show door");
-    //     $("#door").show();
-    // } else {
-    //     $("#door").hide();
-    //     console.log("hide door");
-    // }
+    if (counter % 3 == 0) {
+        console.log("show door");
+        $("#door").show();
+    } else {
+        $("#door").hide();
+        console.log("hide door");
+    }
 
     //sidekicks come up
-    
-    // if (counter % 2 == 0) {
-    //     console.log("sidekick time");
-    //     gainSidekick();
-    // }
+    if (counter % 2 == 0) {
+        console.log("sidekick time");
+        gainSidekick();
+    }
     
 });    
 
