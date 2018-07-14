@@ -102,19 +102,19 @@ $(document).ready(function () {
         buttDiv.append(playGame)
 
         var newSound = document.createElement("audio");
-        newSound.src = "theme.mp3";
+        newSound.src = "assets/sounds/theme.mp3";
         newSound.play();
 
         var openGif = $("<img>");
         openGif.addClass("thangsIntro");
-        openGif.attr("src", "Colfax Thangs Open.gif");
+        openGif.attr("src", "assets/images/Colfax Thangs Open.gif");
 
         $("#gif-div").append(openGif)
 
         setTimeout(function () {
-            openGif.attr("src", "colfax_thangs_static.gif");
+            openGif.attr("src", "assets/images/colfax_thangs_static.gif");
             $("#gif-div").append(buttDiv);
-        }, 14000);
+        }, 13000);
     }
-    console.log(user)
+    // console.log(user)
 });
