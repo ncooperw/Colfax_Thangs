@@ -3,8 +3,9 @@
 //sidekicks/doors/items needs a minimum pos distance req to hover over and interact with.
 
 //
+
 var progressTotal = 0;
-var counter = 0;
+var counter = 9;
 var t;
 var insideMode = false;
 var spawnX;
@@ -334,8 +335,9 @@ var distanceCheck;
 //     $(".game-container").append(trash); 
 // }
 // doorGenerator();
-var carLastPos;
+// var carLastPos;
 $(document).keydown(function (e) {
+   
     // car = $("<img id='car' src=assets/images/p1-carRight.png>");
     if(insideMode == false){
     var pos = car.position();
@@ -345,14 +347,54 @@ $(document).keydown(function (e) {
     //console.log(counter);
     //drive left
     if (e.keyCode == 37 || e.keyCode == 65) {
-        $(car).attr("src", "assets/images/p1-carLeft.png").removeClass("carUpDown");
+        // $(car).attr("src", "assets/images/p1-carLeft.png").removeClass("carUpDown");
+        // $(car).attr("data","west");
         if (counter === 10 && pos.top < 180) {
+
+
+
+
+
+            //  if ($(car).attr("data") === "north"){
+            //     $(car).attr("src","assets/images/p1-car-turning-NW.png").removeClass("carUpDown").addClass("carTurning");
+            //     if (pos.top < 210){
+            //         car.animate({
+            //             top: "-=0px"
+            //         }, 100); 
+            //     } else {
+            //        car.animate({
+            //         top: "-=20px"
+            //     }, 100); 
+            //     }
+            //     $(car).removeAttr("data", "north").attr("data", "west");
+            // } else if ($(car).attr("data") === "south"){
+            //     $(car).attr("src","assets/images/p1-car-turning-WS.png").removeClass("carUpDown").addClass("carTurning");
+            //     if (pos.top > 360){
+            //         car.animate({
+            //             top: "+=0px"
+            //         }, 100); 
+            //     } else {
+            //        car.animate({
+            //         top: "+=20px"
+            //     }, 100); 
+            //     }
+            //     $(car).removeAttr("data", "south").attr("data", "west");
+            // } else {
+            //     $(car).attr("src", "assets/images/p1-carLeft.png");
+            //     $(car).attr("data","west").removeClass("carTurning");
+            //     car.css("left", "-=50px");
+            // }
+        
+    
+            
+            
             if (pos.left < 715) {
                 car.css("left", "-=0px");
             } else {
                 car.css("left", "-=20px");
             }
-        } else if (pos.left < 20) {
+        }
+         if (pos.left < 20) {
             if (counter !==0) {
             $("#gameId").removeClass("game-container" + counter);
             counter--;
@@ -363,28 +405,73 @@ $(document).keydown(function (e) {
                 top: carYAxis,
                 left: 800
             });
-            // if (counter === 0) {
-            //     $(".trash").hide();
-            // }
-            // console.log("progress "+progress);
+           
             console.log("progress total " + progressTotal);
             } else {
-                
                 car.css("left", "-=0px");
+                
             }
+        } 
+        if ($(car).attr("data") === "north"){
+            $(car).attr("src","assets/images/p1-car-turning-NW.png").removeClass("carUpDown").addClass("carTurning");
+            if (pos.top < 210){
+                car.animate({
+                    top: "-=0px"
+                }, 100); 
+            } else {
+               car.animate({
+                top: "-=20px"
+            }, 100); 
+            }
+            $(car).removeAttr("data", "north").attr("data", "west");
+        } else if ($(car).attr("data") === "south"){
+            $(car).attr("src","assets/images/p1-car-turning-WS.png").removeClass("carUpDown").addClass("carTurning");
+            if (pos.top > 360){
+                car.animate({
+                    top: "+=0px"
+                }, 100); 
+            } else {
+               car.animate({
+                top: "+=20px"
+            }, 100); 
+            }
+            $(car).removeAttr("data", "south").attr("data", "west");
         } else {
-            // $(car).attr("src", "assets/images/p1-carLeft.png");
+            $(car).attr("src", "assets/images/p1-carLeft.png");
+            $(car).attr("data","west").removeClass("carTurning");
             car.css("left", "-=50px");
-        }
-
-        // car.css("left", "-=20px");  
+        } 
     }
 
     //drive up
     else if (e.keyCode == 38 || e.keyCode == 87) {
-        $(car).attr("src", "assets/images/p1-carUp.png").addClass("carUpDown");
+        $(car).attr("src", "assets/images/p1-carUp.png").removeClass("carTurning");
+
         if (counter === 10 && pos.left > 675) {
-            car.css("top", "-=20px");
+            // car.css("top", "-=20px");
+
+
+
+            // if ($(car).attr("data") === "east"){
+            //     $(car).attr("src","assets/images/p1-car-turning-NE.png").addClass("carTurning");
+            //     car.animate({
+            //         left: "+=20px"
+            //     }, 100);
+            //     $(car).removeAttr("data", "east").attr("data", "north");
+
+            // } else if ($(car).attr("data") === "west"){
+            //     $(car).attr("src","assets/images/p1-car-turning-NW.png").addClass("carTurning");
+            //     car.animate({
+            //         left: "-=20px"
+            //     }, 100);
+            //     $(car).removeAttr("data", "west").attr("data", "north");
+                
+            // } else {
+            //     $(car).attr("data", "north").attr("src", "assets/images/p1-carUp.png").addClass("carUpDown").removeClass("carTurning");
+            //     car.css("top", "-=20px");  
+            // }
+
+
             if(pos.top < 20){
                 insideMode = true;
                 $("#gameId").empty();
@@ -395,19 +482,69 @@ $(document).keydown(function (e) {
             }
             console.log(car.position());
         } 
-        else if (pos.top < 200){
-        car.css("top", "-=0px"); 
-        } else {
-            // $(car).attr("src", "assets/images/p1-carUp.png");
+        if (pos.top < 210){
+            $(car).attr("data","north").attr("src", "assets/images/p1-carUp.png").addClass("carUpDown").removeClass("carTurning"); 
+            car.css("top", "-=0px"); 
+            
+
+        } else if ($(car).attr("data") === "east"){
+            $(car).attr("src","assets/images/p1-car-turning-NE.png").addClass("carTurning");
+            car.animate({
+                left: "+=20px"
+            }, 100);
+            $(car).removeAttr("data", "east").attr("data", "north");
+
+        } else if ($(car).attr("data") === "west"){
+            $(car).attr("src","assets/images/p1-car-turning-NW.png").addClass("carTurning");
+            car.animate({
+                left: "-=20px"
+            }, 100);
+            $(car).removeAttr("data", "west").attr("data", "north");
+            
+        } else { 
+            $(car).attr("data", "north").attr("src", "assets/images/p1-carUp.png").addClass("carUpDown").removeClass("carTurning");
             car.css("top", "-=20px");
-            // console.log(carYAxis);
         }
     }
 
     //drive right
     else if (e.keyCode == 39 || e.keyCode == 68) {
-        $(car).attr("src", "assets/images/p1-carRight.png").removeClass("carUpDown");
+        
+
+
+
+
+
         if (counter === 10) {
+
+
+            //  if ($(car).attr("data") === "north"){
+            //     $(car).attr("src","assets/images/p1-car-turning-NE.png").addClass("carTurning").removeClass("carUpDown");
+            //     if (pos.top < 210){
+            //         car.animate({
+            //             top: "-=0px"
+            //         }, 100); 
+            //     } else {
+            //        car.animate({
+            //         top: "-=20px"
+            //     }, 100); 
+            //     }
+            //     $(car).removeAttr("data", "north").attr("data", "east");
+            // } else if ($(car).attr("data") === "south"){
+            //     $(car).attr("src","assets/images/p1-car-turning-ES.png").removeClass("carUpDown").addClass("carTurning");
+            //     if (pos.top > 360){
+            //         car.animate({
+            //             top: "+=0px"
+            //         }, 100); 
+            //     } else {
+            //        car.animate({
+            //         top: "+=20px"
+            //     }, 100); 
+            //     }
+            //     $(car).removeAttr("data", "south").attr("data", "east");
+            // } 
+
+
             if (pos.left > 775) {
                 car.css("left", "-=0px");
                 responsiveVoice.speak("Look up there, go north");
@@ -421,28 +558,61 @@ $(document).keydown(function (e) {
             if (counter > progressTotal) {
                 progressTotal++;
             }
-
             trashCanGenerator();
             doorGenerator();
             console.log("progress total "+progressTotal);
             console.log("counter " + counter);
             car.css({top: carYAxis, left: 0});
-            
+        } else if ($(car).attr("data") === "north"){
+            $(car).attr("src","assets/images/p1-car-turning-NE.png").addClass("carTurning").removeClass("carUpDown");
+            if (pos.top < 210){
+                car.animate({
+                    top: "-=0px"
+                }, 100); 
+            } else {
+               car.animate({
+                top: "-=20px"
+            }, 100); 
+            }
+            $(car).removeAttr("data", "north").attr("data", "east");
+        } else if ($(car).attr("data") === "south"){
+            $(car).attr("src","assets/images/p1-car-turning-ES.png").removeClass("carUpDown").addClass("carTurning");
+            if (pos.top > 360){
+                car.animate({
+                    top: "+=0px"
+                }, 100); 
+            } else {
+               car.animate({
+                top: "+=20px"
+            }, 100); 
+            }
+            $(car).removeAttr("data", "south").attr("data", "east");    
         } else {
-            car.css("left", "+=50px");
-          
-        
-            
+            $(car).attr("src", "assets/images/p1-carRight.png").removeClass("carTurning carUpDown").attr("data","east");
+            car.css("left", "+=50px");   
         }
     }
 
     //drive down
     else if (e.keyCode == 40 || e.keyCode == 83) {
-        $(car).attr("src", "assets/images/p1-carDown.png").addClass("carUpDown");
+        $(car).attr("src", "assets/images/p1-carDown.png").removeClass("carTurning");
         if (pos.top > 360) {
+            $(car).attr("data","south").attr("src", "assets/images/p1-carDown.png").addClass("carUpDown");
             car.css("top", "+=0px");
+        } else if ($(car).attr("data") === "east") {
+            $(car).removeAttr("data", "east").attr("data", "south");
+            car.animate({
+                left: "+=20px"
+            }, 100);
+            $(car).attr("src","assets/images/p1-car-turning-ES.png").addClass("carTurning");
+        } else if ($(car).attr("data") === "west") {
+            $(car).removeAttr("data", "west").attr("data", "south");
+            car.animate({
+                left: "-=20px"
+            }, 100);
+            $(car).attr("src","assets/images/p1-car-turning-WS.png").addClass("carTurning");
         } else {
-
+            $(car).attr("data", "south").attr("src", "assets/images/p1-carDown.png").addClass("carUpDown").removeClass("carTurning");
             car.css("top", "+=20px");
         }
     }
@@ -450,55 +620,22 @@ $(document).keydown(function (e) {
 })
 
 
+var kittens = ["Devin","Jen","Jared","Dylan","Charlie","Bryan","Colin"];
 
     function gainSidekick() {
-        // var sidekickDiv = $("<div>");
-        // //sparkleDiv.addClass("sparkle");
-
-        // var sidekickImage = "<img src='assets/images/sparkle.gif'/>";
-
-        // sidekickDiv.append(sidekickImage);
-        //sparkleDiv.hide();
-        // var sidekick = false;
-        // if (sidekick == true){
-        //     sparkleDiv.hide();
-        // }
-        //$("#gameId").append(sidekickDiv);
         
-        var sidekicks = ["hobo", "bum", "prostitute", "mangie+dog", "drug+dealer", "angel", "drag+queen", "cute+boy", "cute+girl", "trash", "captain+america", "iron+man", "hulk"]
-
-
-
-        var limit = 1;
-
-        var input = sidekicks[counter];
-
-        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + input + "&limit=" + limit + "&api_key=dc6zaTOxFJmzC";
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-        }).done(function (response) {
-
-            for (var j = 0; j < limit; j++) {
-                console.log(response);
-
-                var displayDiv = $("<div>");
-                displayDiv.addClass("item");
-
-                var image = $("<img>");
-
-                image.attr("src", response.data[j].images.original_still.url);
-                image.attr("data-still", response.data[j].images.original_still.url);
-                image.attr("data-animate", response.data[j].images.original.url);
-                image.attr("data-state", "still");
-                image.attr("class", "gif img-thumbnail");
-                displayDiv.append(image);
-
-
-                $("#gameId").append(displayDiv);
-                $(".sidekick").append(displayDiv);
-
-            }
-        })
+        var arrNum = Math.floor(Math.random() * kittens.length);
+        var sidekit = $("<img>");
+        var displayDiv = $("<div>");
+        var kittenName = $("<p class='text-center'>" + kittens[arrNum] + "</p>");
+        var apiImage = "https://robohash.org/" + kittens[arrNum] + "/?set=set4";
+        sidekit.attr("src", apiImage).addClass("imgItems img-thumbnail");
+        console.log(apiImage);
+        displayDiv.addClass("item");
+        displayDiv.append(sidekit).append(kittenName);
+        $("#gameId").append(displayDiv);
+        $(".sidekick").append(displayDiv);
+        kittens.splice(arrNum, 1);
+        console.log(kittens);
     }
-//gainSidekick();
+
