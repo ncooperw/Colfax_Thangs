@@ -13,10 +13,8 @@ $(document).ready(function () {
     var database = firebase.database();
 
     var newUserID;
-    var ref = database.ref("user")
-
     var newUser;
-
+    var ref = database.ref("user")
 
 
     $("#startGamePlay").on("click", function () {
@@ -45,44 +43,33 @@ $(document).ready(function () {
     // console.log(userRef);
     // var bossAp = 0;
     // var bossHp = 0;
-    // initializeDatabase();
+    initializeDatabase();
 
     bossRef.on("value", function (snapshot) {
         console.log(snapshot.val())
         bossAp = snapshot.val().ap;
         bossHp = snapshot.val().hp;
-
-        // bossHp--;
-
-        bossRef.update({
-            ap: bossAp,
-            hp: bossHp,
-        })
+        console.log(bossHp)
     });
+
     playerRef.on("value", function (snapshot) {
         console.log(snapshot.val())
         playerAp = snapshot.val().ap;
         playerHp = snapshot.val().hp;
-
-        // bossHp--;
-
-        playerRef.update({
-            ap: playerAp,
-            hp: playerHp,
-        })
     });
-    initializeDatabase();
 
-    sideKitsRef.on("value", function (snapshot){
+    // initializeDatabase();
+
+    sideKitsRef.on("value", function (snapshot) {
 
     })
 
-    inventoryRef.on("value", function (snapshot){
-        
+    inventoryRef.on("value", function (snapshot) {
+
     })
-    scoreRef.on("value", function (snapshot){
+    scoreRef.on("value", function (snapshot) {
         score = playerScore;
-        
+
     })
 
 
@@ -100,12 +87,12 @@ $(document).ready(function () {
 
     function initializeDatabase() {
         playerRef.set({
-            hp: 400,
+            hp: 200,
             ap: 10,
         })
         bossRef.set({
             hp: 1000,
-            ap: 25,
+            ap: 100,
         })
         scoreRef.set({
             score: null,
@@ -120,82 +107,96 @@ $(document).ready(function () {
 
     //function loads the player card and attack button
     function bossFight() {
-        $(".game-container").empty();
-        $(".game-container").addClass("boss-container");
-        $(".boss-container").removeClass("game-container");
 
-        //boss card ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        var bossDiv = $("<div>");
-        bossDiv.addClass("row");
+                $(".game-container").empty();
+                $(".game-container").addClass("boss-container");
+                $(".boss-container").removeClass("game-container");
 
-        var bossCard = $("<div>");
-        bossCard.addClass("card");
-        bossCard.attr("id", "boss-stat-card")
 
-        var b = $("<h5>");
-        b.addClass("no-pad");
-        b.text("Demogorgan");
-        bossCard.append(b);
+                var bossDiv = $("<div>");
+                bossDiv.addClass("row");
 
-        var bossHp = $("<p>");
-        bossHp.text("HP: " + bossHp);
-        bossHp.attr("id", "bossHp")
-        bossHp.addClass("no-pad");
-        bossCard.append(bossHp);
+                //boss card ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        var bossAp = $("<p>");
-        bossAp.addClass("no-pad");
-        bossAp.text("AP: " + bossAp);
-        bossAp.attr("id", "bossAp")
-        bossCard.append(bossAp);
-        console.log("bAp: "+ bossAp)
+                var bossCard = $("<div>");
+                bossCard.addClass("card");
+                bossCard.attr("id", "boss-stat-card")
 
-        //boss card ~~~~~~~~~~~~~~~~~~~~~~~~~~
+                var b = $("<h5>");
+                b.addClass("no-pad");
+                b.text("Demogorgan");
+                bossCard.append(b);
 
-        //player card~~~~~~~~~~~~~~~~~~~
+                var bossHealth = $("<p>");
+                bossHealth.text("HP: " + bossHp);
+                bossHealth.attr("id", "bossHp")
+                bossHealth.addClass("no-pad");
+                bossCard.append(bossHealth);
 
-        var p1card = $("<div>");
-        p1card.addClass("card player-card");
+                var bossAttack = $("<p>");
+                bossAttack.addClass("no-pad");
+                bossAttack.text("AP: " + bossAp);
+                bossAttack.attr("id", "bossAp")
+                bossCard.append(bossAttack);
 
-        var p1img = $("<img>");
-        p1img.addClass("card-img-top");
-        p1img.attr("src", "https://placekitten.com/g/100/100");
-        p1card.append(p1img);
+                var gorgan = $("<img>");
+                gorgan.attr("src", "assets/images/p1-boss.png")
+                gorgan.addClass("boss-image");
+                $(bossDiv).append(gorgan);
 
-        var p1 = $("<h5>")
-        p1.addClass("no-pad");
-        p1.addClass("card-title");
-        p1.text("Player 1");
-        p1card.append(p1);
+                setTimeout(function() {
+                    $(".boss-image").fadeIn(3000);
+                }, 1)
+               
 
-        var p1HP = $("<p>");
-        p1HP.addClass("no-pad");
-        p1HP.addClass("card-text");
-        p1HP.attr("id", "p1hp")
-        p1HP.text("HP: " + playerHp);
+                //boss card ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        var p1AP = $("<p>");
-        p1AP.addClass("no-pad");
-        p1AP.addClass("card-text");
-        p1AP.attr("id", "p1ap");
-        p1AP.text("AP: " + playerAp);
-        p1card.append(p1HP).append(p1AP);
+                //player card~~~~~~~~~~~~~~~~~~~
 
-        var attack = $("<button>");
-        attack.addClass("btn btn-primary attack");
-        attack.text("Attack!");
-        p1card.append(attack);
+                var p1card = $("<div>");
+                p1card.addClass("card player-card");
 
-        //player card~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                var p1img = $("<img>");
+                p1img.addClass("card-img-top");
+                p1img.attr("src", "https://placekitten.com/g/100/100");
+                p1card.append(p1img);
 
-       
+                var p1 = $("<h5>")
+                p1.addClass("no-pad");
+                p1.addClass("card-title");
+                p1.text("Player 1");
+                p1card.append(p1);
 
-        bossDiv.append(p1card);
-        bossDiv.append(bossCard);
-       
+                var p1HP = $("<p>");
+                p1HP.addClass("no-pad");
+                p1HP.addClass("card-text");
+                p1HP.attr("id", "p1hp")
+                p1HP.text("HP: " + playerHp);
 
-        $(".boss-container").append(bossDiv)
-    }
+                var p1AP = $("<p>");
+                p1AP.addClass("no-pad");
+                p1AP.addClass("card-text");
+                p1AP.attr("id", "p1ap");
+                p1AP.text("AP: " + playerAp);
+                p1card.append(p1HP).append(p1AP);
+
+                var attack = $("<button>");
+                attack.addClass("btn btn-primary attack");
+                attack.text("Attack!");
+                p1card.append(attack);
+
+                //player card~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+                bossDiv.append(p1card);
+                bossDiv.append(bossCard);
+
+
+                $(".boss-container").append(bossDiv)
+            // });
+            }
+      
 
     function winning() {
         $(".boss-container").empty();
@@ -229,6 +230,7 @@ $(document).ready(function () {
                 winning();
             }
             $("#p1hp").text("HP: " + playerHp);
+            $("#bossHp").text("HP: " + bossHp);
         }
         if (playerHp <= 0) {
             console.log("you lose")
@@ -374,8 +376,8 @@ $(document).ready(function () {
     var userSelect;
     //var playContinue = false;
     var playerScore = 0;
-    var bossHp;
-    var bossAp;
+    // var bossHp;
+    // var bossAp;
     // var highScore = 0; //get high score from Firebase
     var highPlayer = "No one";
     var health = 100;
@@ -668,6 +670,13 @@ $(document).ready(function () {
 
 
             playerHp += 50;
+            bossHp -= 50
+            playerRef.update({
+                hp: playerHp,
+            })
+            bossRef.update({
+                hp: bossHp,
+            })
             playerScore += 100;
             // score.push(playerScore);
             scoreRef.update({
@@ -685,7 +694,15 @@ $(document).ready(function () {
             console.log("positive Choice");
             $(".gamePlay").append(": " + positive);
             playerHp += 25;
+            bossHp -= 25;
             playerScore += 50;
+            playerRef.update({
+                hp: playerHp,
+            })
+            bossRef.update({
+                hp: bossHp,
+            })
+
             // score.push(playerScore);
             scoreRef.update({
                 playerScore: playerScore
@@ -703,7 +720,7 @@ $(document).ready(function () {
                 $(".sidekick").append(imgDiv);
                 sidekick.push("RuPaul");
 
-                database.ref().push({
+                ref.push({
                     sidekick: sidekick
                 });
             }
@@ -728,8 +745,16 @@ $(document).ready(function () {
         if (userSelect == "negativeChoice") {
             console.log("negative choice");
             $(".gamePlay").append(": " + negative);
+
             pleayerHp -= 25;
             playerScore -= 25;
+            bossHp += 25;
+            playerRef.update({
+                hp: playerHp,
+            })
+            bossRef.update({
+                hp: bossHp,
+            })
 
             //return to main map feature
 

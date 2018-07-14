@@ -314,6 +314,7 @@ body {
     padding: 3px;
     position: relative;
     top: 235px;
+    right: 530px;
 }
 
 .btn-primary {
@@ -354,8 +355,17 @@ body {
     padding: 3px;
     position: relative;
     height: 100px;
-    left: 560px; 
+    /* left: 560px;  */
     width: 150px;
+}
+
+.boss-image {
+    position: relative;
+    height: 450px;
+    top: 46px;
+    left: 350px;
+    /* opacity: 0.0; */
+    display: none;
 }
 
 /* megan's styling */
