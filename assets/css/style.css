@@ -127,7 +127,13 @@
 }
 
 .carUpDown {
+    position: relative;
     width: 50px;
+    height: 60px;
+}
+.carTurning {
+    position: relative;
+    width: 80px;
     height: 60px;
 }
 
