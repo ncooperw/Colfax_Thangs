@@ -10,6 +10,26 @@
         //3
     //attack option 
 
+//add to game.js
+
+    var bossButton = $("<button>");
+    bossButton.addClass("btn btn-danger");
+    bossButton.attr("id", "start-boss");
+    bossButton.text("Fight!")
+
+    var bossText = $("<div>");
+    bossText.attr("id", "boss-story");
+    bossText.addClass("boss-paragraph");
+    bossText.text("Something russles in the bushes...")
+    setTimeout(function () {
+        responsiveVoice.speak("Prepare to defnd yourself human!");
+        bossText.text("Prepare to defend yourself Human!")
+        bossText.append(bossButton);
+
+    }, 3000)
+
+    $(".game-container11").append(bossText);
+
 //boss character stats:
     //hp
     //ap

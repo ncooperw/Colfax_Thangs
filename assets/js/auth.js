@@ -31,90 +31,50 @@ $(document).ready(function () {
     };
     firebase.initializeApp(config);
 
-    // var provider = new firebase.auth.GoogleAuthProvider();
-    // provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-    // firebase.auth().languageCode = 'pt';
-
-
-
     var database = firebase.database();
     var auth = firebase.auth();
 
-    var ui = new firebaseui.auth.AuthUI(auth); /*********************** */
+    var ui = new firebaseui.auth.AuthUI(auth); 
 
     ui.start('#firebaseui-auth-container', {
         signInOptions: [
             firebase.auth.EmailAuthProvider.PROVIDER_ID,
             firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-            firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-
         ],
-        // Other config options...
     });
 
     var uiConfig = {
         callbacks: {
-          signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-            // User successfully signed in.
-            // Return type determines whether we continue the redirect automatically
-            // or whether we leave that to developer to handle.
-            return true;
-          },
-          uiShown: function() {
-            // The widget is rendered.
-            // Hide the loader.
-            document.getElementById('loader').style.display = 'none';
-          }
+            signInSuccessWithAuthResult: function (authResult, redirectUrl) {
+                return true;
+            },
+            uiShown: function () {
+                document.getElementById('loader').style.display = 'none';
+            }
         },
-        // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
         signInFlow: 'popup',
         signInSuccessUrl: 'index1.html',
         signInOptions: [
-          // Leave the lines as is for the providers you want to offer your users.
-          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-          firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-        //   firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-        //   firebase.auth.GithubAuthProvider.PROVIDER_ID,
-          firebase.auth.EmailAuthProvider.PROVIDER_ID,
-        //   firebase.auth.PhoneAuthProvider.PROVIDER_ID
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+            firebase.auth.EmailAuthProvider.PROVIDER_ID,
         ],
         // Terms of service url.
         tosUrl: "terms.html",
-      };
-    // var uiConfig = {
-    //     callbacks: {
-    //         signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-    //             // userIn = true;
-    //             // User successfully signed in.
-    //             // Return type determines whether we continue the redirect automatically
-    //             // or whether we leave that to developer to handle.
-    //             console.log(user)
-    //             return true;
-    //         },
-    //         uiShown: function () {
-    //             document.getElementById('loader').style.display = 'none';
-    //         }
-    //     },
-    //     // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
-    //     signInFlow: 'popup',
-    //     signInSuccessUrl: "index.html",
-    //     //will need git pages url once finied
-    //     signInOptions: [{
-    //         provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    //         provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-    //         provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    //         // requireDisplayName: true,
-    //     }],
-    //     tosUrl: 'terms.html'
-    // };
-
-    //calls authorization
-    // if(userIn === false) {
-    // ui.start('#firebaseui-auth-container', uiConfig);
-    // }
-
+    };
     // The start method will wait until the DOM is loaded.
     ui.start('#firebaseui-auth-container', uiConfig);
+
+    var skipAuth = $("<button>");
+    skipAuth.text("Skip");
+    skipAuth.addClass("btn btn-danger");
+    skipAuth.attr("id", "skip-auth")
+
+
+    $("#auth").append(skipAuth)
+
+    $("#auth").on("click", function(){
+        window.location="index1.html";
+    })
 
     //auth listener
     // firebase.auth().onAuthStateChanged(user => {
@@ -125,14 +85,13 @@ $(document).ready(function () {
     //     }
 
     // });
+    
+    
     firebase.auth().signOut().then(function () {
         // Sign-out successful.
     }).catch(function (error) {
         // An error happened.
     });
-
-
-
 
     //big nealy invisible question mark to start game
     function mystery() {
@@ -177,7 +136,7 @@ $(document).ready(function () {
             $("#gif-div").append(buttDiv);
         }, 13000);
     }
-    // console.log(user)
+ 
 
-   
+
 });

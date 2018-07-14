@@ -12,18 +12,18 @@ $(document).ready(function () {
 
     var database = firebase.database();
 
-    var newUserID;
-    var newUser;
+    // var newUserID;
+    // var newUser;
     var ref = database.ref("user")
 
 
-    $("#startGamePlay").on("click", function () {
+    // $("#startGamePlay").on("click", function () {
 
-        firebase.auth().onAuthStateChanged(function (user) {
-            console.log("clicky")
-            console.log(user.uiu);
-        })
-    });
+    //     firebase.auth().onAuthStateChanged(function (user) {
+    //         console.log("clicky")
+    //         console.log(user.uiu);
+    //     })
+    // });
 
     // firebase.auth().onAuthStateChanged(function (user) { /**************** */
 
@@ -105,104 +105,148 @@ $(document).ready(function () {
     playAgain.text("Play Again?")
 
 
+
+
+
+
     //function loads the player card and attack button
     function bossFight() {
 
-                $("#gameId").empty();
-                $("#gameId").addClass("boss-container");
-                $(".boss-container").removeClass("game-container11");
+        $("#gameId").empty();
+        $("#gameId").addClass("boss-container");
+        $(".boss-container").removeClass("game-container11");
 
 
-                var bossDiv = $("<div>");
-                bossDiv.addClass("row");
+        var bossDiv = $("<div>");
+        bossDiv.addClass("row");
 
-                //boss card ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        //boss card ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-                var bossCard = $("<div>");
-                bossCard.addClass("card");
-                bossCard.attr("id", "boss-stat-card")
+        var bossCard = $("<div>");
+        bossCard.addClass("card");
+        bossCard.attr("id", "boss-stat-card")
 
-                var b = $("<h5>");
-                b.addClass("no-pad");
-                b.text("Demogorgan");
-                bossCard.append(b);
+        var b = $("<h5>");
+        b.addClass("no-pad");
+        b.text("Demogorgan");
+        bossCard.append(b);
 
-                var bossHealth = $("<p>");
-                bossHealth.text("HP: " + bossHp);
-                bossHealth.attr("id", "bossHp")
-                bossHealth.addClass("no-pad");
-                bossCard.append(bossHealth);
+        var bossHealth = $("<p>");
+        bossHealth.text("HP: " + bossHp);
+        bossHealth.attr("id", "bossHp")
+        bossHealth.addClass("no-pad");
+        bossCard.append(bossHealth);
 
-                var bossAttack = $("<p>");
-                bossAttack.addClass("no-pad");
-                bossAttack.text("AP: " + bossAp);
-                bossAttack.attr("id", "bossAp")
-                bossCard.append(bossAttack);
+        var bossAttack = $("<p>");
+        bossAttack.addClass("no-pad");
+        bossAttack.text("AP: " + bossAp);
+        bossAttack.attr("id", "bossAp")
+        bossCard.append(bossAttack);
 
-                var gorgan = $("<img>");
-                gorgan.attr("src", "assets/images/p1-boss.png")
-                gorgan.addClass("boss-image");
-                $(bossDiv).append(gorgan);
+        var gorgan = $("<img>");
+        gorgan.attr("src", "assets/images/p1-boss.png")
+        gorgan.addClass("boss-image");
+        $(bossDiv).append(gorgan);
 
-                setTimeout(function() {
-                    $(".boss-image").fadeIn(3000);
-                }, 1)
-               
-
-                //boss card ~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-                //player card~~~~~~~~~~~~~~~~~~~
-
-                var p1card = $("<div>");
-                p1card.addClass("card player-card");
-
-                var p1img = $("<img>");
-                p1img.addClass("card-img-top");
-                p1img.attr("src", "https://placekitten.com/g/100/100");
-                p1card.append(p1img);
-
-                var p1 = $("<h5>")
-                p1.addClass("no-pad");
-                p1.addClass("card-title");
-                p1.text("Player 1");
-                p1card.append(p1);
-
-                var p1HP = $("<p>");
-                p1HP.addClass("no-pad");
-                p1HP.addClass("card-text");
-                p1HP.attr("id", "p1hp")
-                p1HP.text("HP: " + playerHp);
-
-                var p1AP = $("<p>");
-                p1AP.addClass("no-pad");
-                p1AP.addClass("card-text");
-                p1AP.attr("id", "p1ap");
-                p1AP.text("AP: " + playerAp);
-                p1card.append(p1HP).append(p1AP);
-
-                var attack = $("<button>");
-                attack.addClass("btn btn-primary attack");
-                attack.text("Attack!");
-                p1card.append(attack);
-
-                //player card~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        setTimeout(function () {
+            $(".boss-image").fadeIn(3000);
+        }, 1)
 
 
+        //boss card ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-                bossDiv.append(p1card);
-                bossDiv.append(bossCard);
+        //player card~~~~~~~~~~~~~~~~~~~
+
+        var p1card = $("<div>");
+        p1card.addClass("card player-card");
+
+        var p1img = $("<img>");
+        p1img.addClass("card-img-top");
+        p1img.attr("src", "https://placekitten.com/g/100/100");
+        p1card.append(p1img);
+
+        var p1 = $("<h5>")
+        p1.addClass("no-pad");
+        p1.addClass("card-title");
+        p1.text("Player 1");
+        p1card.append(p1);
+
+        var p1HP = $("<p>");
+        p1HP.addClass("no-pad");
+        p1HP.addClass("card-text");
+        p1HP.attr("id", "p1hp")
+        p1HP.text("HP: " + playerHp);
+
+        var p1AP = $("<p>");
+        p1AP.addClass("no-pad");
+        p1AP.addClass("card-text");
+        p1AP.attr("id", "p1ap");
+        p1AP.text("AP: " + playerAp);
+        p1card.append(p1HP).append(p1AP);
+
+        var attack = $("<button>");
+        attack.addClass("btn btn-primary attack");
+        attack.text("Attack!");
+        p1card.append(attack);
+
+        //player card~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-                $(".boss-container").append(bossDiv)
-            // });
-            }
-      
+
+        bossDiv.append(p1card);
+        bossDiv.append(bossCard);
+
+
+        $(".boss-container").append(bossDiv)
+        // });
+    }
+    function reset() {
+        counter = 0;
+        $(".inventory").empty();
+        $(".sidekick").empty();
+        updateDisplay();
+        initializeDatabase();
+        $("#gameId").empty();
+        $("#gameId").removeClass(".boss-container");
+        $("#gameId").addClass("game-container");
+        $(".userStuff").show();
+        // $(".scenario").hide();
+        trashCanGenerator();
+        doorGenerator();
+        car.css({
+            top: 380,
+            left: 0
+        });
+
+        console.log("gamejs " + counter);
+
+        iCounter++;
+
+        console.log("interaction # " + iCounter);
+        $(".gamePlay").show();
+
+    }
+
+
+    $(document).on("click", ".play-again", function () {
+
+        reset();
+    })
+
 
     function winning() {
         $(".boss-container").empty();
+
+        var openGif = $("<img>");
+        openGif.addClass("thangsIntro");
+        openGif.attr("src", "assets/images/Colfax Thangs - The End.gif");
+
+        $(".boss-container").append(openGif)
+
         $(".boss-container").html("<h1> Congradulations! You won with a score of: " + playerScore + "</h1>")
 
         $(".boss-container").append(playAgain);
+      
     }
 
     //game-over function runs when player loses all HP
@@ -212,9 +256,12 @@ $(document).ready(function () {
         $(".boss-container").html("<h1> Game Over </h1>")
 
         $(".boss-container").append(playAgain);
+        // $(".play-again").on("click", function () {
+
+        //     playAgain();
+        // })
+   
     }
-    // $(document).on("click", "#fight-boss", function(){
-    // bossFight();
     // })
 
 
@@ -235,6 +282,7 @@ $(document).ready(function () {
         if (playerHp <= 0) {
             console.log("you lose")
             gameOver();
+
         }
     }
 
@@ -800,51 +848,55 @@ $(document).ready(function () {
 
     });
 
-    //boss fight tester code
-    // $(document).on("click", "#continue-to-boss", function () {
-    //     console.log("clicky")
-    //     $("#gameId").removeClass("game-container" + counter);
-    //     $("#gameId").empty();
-    //     $("#gameId").addClass("game-container"+ "11")
-
-    //     var bossButton = $("<button>");
-    //     bossButton.addClass("btn btn-danger");
-    //     bossButton.attr("id", "start-boss");
-    //     bossButton.text("Fight!")
-
-    //     var bossText = $("<div>");
-    //     bossText.attr("id", "boss-story");
-    //     bossText.addClass("boss-paragraph");
-    //     bossText.text("Something russles in the bushes...")
-    //     setTimeout(function(){
-    //         responsiveVoice.speak("Prepare to defnd yourself human!");
-    //         bossText.text("Prepare to defend yourself Human!")
-    //         bossText.append(bossButton);
-
-    //     }, 3000)
-    
-    //     $(".game-container11").append(bossText);
-
-       
-
-    
-    
-    //     $(document).on("click", "#start-boss", function(){
-    //         bossFight();
-    //     })
-      
-    // })
+ 
 
 
-
-
-
-
-
-
-
-
-    //firebase data for the start of a new game--does not include high score--only data we want to be kept consistnet from one game to another (not high scores and the like)
-
+    bossFight();
 
 });
+
+//boss fight tester code
+// $(document).on("click", "#continue-to-boss", function () {
+//     console.log("clicky")
+//     $("#gameId").removeClass("game-container" + counter);
+//     $("#gameId").empty();
+//     $("#gameId").addClass("game-container"+ "11")
+
+//     var bossButton = $("<button>");
+//     bossButton.addClass("btn btn-danger");
+//     bossButton.attr("id", "start-boss");
+//     bossButton.text("Fight!")
+
+//     var bossText = $("<div>");
+//     bossText.attr("id", "boss-story");
+//     bossText.addClass("boss-paragraph");
+//     bossText.text("Something russles in the bushes...")
+//     setTimeout(function(){
+//         responsiveVoice.speak("Prepare to defnd yourself human!");
+//         bossText.text("Prepare to defend yourself Human!")
+//         bossText.append(bossButton);
+
+//     }, 3000)
+
+//     $(".game-container11").append(bossText);
+
+
+
+
+
+//     $(document).on("click", "#start-boss", function(){
+      
+//     })
+
+// })
+
+
+
+
+
+
+
+
+
+
+//firebase data for the start of a new game--does not include high score--only data we want to be kept consistnet from one game to another (not high scores and the like)

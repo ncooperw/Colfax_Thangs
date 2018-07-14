@@ -298,13 +298,24 @@ body {
     border-color: rgb(158, 16, 6);
 }
 
-#skip {
+#skip, #skip-auth {
     background-color: black;
     font-size: 30px;
     color: rgb(158, 16, 6);
     border-color: rgb(158, 16, 6);
     margin-left: 10px;
+}
 
+#title-plate {
+    color: rgb(158, 16, 6);
+    font-size: 50px;
+    text-align: center;
+}
+
+#skip-auth {
+    position: relative;
+    margin: 720px;
+    bottom: 720px;
 }
 
 .boss-container {
