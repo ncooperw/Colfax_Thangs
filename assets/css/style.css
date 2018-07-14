@@ -6,13 +6,12 @@
     right: 0;
     margin: auto;
     /* padding: 0; */
-    background-image: url("../images/p1-startstreet-bg.png");
+    background-image: url("../images/p1-street1-bg.png");
     /* background-size:; */
     background-repeat: no-repeat;
     /* margin-left: 20%; */
     /* margin-right: 20%; */
 }
-
 
 .game-container1 {
     width: 900px;
@@ -21,8 +20,8 @@
     /* background-size:; */
     background-repeat: no-repeat;
 }
-.game-container2 {
 
+.game-container2 {
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-ogden-bg.png");
@@ -31,7 +30,6 @@
 }
 
 .game-container3 {
-
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-street4-bg.png");
@@ -48,7 +46,6 @@
 }
 
 .game-container5 {
-
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-charlies-bg.png");
@@ -57,7 +54,6 @@
 }
 
 .game-container6 {
-
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-street7-bg.png");
@@ -66,7 +62,6 @@
 }
 
 .game-container7 {
-
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-street8-bg.png");
@@ -74,9 +69,7 @@
     background-repeat: no-repeat;
 }
 
-
 .game-container8 {
-
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-petes-bg.png");
@@ -85,17 +78,6 @@
 }
 
 .game-container9 {
-
-    width: 900px;
-    height: 500px;
-    background-image: url("../images/p1-street9-bg.png");
-    /* background-size:; */
-    background-repeat: no-repeat;
-}
-
-
-.game-container10 {
-
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-street10-bg.png");
@@ -103,12 +85,18 @@
     background-repeat: no-repeat;
 }
 
-
-.game-container11 {
-
+.game-container10 {
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-street11-bg.png");
+    /* background-size:; */
+    background-repeat: no-repeat;
+}
+
+.game-container11 {
+    width: 900px;
+    height: 500px;
+    background-image: url("../images/p1-boss-bg.png");
     /* background-size:; */
     background-repeat: no-repeat;
 }
@@ -142,18 +130,22 @@
     height: 25px;
 }
 
-/*door*/
+#door {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+}
 
 .rectangle {
     height: 150px;
-   width: 300px;
-   background-color: rgba(255, 0, 0, 0);
+    width: 300px;
+    background-color: rgba(255, 0, 0, 0);
 }
 
-rectangle:hover {
-    border: solid 2px red;  
- }
- 
+.rectangle:hover {
+    border: solid 2px red;
+}
+
 #playerStats {
     border: 2px solid black;
     background: #333333;
@@ -171,15 +163,21 @@ rectangle:hover {
 }
 
 .interactions0 {
-    background-image: url("../images/OgdenTheater.jpg");
+    background-image: url("../images/p1-ogden-inside-bg.jpg");
+    width: 900px;
+    height: 500px;
 }
 
 .interactions1 {
-    background-image: url("../images/petesKitchen.jpg");
+    background-image: url("../images/p1-charlies-inside-bg.png");
+    width: 900px;
+    height: 500px;
 }
 
 .interactions2 {
-    background-image: url("../images/charlies.jpg");
+    background-image: url("../images/petesKitchen.jpg");
+    width: 900px;
+    height: 500px;
 }
 
 #scenarioRow {
@@ -195,7 +193,7 @@ rectangle:hover {
     font-weight: bold;
     color: rgb(219, 145, 60);
     padding: 5px;
-    margin: 5px;    
+    margin: 5px;
 }
 
 .thisChoice:hover {
@@ -227,9 +225,13 @@ rectangle:hover {
     top: 580px;
     left: 210px;
     position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
     background: #333333;
     margin-bottom: 20px;
 }
+
 /*Styling sidekick function */
 
 .sidekickChoice {
@@ -240,7 +242,8 @@ rectangle:hover {
 }
 
 .item {
-    width: 150px;
+    width: 100px;
+    margin: 10px 5px;
     height: auto;
     float: left;
 }
@@ -250,7 +253,6 @@ rectangle:hover {
 body {
     background: black;
     color: rgb(212, 212, 212);
-
 }
 
 #gif-div {
@@ -272,7 +274,7 @@ body {
     color: red;
     border-color: red;
     background-color: rgb(58, 11, 11);
-    transition: color .25s ease-in-out,background-color .25s ease-in-out,border-color .25s ease-in-out,box-shadow .25s ease-in-out;
+    transition: color .25s ease-in-out, background-color .25s ease-in-out, border-color .25s ease-in-out, box-shadow .25s ease-in-out;
 }
 
 .thangsIntro {
@@ -281,31 +283,37 @@ body {
 }
 
 #play-game {
-   position: fixed;
-   margin-left: 470px;
-   bottom: 150px;
-   background-color: black;
-   font-size: 30px;
-   color: rgb(158, 16, 6);
-   border-color: rgb(158, 16, 6);
+    position: fixed;
+    margin-left: 470px;
+    bottom: 150px;
+    background-color: black;
+    font-size: 30px;
+    color: rgb(158, 16, 6);
+    border-color: rgb(158, 16, 6);
 }
 
 .boss-container {
     width: 900px;
     height: 500px;
     background-color: black;
-    border: solid red 2px;
+    background-image: url("../images/p1-boss-bg.png");
+    border: solid rgb(124, 5, 5) 2px;
 }
 
 .card {
-    height: 320px;
+    width: 120px;
+}
+
+.player-card {
+    height: 220px;
+    width: 100px;
     color: black;
-    border: red solid 4px;
+    border: rgb(100, 11, 11) solid 4px;
     background: lightslategray;
     margin: 20px;
     padding: 3px;
     position: relative;
-    top: 150px;
+    top: 235px;
 }
 
 .btn-primary {
@@ -321,12 +329,33 @@ body {
 
 #invent {
     clear: both;
-
 }
 
 .img-thumbnail {
-    width: 50px;
-    height: 50px;
+    width: 100px;
+    height: 100px;
+    margin: 10px 5px;
+}
+
+.imgItems {
+    width: 90px;
+    height: 90px;
+}
+.no-pad {
+    margin-bottom: 1px;
+}
+
+#boss-stat-card {
+    float: right;
+    color: black;
+    border: rgb(100, 11, 11) solid 4px;
+    background: lightslategray;
+    margin: 20px;
+    padding: 3px;
+    position: relative;
+    height: 100px;
+    left: 560px; 
+    width: 150px;
 }
 
 /* megan's styling */

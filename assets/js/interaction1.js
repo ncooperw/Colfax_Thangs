@@ -19,29 +19,33 @@ $(document).ready(function () {
 
 
 
-    $("#startGamePlay").on("click", function(){
+    $("#startGamePlay").on("click", function () {
 
-     firebase.auth().onAuthStateChanged(function (user) {
-        console.log("clicky")
-        console.log(user.uiu);
-    })});
+        firebase.auth().onAuthStateChanged(function (user) {
+            console.log("clicky")
+            console.log(user.uiu);
+        })
+    });
 
     // firebase.auth().onAuthStateChanged(function (user) { /**************** */
 
-        //  newUserID = user.uid;
-        //  console.log(user.uid);
-        //  console.log(newUserID)
-        // newUser = ref.child(newUserID)
+    //  newUserID = user.uid;
+    //  console.log(user.uid);
+    //  console.log(newUserID)
+    // newUser = ref.child(newUserID)
     // })
 
 
     var playerRef = ref.child("player1");
     var bossRef = ref.child("boss");
+    var inventoryRef = ref.child("inventory");
+    var sideKitsRef = ref.child("SideKits")
+    var scoreRef = ref.child("score");
     // var userRef = ref.child(newUserID)
     // console.log(userRef);
-    var bossAp = 0;
-    var bossHp = 0;
-    initializeDatabase();
+    // var bossAp = 0;
+    // var bossHp = 0;
+    // initializeDatabase();
 
     bossRef.on("value", function (snapshot) {
         console.log(snapshot.val())
@@ -67,17 +71,30 @@ $(document).ready(function () {
             hp: playerHp,
         })
     });
+    initializeDatabase();
 
+    sideKitsRef.on("value", function (snapshot){
 
-    $(document).on("click", "#special", function () {
-        console.log("clicked")
-        bossHp = bossHp + 10;
-
-        bossRef.update({
-            hp: bossHp,
-        })
-        console.log(bossHp)
     })
+
+    inventoryRef.on("value", function (snapshot){
+        
+    })
+    scoreRef.on("value", function (snapshot){
+        score = playerScore;
+        
+    })
+
+
+    // $(document).on("click", "#special", function () {
+    //     console.log("clicked")
+    //     bossHp = bossHp + 10;
+
+    //     bossRef.update({
+    //         hp: bossHp,
+    //     })
+    //     console.log(bossHp)
+    // })
 
 
 
@@ -85,12 +102,15 @@ $(document).ready(function () {
         playerRef.set({
             hp: 400,
             ap: 10,
-            highScore: null,
         })
         bossRef.set({
             hp: 1000,
             ap: 25,
         })
+        scoreRef.set({
+            score: null,
+        })
+
     }
     //play again button global variable
     var playAgain = $("<button>");
@@ -103,28 +123,59 @@ $(document).ready(function () {
         $(".game-container").empty();
         $(".game-container").addClass("boss-container");
         $(".boss-container").removeClass("game-container");
+
+        //boss card ~~~~~~~~~~~~~~~~~~~~~~~~~~~
         var bossDiv = $("<div>");
         bossDiv.addClass("row");
+
+        var bossCard = $("<div>");
+        bossCard.addClass("card");
+        bossCard.attr("id", "boss-stat-card")
+
+        var b = $("<h5>");
+        b.addClass("no-pad");
+        b.text("Demogorgan");
+        bossCard.append(b);
+
+        var bossHp = $("<p>");
+        bossHp.text("HP: " + bossHp);
+        bossHp.attr("id", "bossHp")
+        bossHp.addClass("no-pad");
+        bossCard.append(bossHp);
+
+        var bossAp = $("<p>");
+        bossAp.addClass("no-pad");
+        bossAp.text("AP: " + bossAp);
+        bossAp.attr("id", "bossAp")
+        bossCard.append(bossAp);
+        console.log("bAp: "+ bossAp)
+
+        //boss card ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        //player card~~~~~~~~~~~~~~~~~~~
 
         var p1card = $("<div>");
         p1card.addClass("card player-card");
 
         var p1img = $("<img>");
         p1img.addClass("card-img-top");
-        p1img.attr("src", "https://placekitten.com/g/200/150");
+        p1img.attr("src", "https://placekitten.com/g/100/100");
         p1card.append(p1img);
 
         var p1 = $("<h5>")
+        p1.addClass("no-pad");
         p1.addClass("card-title");
         p1.text("Player 1");
         p1card.append(p1);
 
         var p1HP = $("<p>");
+        p1HP.addClass("no-pad");
         p1HP.addClass("card-text");
         p1HP.attr("id", "p1hp")
         p1HP.text("HP: " + playerHp);
 
         var p1AP = $("<p>");
+        p1AP.addClass("no-pad");
         p1AP.addClass("card-text");
         p1AP.attr("id", "p1ap");
         p1AP.text("AP: " + playerAp);
@@ -135,7 +186,13 @@ $(document).ready(function () {
         attack.text("Attack!");
         p1card.append(attack);
 
+        //player card~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+       
+
         bossDiv.append(p1card);
+        bossDiv.append(bossCard);
+       
 
         $(".boss-container").append(bossDiv)
     }
@@ -156,7 +213,7 @@ $(document).ready(function () {
         $(".boss-container").append(playAgain);
     }
     // $(document).on("click", "#fight-boss", function(){
-    // bossFight();
+    bossFight();
     // })
 
 
@@ -238,7 +295,8 @@ $(document).ready(function () {
 
     //-----------------------Interactions-----------------------------------
 
-    var interaction = [{
+    var interaction = {
+        2: {
             story: "You hear a band playing and the music is intoxicating. Click the door to go inside.",
 
             scenario: "You cannot maintain clear thought while the music is playing. You are surrounded by people...at least they look like people, it is hard to tell.",
@@ -259,8 +317,9 @@ $(document).ready(function () {
             },
             item: "music box with hypnotic music",
             itemImg: "assets/images/musicbox.jpg",
+            class: "interactions0"
         },
-        {
+        5: {
             story: "You find yourself outside of a quaint little country bar. You decide to go inside.",
 
             scenario: "Once you are inside the bar, you realize that this is not your typical, run of the mill country bar. There are shirtless men EVERYWHERE and many of the women are extremely tall. As you make your way further into the bar you",
@@ -280,9 +339,10 @@ $(document).ready(function () {
                 positive: "Your master winkery causes the person to walk over to you. As they come closer, you see that you have just winked at...RuPaul! You spend the rest of the evening talking candidly and learning the drag queen secrets."
             },
             item: "Cowboy Hat",
-            itemImg: "assets/images/cowboyHat.jpg"
+            itemImg: "assets/images/cowboyHat.jpg",
+            class: "interactions1"
         },
-        {
+        8: {
             story: "The smell of bacon permeates the air. You see a line of people down the street and wonder what they are waiting for. When you look up, you see the sign, 'Pete's Kitchen'. Click the door to go inside.",
 
             scenario: "The smell is the best smell that you have ever encountered. It makees you hungry and satisfied at the same time.",
@@ -303,17 +363,20 @@ $(document).ready(function () {
             },
             item: "Golden Fork",
             itemImg: "assets/images/goldFork.jpg",
+            class: "interactions2"
 
-        },
+        }
 
-    ];
+    };
 
 
     var currrentScenario;
     var userSelect;
     //var playContinue = false;
     var playerScore = 0;
-    var highScore = 0; //get high score from Firebase
+    var bossHp;
+    var bossAp;
+    // var highScore = 0; //get high score from Firebase
     var highPlayer = "No one";
     var health = 100;
     var sidekick = [];
@@ -330,14 +393,15 @@ $(document).ready(function () {
 
 
     //continue button gets made 
+    // var buttonSpotDiv = $("<div class='col-sm-3' id='buttonSpot'>");
+    // buttonSpotDiv.append(".interactions");
+    // var next = $("<button>");
+    // next.text("Continue");
+    // next.addClass("btn btn-success continue");
 
-    var next = $("<button>");
-    next.text("Continue");
-    next.addClass("btn btn-success continue");
+    // $("#buttonSpot").append(next);
 
-    $("#buttonSpot").append(next);
-
-    $(".continue").hide();
+    // $(".continue").hide();
 
 
     //continue button gets made 
@@ -382,7 +446,7 @@ $(document).ready(function () {
 
     function updateDisplay() {
         //Player Stats display --> create function upon game start
-        $("#health").html("Player HP: " + health);
+        $("#health").html("Player HP: " + playerHp);
         $("#score").html("Score: " + playerScore);
         // if (playerScore <= highScore) {
         //     playerScore = highScore;
@@ -408,7 +472,7 @@ $(document).ready(function () {
         imgDiv.addClass("item img-thumbnail");
 
         //var image = $("<img>")
-        image.attr("src", interaction[iCounter].itemImg);
+        image.attr("src", interaction[counter].itemImg).addClass("imgItems");
         console.log(image);
         imgDiv.append(image);
 
@@ -416,9 +480,9 @@ $(document).ready(function () {
 
 
         $(".inventory").append(imgDiv);
-        inventory.push(interaction[iCounter].item);
+        inventory.push(interaction[counter].item);
         //push inventory to Firebase
-        database.ref().push({
+        ref.update({
             inventory: inventory
         })
 
@@ -446,7 +510,7 @@ $(document).ready(function () {
 
             var limit = 1;
 
-            var input = sidekicks[iCounter];
+            var input = sidekicks[counter];
 
             var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + input + "&limit=" + limit + "&api_key=dc6zaTOxFJmzC";
             $.ajax({
@@ -479,30 +543,41 @@ $(document).ready(function () {
         })
     }
 
+
     //create a function upon click of the door
-    $("#door").on('click', function doorExplore() {
-        console.log("clicked");
-        //as door is clicked, read story
-        responsiveVoice.speak(interaction[iCounter].story);
-        //clear the screen
-        $("#door").hide();
+    $("#gameId").on('click', "#door", function doorExplore() {
+        pp1 = $(this)[0].offsetLeft - car.position().left
+        pp2 = $(this)[0].offsetTop - car.position().top
+        distanceCheck = Math.sqrt((pp1 * pp1) + (pp2 * pp2));
 
-        //hides the game play panel
-        $(".gamePlay").hide();
-        console.log("gamePlay hidden");
+        if (distanceCheck < 150) {
+            insideMode = true;
+            $("#gameId").empty();
+            console.log("clicked");
+            //as door is clicked, read story
+            responsiveVoice.speak(interaction[counter].story);
+            //clear the screen
+            // $("#door").hide();
 
-        //changes the background 
-        $("#gameId").addClass("interactions" + iCounter);
+            //hides the game play panel
+            // $(".gamePlay").hide();
+            console.log("gamePlay hidden");
 
-        var choices = $("<div>");
-        choices.addClass("interactions" + iCounter);
-        choices.attr("id", "int");
+            //changes the background 
+            $("#gameId").addClass(interaction[counter].class).removeClass("game-container").removeClass("game-container" + counter);
 
-        $("#game").append(choices)
+            var choices = $("<div>");
+            // choices.addClass("interactions" + iCounter);
+            choices.attr("id", "int");
 
-        //Scenario and choices come up
+            $("#game").append(choices)
 
-        beginInteraction();
+            //Scenario and choices come up
+
+            beginInteraction();
+        } else {
+            responsiveVoice.speak("Try getting closer");
+        }
     });
 
     // doorExplore();
@@ -513,25 +588,24 @@ $(document).ready(function () {
     function beginInteraction() {
 
         //removing game screen
-        $("#gameId").removeClass("game-container");
-        $(".car").hide();
-        $(".userStuff").show();
+        // $("#gameId").removeClass("game-container");
+        // $(".car").hide();
+        // $(".userStuff").show();
         //$("#gameId").addClass("")
 
 
         //showing the text with the story and the user choices
         $(".interactions").show();
-        $(".scenario").html("<h2>Scenario: " + interaction[iCounter].scenario + "</h2>");
-        responsiveVoice.speak(interaction[iCounter].scenario);
-        $(".question").html("<h3>" + interaction[iCounter].question + "</h3>");
+        $(".scenario").html("<h2>Scenario: " + interaction[counter].scenario + "</h2>");
+        responsiveVoice.speak(interaction[counter].scenario);
+        $(".question").html("<h3>" + interaction[counter].question + "</h3>");
         console.log(iCounter);
         var x;
 
         // for (var i = 0; i < interaction.answerChoices.length; i++) 
-        for (x in interaction[iCounter].answerChoices) {
+        for (x in interaction[counter].answerChoices) {
             var choices = $("<div>");
-
-            choices.text(interaction[iCounter].answerChoices[x]);
+            choices.text(interaction[counter].answerChoices[x]);
             choices.attr({
                 "data-index": x
             });
@@ -565,13 +639,21 @@ $(document).ready(function () {
         //playContinue = true;
         // update and alert users choice
 
-        $(".gamePlay").html("You decide to " + interaction[iCounter].answerChoices[userSelect]);
-        responsiveVoice.speak("You decide to " + interaction[iCounter].answerChoices[userSelect]);
+        // makes button after user chooses
+        var buttonSpotDiv = $("<div class='col-sm-3' id='buttonSpot'>");
+        $("#gameId").append(buttonSpotDiv);
+        var next = $("<button>");
+        next.text("Continue");
+        next.addClass("btn btn-success continue");
+        $("#buttonSpot").append(next);
 
-        var ideal = interaction[iCounter].consequences.ideal;
-        var positive = interaction[iCounter].consequences.positive;
-        var negative = interaction[iCounter].consequences.negative;
-        var nothing = interaction[iCounter].consequences.nothing;
+        $(".gamePlay").html("You decide to " + interaction[counter].answerChoices[userSelect]);
+        responsiveVoice.speak("You decide to " + interaction[counter].answerChoices[userSelect]);
+
+        var ideal = interaction[counter].consequences.ideal;
+        var positive = interaction[counter].consequences.positive;
+        var negative = interaction[counter].consequences.negative;
+        var nothing = interaction[counter].consequences.nothing;
 
         //if statements to add consequences for each choice
         if (userSelect == "idealChoice") {
@@ -585,11 +667,15 @@ $(document).ready(function () {
             itemsDisplay();
 
 
-            health += 50;
+            playerHp += 50;
             playerScore += 100;
+            // score.push(playerScore);
+            scoreRef.update({
+                playerScore: playerScore
+            })
             console.log(health);
             console.log(playerScore);
-            console.log(highScore);
+            // console.log(highScore);
             //return to map feature
 
             updateDisplay();
@@ -598,16 +684,16 @@ $(document).ready(function () {
         } else if (userSelect == "positiveChoice") {
             console.log("positive Choice");
             $(".gamePlay").append(": " + positive);
-            health += 25;
+            playerHp += 25;
             playerScore += 50;
-
-            database.ref().push({
+            // score.push(playerScore);
+            scoreRef.update({
                 playerScore: playerScore
             })
-
-            highScore();
-
-            console.log(highScore);
+            // $(".scenario").hide();
+            // highScore();
+            updateDisplay();
+            // console.log(highScore);
 
             if (userSelect == interaction[2].answerChoices.positiveChoice) {
                 var image = $("<img>")
@@ -625,44 +711,50 @@ $(document).ready(function () {
             //return to main map feature
             updateDisplay();
             // chooseSidekick();
-            $(".continue").show();
+            // $(".continue").show();
 
 
         } else if (userSelect == "nothingChoice") {
             console.log("nothing happens");
             $(".gamePlay").append(": " + nothing);
             //add button to end interaction or give user a chance to try again
-            console.log(highScore);
+            // console.log(highScore);
             // return to main map feature
 
 
             updateDisplay();
-            $(".continue").show();
+            // $(".continue").show();
         }
         if (userSelect == "negativeChoice") {
             console.log("negative choice");
             $(".gamePlay").append(": " + negative);
-            health -= 25;
+            pleayerHp -= 25;
             playerScore -= 25;
 
             //return to main map feature
 
-            $(".continue").show();
-            console.log(highScore);
+            // $(".continue").show();
+            // console.log(highScore);
             updateDisplay();
         }
     }
 
 
 
-    $(".continue").on("click", function () {
-        console.log("continue was clicked");
+    $("#gameId").on("click", ".continue", function () {
+        console.log("carpos" + carLastPos);
+        insideMode = false;
 
         // playContinue = false;
-        $("#gameId").addClass("game-container");
-        $(".game-container").removeClass("interactions" + iCounter);
-        $(".userStuff").hide();
-        $(".car").show()
+        $("#gameId").addClass("game-container").addClass("game-container" + counter);
+        $("#gameId").removeClass(interaction[counter].class);
+        $(".userStuff").show();
+        // $(".scenario").hide();
+        trashCanGenerator();
+        doorGenerator();
+        car.css(carLastPos);
+
+        // $(".car").show()
 
 
         //.addClass("game-container" + counter);
@@ -673,12 +765,12 @@ $(document).ready(function () {
 
         console.log("interaction # " + iCounter);
 
-        $("#door").show();
+        // $("#door").show();
 
         //hides the game play panel
-        $(".gamePlay").hide();
+        $(".gamePlay").show();
 
-        $(".continue").hide();
+        // $(".continue").hide();
 
 
     });
