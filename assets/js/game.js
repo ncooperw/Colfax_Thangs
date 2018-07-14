@@ -10,7 +10,7 @@ var t;
 var insideMode = false;
 var spawnX;
 var spawnY;
-var door;   
+var door;
 var door = $("<img id='door' src='assets/images/DoorOpening-gif.gif'>");
 var car = $("<img class='car' src='assets/images/p1-carRight.png'>");
 car.css({
@@ -227,20 +227,30 @@ trashcanStates = {
 };
 // doorGenerator();
 trashCanGenerator();
+
 function doorGenerator() {
-    
+
     door.removeAttr("src");
     door.attr("src", 'assets/images/DoorOpening-gif.gif');
-    
+
     console.log(counter);
-    if(counter === 2) { 
-        door.css({top:105,left:410});
+    if (counter === 2) {
+        door.css({
+            top: 105,
+            left: 410
+        });
         $("#gameId").append(door);
-    } else if(counter === 5) {
-        door.css({top:79,left:400});
+    } else if (counter === 5) {
+        door.css({
+            top: 79,
+            left: 400
+        });
         $("#gameId").append(door);
-    } else if(counter === 8) {
-        door.css({top:132,left:440});
+    } else if (counter === 8) {
+        door.css({
+            top: 132,
+            left: 440
+        });
         $("#gameId").append(door);
     }
     
@@ -249,7 +259,7 @@ var randomNumber;
 
 function trashCanGenerator() {
     randomNumber = Math.floor(Math.random() * 5);
-    console.log("rand" +randomNumber);
+    console.log("rand" + randomNumber);
     $("#gameId").empty();
     car.css({
         top: carYAxis,
@@ -270,9 +280,9 @@ function trashCanGenerator() {
         });
         $("#gameId").append(trashHtml);
     }
-var pp1;
-var pp2;
-var distanceCheck;
+    var pp1;
+    var pp2;
+    var distanceCheck;
     $(".trash").click(function () {
         //clicking trashcan data2 makes a sidekick/item pop up
     
@@ -286,7 +296,7 @@ var distanceCheck;
         if (distanceCheck < 120) {
 
             //clicking trashcan data2 makes a sidekick/item pop up
-            if ($(this).attr("data") == randomNumber){
+            if ($(this).attr("data") == randomNumber) {
                 gainSidekick();
             }
 
@@ -453,24 +463,18 @@ $(document).keydown(function (e) {
             $(car).attr("src","assets/images/p1-car-turning-NE.png").addClass("carTurning").removeClass("carUpDown");
             if (pos.top < 210){
                 car.animate({
-                    top: "-=0px"
-                }, 100); 
-            } else {
-               car.animate({
-                top: "-=20px"
-            }, 100); 
-            }
-            $(car).removeAttr("data", "north").attr("data", "east");
-        } else if ($(car).attr("data") === "south"){
-            $(car).attr("src","assets/images/p1-car-turning-ES.png").removeClass("carUpDown").addClass("carTurning");
-            if (pos.top > 360){
+                    left: "+=20px"
+                }, 100);
+                $(car).attr("src", "assets/images/p1-car-turning-ES.png").addClass("carTurning");
+            } else if ($(car).attr("data") === "west") {
+                $(car).removeAttr("data", "west").attr("data", "south");
                 car.animate({
-                    top: "+=0px"
-                }, 100); 
+                    left: "-=20px"
+                }, 100);
+                $(car).attr("src", "assets/images/p1-car-turning-WS.png").addClass("carTurning");
             } else {
-               car.animate({
-                top: "+=20px"
-            }, 100); 
+                $(car).attr("data", "south").attr("src", "assets/images/p1-carDown.png").addClass("carUpDown").removeClass("carTurning");
+                car.css("top", "+=20px");
             }
             $(car).removeAttr("data", "south").attr("data", "east");    
         } else {
@@ -533,22 +537,21 @@ $(document).keydown(function (e) {
     
 })
 
-var kittens = ["Devin","Jen","Jared","Dylan","Charlie","Bryan","Colin"];
+var kittens = ["Devin", "Jen", "Jared", "Dylan", "Charlie", "Bryan", "Colin"];
 
-    function gainSidekick() {
-        
-        var arrNum = Math.floor(Math.random() * kittens.length);
-        var sidekit = $("<img>");
-        var displayDiv = $("<div>");
-        var kittenName = $("<p class='text-center'>" + kittens[arrNum] + "</p>");
-        var apiImage = "https://robohash.org/" + kittens[arrNum] + "/?set=set4";
-        sidekit.attr("src", apiImage).addClass("imgItems img-thumbnail");
-        console.log(apiImage);
-        displayDiv.addClass("item");
-        displayDiv.append(sidekit).append(kittenName);
-        $("#gameId").append(displayDiv);
-        $(".sidekick").append(displayDiv);
-        kittens.splice(arrNum, 1);
-        console.log(kittens);
-    }
+function gainSidekick() {
 
+    var arrNum = Math.floor(Math.random() * kittens.length);
+    var sidekit = $("<img>");
+    var displayDiv = $("<div>");
+    var kittenName = $("<p class='text-center'>" + kittens[arrNum] + "</p>");
+    var apiImage = "https://robohash.org/" + kittens[arrNum] + "/?set=set4";
+    sidekit.attr("src", apiImage).addClass("imgItems img-thumbnail");
+    console.log(apiImage);
+    displayDiv.addClass("item");
+    displayDiv.append(sidekit).append(kittenName);
+    $("#gameId").append(displayDiv);
+    $(".sidekick").append(displayDiv);
+    kittens.splice(arrNum, 1);
+    console.log(kittens);
+}

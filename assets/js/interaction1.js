@@ -1,5 +1,3 @@
-
-
 $(document).ready(function () {
 
     var config = {
@@ -13,79 +11,93 @@ $(document).ready(function () {
     firebase.initializeApp(config);
 
     var database = firebase.database();
-  
+
     var newUserID;
-    var ref = database.ref("user")
-   
     var newUser;
-  
-    
-    
-    firebase.auth().onAuthStateChanged(function (user) { /**************** */
-      
+    var ref = database.ref("user")
+
+
+    $("#startGamePlay").on("click", function () {
+
+        firebase.auth().onAuthStateChanged(function (user) {
+            console.log("clicky")
+            console.log(user.uiu);
+        })
+    });
+
+    // firebase.auth().onAuthStateChanged(function (user) { /**************** */
+
     //  newUserID = user.uid;
     //  console.log(user.uid);
     //  console.log(newUserID)
-        // newUser = ref.child(newUserID)
-    })
+    // newUser = ref.child(newUserID)
+    // })
 
 
     var playerRef = ref.child("player1");
     var bossRef = ref.child("boss");
+    var inventoryRef = ref.child("inventory");
+    var sideKitsRef = ref.child("SideKits")
+    var scoreRef = ref.child("score");
     // var userRef = ref.child(newUserID)
     // console.log(userRef);
-    var bossAp = 0;
-    var bossHp = 0;
+    // var bossAp = 0;
+    // var bossHp = 0;
     initializeDatabase();
 
     bossRef.on("value", function (snapshot) {
         console.log(snapshot.val())
         bossAp = snapshot.val().ap;
         bossHp = snapshot.val().hp;
-
-        // bossHp--;
-
-        bossRef.update({
-            ap: bossAp,
-            hp: bossHp,
-        })
+        console.log(bossHp)
     });
+
     playerRef.on("value", function (snapshot) {
         console.log(snapshot.val())
         playerAp = snapshot.val().ap;
         playerHp = snapshot.val().hp;
-
-        // bossHp--;
-
-        playerRef.update({
-            ap: playerAp,
-            hp: playerHp,
-        })
     });
 
+    // initializeDatabase();
 
-    $(document).on("click", "#special", function () {
-        console.log("clicked")
-        bossHp = bossHp + 10;
+    sideKitsRef.on("value", function (snapshot) {
 
-        bossRef.update({
-            hp: bossHp,
-        })
-        console.log(bossHp)
     })
+
+    inventoryRef.on("value", function (snapshot) {
+
+    })
+    scoreRef.on("value", function (snapshot) {
+        score = playerScore;
+
+    })
+
+
+    // $(document).on("click", "#special", function () {
+    //     console.log("clicked")
+    //     bossHp = bossHp + 10;
+
+    //     bossRef.update({
+    //         hp: bossHp,
+    //     })
+    //     console.log(bossHp)
+    // })
 
 
 
     function initializeDatabase() {
         playerRef.set({
-            hp: 400,
+            hp: 200,
             ap: 10,
-            highScore: null,
         })
         bossRef.set({
             hp: 1000,
-            ap: 25,
+            ap: 100,
         })
+        scoreRef.set({
+            score: null,
+        })
+
     }
     //play again button global variable
     var playAgain = $("<button>");
@@ -95,45 +107,96 @@ $(document).ready(function () {
 
     //function loads the player card and attack button
     function bossFight() {
-        $(".game-container").empty();
-        $(".game-container").addClass("boss-container");
-        $(".boss-container").removeClass("game-container");
-        var bossDiv = $("<div>");
-        bossDiv.addClass("row");
 
-        var p1card = $("<div>");
-        p1card.addClass("card player-card");
+                $("#gameId").empty();
+                $("#gameId").addClass("boss-container");
+                $(".boss-container").removeClass("game-container11");
 
-        var p1img = $("<img>");
-        p1img.addClass("card-img-top");
-        p1img.attr("src", "https://placekitten.com/g/200/150");
-        p1card.append(p1img);
 
-        var p1 = $("<h5>")
-        p1.addClass("card-title");
-        p1.text("Player 1");
-        p1card.append(p1);
+                var bossDiv = $("<div>");
+                bossDiv.addClass("row");
 
-        var p1HP = $("<p>");
-        p1HP.addClass("card-text");
-        p1HP.attr("id", "p1hp")
-        p1HP.text("HP: " + playerHp);
+                //boss card ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        var p1AP = $("<p>");
-        p1AP.addClass("card-text");
-        p1AP.attr("id", "p1ap");
-        p1AP.text("AP: " + playerAp);
-        p1card.append(p1HP).append(p1AP);
+                var bossCard = $("<div>");
+                bossCard.addClass("card");
+                bossCard.attr("id", "boss-stat-card")
 
-        var attack = $("<button>");
-        attack.addClass("btn btn-primary attack");
-        attack.text("Attack!");
-        p1card.append(attack);
+                var b = $("<h5>");
+                b.addClass("no-pad");
+                b.text("Demogorgan");
+                bossCard.append(b);
 
-        bossDiv.append(p1card);
+                var bossHealth = $("<p>");
+                bossHealth.text("HP: " + bossHp);
+                bossHealth.attr("id", "bossHp")
+                bossHealth.addClass("no-pad");
+                bossCard.append(bossHealth);
 
-        $(".boss-container").append(bossDiv)
-    }
+                var bossAttack = $("<p>");
+                bossAttack.addClass("no-pad");
+                bossAttack.text("AP: " + bossAp);
+                bossAttack.attr("id", "bossAp")
+                bossCard.append(bossAttack);
+
+                var gorgan = $("<img>");
+                gorgan.attr("src", "assets/images/p1-boss.png")
+                gorgan.addClass("boss-image");
+                $(bossDiv).append(gorgan);
+
+                setTimeout(function() {
+                    $(".boss-image").fadeIn(3000);
+                }, 1)
+               
+
+                //boss card ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+                //player card~~~~~~~~~~~~~~~~~~~
+
+                var p1card = $("<div>");
+                p1card.addClass("card player-card");
+
+                var p1img = $("<img>");
+                p1img.addClass("card-img-top");
+                p1img.attr("src", "https://placekitten.com/g/100/100");
+                p1card.append(p1img);
+
+                var p1 = $("<h5>")
+                p1.addClass("no-pad");
+                p1.addClass("card-title");
+                p1.text("Player 1");
+                p1card.append(p1);
+
+                var p1HP = $("<p>");
+                p1HP.addClass("no-pad");
+                p1HP.addClass("card-text");
+                p1HP.attr("id", "p1hp")
+                p1HP.text("HP: " + playerHp);
+
+                var p1AP = $("<p>");
+                p1AP.addClass("no-pad");
+                p1AP.addClass("card-text");
+                p1AP.attr("id", "p1ap");
+                p1AP.text("AP: " + playerAp);
+                p1card.append(p1HP).append(p1AP);
+
+                var attack = $("<button>");
+                attack.addClass("btn btn-primary attack");
+                attack.text("Attack!");
+                p1card.append(attack);
+
+                //player card~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+                bossDiv.append(p1card);
+                bossDiv.append(bossCard);
+
+
+                $(".boss-container").append(bossDiv)
+            // });
+            }
+      
 
     function winning() {
         $(".boss-container").empty();
@@ -167,6 +230,7 @@ $(document).ready(function () {
                 winning();
             }
             $("#p1hp").text("HP: " + playerHp);
+            $("#bossHp").text("HP: " + bossHp);
         }
         if (playerHp <= 0) {
             console.log("you lose")
@@ -233,30 +297,30 @@ $(document).ready(function () {
 
     //-----------------------Interactions-----------------------------------
 
-    var interaction =  { 
-        2:{
-             story: "You hear a band playing and the music is intoxicating. Click the door to go inside.",
-  
-             scenario: "You cannot maintain clear thought while the music is playing. You are surrounded by people...at least they look like people, it is hard to tell.",
-  
-             question: "There is an empty container lying at the doorway. Do you:",
-  
-             answerChoices: {
-                 idealChoice: "Grab the container and capture the music",
-                 nothingChoice: "Turn around and leave, you want no part of whatever is going on here.",
-                 negativeChoice: "Go to the bar and get a drink",
-                 positiveChoice: "move towards the stage and start dancing."
-             },
-             consequences: {
-                 ideal: "increases your health and adds the item to your inventory. Nice!",
-                 nothing: "nothing happens. You are no closer to uncovering the truth.",
-                 negative: "Your drink is poisoned. You wake up the next day in the alley and you lose health.",
-                 positive: "Everyone starts laughing at you because your dancing is off beat. You use your new found notoriety to make a new friend."
-             },
-             item: "music box with hypnotic music",
-             itemImg: "assets/images/musicbox.jpg",
-             class: "interactions0"
-         },
+    var interaction = {
+        2: {
+            story: "You hear a band playing and the music is intoxicating. Click the door to go inside.",
+
+            scenario: "You cannot maintain clear thought while the music is playing. You are surrounded by people...at least they look like people, it is hard to tell.",
+
+            question: "There is an empty container lying at the doorway. Do you:",
+
+            answerChoices: {
+                idealChoice: "Grab the container and capture the music",
+                nothingChoice: "Turn around and leave, you want no part of whatever is going on here.",
+                negativeChoice: "Go to the bar and get a drink",
+                positiveChoice: "move towards the stage and start dancing."
+            },
+            consequences: {
+                ideal: "increases your health and adds the item to your inventory. Nice!",
+                nothing: "nothing happens. You are no closer to uncovering the truth.",
+                negative: "Your drink is poisoned. You wake up the next day in the alley and you lose health.",
+                positive: "Everyone starts laughing at you because your dancing is off beat. You use your new found notoriety to make a new friend."
+            },
+            item: "music box with hypnotic music",
+            itemImg: "assets/images/musicbox.jpg",
+            class: "interactions0"
+        },
         5: {
             story: "You find yourself outside of a quaint little country bar. You decide to go inside.",
 
@@ -312,7 +376,9 @@ $(document).ready(function () {
     var userSelect;
     //var playContinue = false;
     var playerScore = 0;
-    var highScore = 0; //get high score from Firebase
+    // var bossHp;
+    // var bossAp;
+    // var highScore = 0; //get high score from Firebase
     var highPlayer = "No one";
     var health = 100;
     var sidekick = [];
@@ -326,7 +392,7 @@ $(document).ready(function () {
     console.log("continue button should be hidden");
 
     $(".gamePlay").hide();
-    
+
 
     //continue button gets made 
     // var buttonSpotDiv = $("<div class='col-sm-3' id='buttonSpot'>");
@@ -340,51 +406,63 @@ $(document).ready(function () {
     // $(".continue").hide();
 
 
-    database.ref().on("value", function (snapshot) {
-        //If Firebase has a highscore and a highPlayer, update our client-side variables
-        if (snapshot.child("highScore").exists() && snapshot.child("highPlayer").exists()) {
-            //set the variables for highScore/highPlayer equal to the stored values.
-            highPlayer = snapshot.val().highPlayer;
-            highScore = snapshot.val().highScore;
-            console.log(highPlayer);
-            console.log(highScore);
+    //continue button gets made 
+    // var buttonSpotDiv = $("<div class='col-sm-3' id='buttonSpot'>");
+    // buttonSpotDiv.append(".interactions");
+    // var next = $("<button>");
+    // next.text("Continue");
+    // next.addClass("btn btn-success continue");
 
-        }
-    })
+    // $("#buttonSpot").append(next);
 
-    function storeHighScore() {
-        //var playerName = $("#player-name").val().trim();
-        //playerScore = parseInt($("#score").val().trim());
-        //console.log(playerName);
-        console.log(playerScore);
-        if (playerScore > highScore) {
-            console.warn("new high Score");
-            database.ref().set({
-                highPlayer: playerName,
-                highScore: playerScore,
-            });
-        }
+    // $(".continue").hide();
 
-    }
-    storeHighScore();
+
+    // database.ref().on("value", function (snapshot) {
+    //     //If Firebase has a highscore and a highPlayer, update our client-side variables
+    //     if (snapshot.child("highScore").exists() && snapshot.child("highPlayer").exists()) {
+    //         //set the variables for highScore/highPlayer equal to the stored values.
+    //         highPlayer = snapshot.val().highPlayer;
+    //         highScore = snapshot.val().highScore;
+    //         console.log(highPlayer);
+    //         console.log(highScore);
+
+    //     }
+    // })
+
+    // function storeHighScore() {
+    //     //var playerName = $("#player-name").val().trim();
+    //     //playerScore = parseInt($("#score").val().trim());
+    //     //console.log(playerName);
+    //     console.log(playerScore);
+    //     if (playerScore > highScore) {
+    //         console.warn("new high Score");
+    //         database.ref().set({
+    //             highPlayer: playerName,
+    //             highScore: playerScore,
+    //         });
+    //     }
+
+    // }
+    // storeHighScore();
 
     function updateDisplay() {
         //Player Stats display --> create function upon game start
-        $("#health").html("Player HP: " + health);
+        $("#health").html("Player HP: " + playerHp);
         $("#score").html("Score: " + playerScore);
-        if (playerScore <= highScore) {
-            playerScore = highScore;
-        }
+        // if (playerScore <= highScore) {
+        //     playerScore = highScore;
+        // }
         var newDiv = $("<div>");
-        newDiv.append(highPlayer);
-        $("#highScore").append("High Player: " + newDiv);
-        $("#highScore").html("High Score: " + highScore);
+        // newDiv.append(highPlayer);
+        // $("#highScore").append("High Player: " + newDiv);
+        // $("#highScore").html("High Score: " + highScore);
         $(".interactions").hide();
-        //push to Firebase
-        ref.update({
-            highScore: highScore,
+        // //push to Firebase
+        // ref.update({
+        //     highScore: highScore,
 
-        })
+        // })
     }
 
     updateDisplay();
@@ -406,7 +484,7 @@ $(document).ready(function () {
         $(".inventory").append(imgDiv);
         inventory.push(interaction[counter].item);
         //push inventory to Firebase
-        database.ref().push({
+        ref.update({
             inventory: inventory
         })
 
@@ -467,7 +545,7 @@ $(document).ready(function () {
         })
     }
 
-    
+
     //create a function upon click of the door
     $("#gameId").on('click', "#door", function doorExplore() {
         pp1 = $(this)[0].offsetLeft - car.position().left
@@ -475,30 +553,30 @@ $(document).ready(function () {
         distanceCheck = Math.sqrt((pp1 * pp1) + (pp2 * pp2));
 
         if (distanceCheck < 150) {
-        insideMode = true;
-        $("#gameId").empty();
-        console.log("clicked");
-        //as door is clicked, read story
-        responsiveVoice.speak(interaction[counter].story);
-        //clear the screen
-        // $("#door").hide();
+            insideMode = true;
+            $("#gameId").empty();
+            console.log("clicked");
+            //as door is clicked, read story
+            responsiveVoice.speak(interaction[counter].story);
+            //clear the screen
+            // $("#door").hide();
 
-        //hides the game play panel
-        // $(".gamePlay").hide();
-        console.log("gamePlay hidden");
-       
-        //changes the background 
-        $("#gameId").addClass(interaction[counter].class).removeClass("game-container").removeClass("game-container" + counter);
+            //hides the game play panel
+            // $(".gamePlay").hide();
+            console.log("gamePlay hidden");
 
-        var choices = $("<div>");
-        // choices.addClass("interactions" + iCounter);
-        choices.attr("id", "int");
+            //changes the background 
+            $("#gameId").addClass(interaction[counter].class).removeClass("game-container").removeClass("game-container" + counter);
 
-        $("#game").append(choices)
+            var choices = $("<div>");
+            // choices.addClass("interactions" + iCounter);
+            choices.attr("id", "int");
 
-        //Scenario and choices come up
+            $("#game").append(choices)
 
-        beginInteraction();
+            //Scenario and choices come up
+
+            beginInteraction();
         } else {
             responsiveVoice.speak("Try getting closer");
         }
@@ -506,7 +584,7 @@ $(document).ready(function () {
 
     // doorExplore();
 
-   
+
 
 
     function beginInteraction() {
@@ -517,7 +595,7 @@ $(document).ready(function () {
         // $(".userStuff").show();
         //$("#gameId").addClass("")
 
-        
+
         //showing the text with the story and the user choices
         $(".interactions").show();
         $(".scenario").html("<h2>Scenario: " + interaction[counter].scenario + "</h2>");
@@ -591,11 +669,22 @@ $(document).ready(function () {
             itemsDisplay();
 
 
-            health += 50;
+            playerHp += 50;
+            bossHp -= 50
+            playerRef.update({
+                hp: playerHp,
+            })
+            bossRef.update({
+                hp: bossHp,
+            })
             playerScore += 100;
+            // score.push(playerScore);
+            scoreRef.update({
+                playerScore: playerScore
+            })
             console.log(health);
             console.log(playerScore);
-            console.log(highScore);
+            // console.log(highScore);
             //return to map feature
 
             updateDisplay();
@@ -604,16 +693,24 @@ $(document).ready(function () {
         } else if (userSelect == "positiveChoice") {
             console.log("positive Choice");
             $(".gamePlay").append(": " + positive);
-            health += 25;
+            playerHp += 25;
+            bossHp -= 25;
             playerScore += 50;
+            playerRef.update({
+                hp: playerHp,
+            })
+            bossRef.update({
+                hp: bossHp,
+            })
 
-            database.ref().push({
+            // score.push(playerScore);
+            scoreRef.update({
                 playerScore: playerScore
             })
             // $(".scenario").hide();
-            highScore();
+            // highScore();
             updateDisplay();
-            console.log(highScore);
+            // console.log(highScore);
 
             if (userSelect == interaction[2].answerChoices.positiveChoice) {
                 var image = $("<img>")
@@ -623,7 +720,7 @@ $(document).ready(function () {
                 $(".sidekick").append(imgDiv);
                 sidekick.push("RuPaul");
 
-                database.ref().push({
+                ref.push({
                     sidekick: sidekick
                 });
             }
@@ -638,7 +735,7 @@ $(document).ready(function () {
             console.log("nothing happens");
             $(".gamePlay").append(": " + nothing);
             //add button to end interaction or give user a chance to try again
-            console.log(highScore);
+            // console.log(highScore);
             // return to main map feature
 
 
@@ -648,13 +745,21 @@ $(document).ready(function () {
         if (userSelect == "negativeChoice") {
             console.log("negative choice");
             $(".gamePlay").append(": " + negative);
-            health -= 25;
+
+            pleayerHp -= 25;
             playerScore -= 25;
+            bossHp += 25;
+            playerRef.update({
+                hp: playerHp,
+            })
+            bossRef.update({
+                hp: bossHp,
+            })
 
             //return to main map feature
 
             // $(".continue").show();
-            console.log(highScore);
+            // console.log(highScore);
             updateDisplay();
         }
     }
@@ -673,9 +778,9 @@ $(document).ready(function () {
         trashCanGenerator();
         doorGenerator();
         car.css(carLastPos);
-        
+
         // $(".car").show()
-      
+
 
         //.addClass("game-container" + counter);
 
@@ -695,7 +800,42 @@ $(document).ready(function () {
 
     });
 
- 
+    //boss fight tester code
+    // $(document).on("click", "#continue-to-boss", function () {
+    //     console.log("clicky")
+    //     $("#gameId").removeClass("game-container" + counter);
+    //     $("#gameId").empty();
+    //     $("#gameId").addClass("game-container"+ "11")
+
+    //     var bossButton = $("<button>");
+    //     bossButton.addClass("btn btn-danger");
+    //     bossButton.attr("id", "start-boss");
+    //     bossButton.text("Fight!")
+
+    //     var bossText = $("<div>");
+    //     bossText.attr("id", "boss-story");
+    //     bossText.addClass("boss-paragraph");
+    //     bossText.text("Something russles in the bushes...")
+    //     setTimeout(function(){
+    //         responsiveVoice.speak("Prepare to defnd yourself human!");
+    //         bossText.text("Prepare to defend yourself Human!")
+    //         bossText.append(bossButton);
+
+    //     }, 3000)
+    
+    //     $(".game-container11").append(bossText);
+
+       
+
+    
+    
+    //     $(document).on("click", "#start-boss", function(){
+    //         bossFight();
+    //     })
+      
+    // })
+
+
 
 
 

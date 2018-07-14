@@ -30,4 +30,24 @@
 
 //if Boss's HP reaches zero or below, User Wins!
 
+$(document).on("click", "#continue-to-boss", function () {
+
+    var bossText = $("<div>");
+    bossText.attr("id", "boss-story");
+    bossText.addClass("boss-paragraph");
+    bossText.text("Something russles in the bushes...")
+    setTimeout(function(){
+        resposiveVoice.speak("Prepare to defnd yourself human!");
+        bossText.text("Prepare to defend yourself Human!")
+    }, 3000)
+
+
+    $(".game-container11").append(bossText);
+
+    $("#start-boss").on("click", function(){
+        bossfight();
+    })
+  
+})
+
 
