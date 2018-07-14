@@ -6,12 +6,14 @@
 var progressTotal = 0;
 var counter = 0;
 var t;
-
+var insideMode = false;
 var spawnX;
 var spawnY;
+var door;   
+var door = $("<img id='door' src='assets/images/DoorOpening-gif.gif'>");
 var car = $("<img class='car' src='assets/images/p1-carRight.png'>");
 car.css({
-    top: 200,
+    top: 380,
     left: 0
 });
 $("#gameId").append(car);
@@ -19,49 +21,49 @@ var pos;
 var carYAxis;
 var trashSpawnPoints = [
     [{
-            streetY: 100,
-            streetX: 350,
+            streetY: 450,
+            streetX: 850,
             state: "closed"
         },
         {
-            streetY: 150,
-            streetX: 300,
+            streetY: 120,
+            streetX: 850,
             state: "closed"
 
         },
         {
-            streetY: 170,
-            streetX: 420,
+            streetY: 120,
+            streetX: 80,
             state: "closed"
 
         }
     ],
     [{
-            streetY: 120,
+            streetY: 125,
             streetX: 80,
             state: "closed"
         },
         {
-            streetY: 430,
-            streetX: 90,
+            streetY: 440,
+            streetX: 80,
             state: "closed"
 
         },
         {
-            streetY: 120,
-            streetX: 820,
+            streetY: 130,
+            streetX: 810,
             state: "closed"
 
         }
     ],
     [{
-            streetY: 110,
+            streetY: 120,
             streetX: 260,
             state: "closed"
         },
         {
             streetY: 450,
-            streetX: 550,
+            streetX: 530,
             state: "closed"
 
         },
@@ -73,7 +75,7 @@ var trashSpawnPoints = [
         }
     ],
     [{
-            streetY: 100,
+            streetY: 110,
             streetX: 40,
             state: "closed"
         },
@@ -92,25 +94,25 @@ var trashSpawnPoints = [
     ],
     [{
             streetY: 120,
-            streetX: 135,
+            streetX: 145,
             state: "closed"
         },
         {
-            streetY: 450,
-            streetX: 450,
+            streetY: 460,
+            streetX: 420,
             state: "closed"
 
         },
         {
-            streetY: 150,
-            streetX: 800,
+            streetY: 100,
+            streetX: 760,
             state: "closed"
 
         }
     ],
     [{
             streetY: 450,
-            streetX: 690,
+            streetX: 670,
             state: "closed"
         },
         {
@@ -133,7 +135,7 @@ var trashSpawnPoints = [
         },
         {
             streetY: 95,
-            streetX: 880,
+            streetX: 840,
             state: "closed"
 
         },
@@ -145,13 +147,13 @@ var trashSpawnPoints = [
         }
     ],
     [{
-            streetY: 90,
+            streetY: 110,
             streetX: 200,
             state: "closed"
         },
         {
             streetY: 460,
-            streetX: 480,
+            streetX: 450,
             state: "closed"
 
         },
@@ -163,18 +165,18 @@ var trashSpawnPoints = [
         }
     ],
     [{
-            streetY: 117,
-            streetX: 250,
+            streetY: 125,
+            streetX: 295,
             state: "closed"
         },
         {
-            streetY: 140,
-            streetX: 880,
+            streetY: 145,
+            streetX: 840,
             state: "closed"
 
         },
         {
-            streetY: 430,
+            streetY: 440,
             streetX: 210,
             state: "closed"
 
@@ -187,12 +189,12 @@ var trashSpawnPoints = [
         },
         {
             streetY: 450,
-            streetX: 200,
+            streetX: 240,
             state: "closed"
 
         },
         {
-            streetY: 450,
+            streetY: 455,
             streetX: 725,
             state: "closed"
 
@@ -205,7 +207,7 @@ var trashSpawnPoints = [
         },
         {
             streetY: 460,
-            streetX: 880,
+            streetX: 670,
             state: "closed"
 
         },
@@ -222,10 +224,33 @@ trashcanStates = {
     "open": "<img class='trashOpened' src='assets/images/p1-trashcan-opened.png'>",
     "closed": "<img class='trash' src='assets/images/p1-trashcan-unopened.png'>"
 };
-
+// doorGenerator();
+trashCanGenerator();
+function doorGenerator() {
+    
+    door.removeAttr("src");
+    door.attr("src", 'assets/images/DoorOpening-gif.gif');
+    
+    console.log(counter);
+    if(counter === 2) { 
+        door.css({top:105,left:410});
+        $("#gameId").append(door);
+    } else if(counter === 5) {
+        door.css({top:79,left:400});
+        $("#gameId").append(door);
+    } else if(counter === 8) {
+        door.css({top:132,left:440});
+        $("#gameId").append(door);
+    }
+    // door.css({top:100,left:100});
+    // $("#gameId").append(door);
+}
+var randomNumber;
 // for (j = 0; j < trashSpawnPoints.length; j++) {
 // trash = $("<img class='trash' src='assets/images/p1-trashcan-unopened.png'>")
 function trashCanGenerator() {
+    randomNumber = Math.floor(Math.random() * 5);
+    console.log("rand" +randomNumber);
     $("#gameId").empty();
     car.css({
         top: carYAxis,
@@ -246,18 +271,29 @@ function trashCanGenerator() {
         });
         $("#gameId").append(trashHtml);
     }
-
+var pp1;
+var pp2;
+var distanceCheck;
     $(".trash").click(function () {
-        //clicking trash can makes a sidekick pop up
-        //if ((this).data() == 0){
-        gainSidekick();
-        //}
+        //clicking trashcan data2 makes a sidekick/item pop up
+        
+        // if ($(this).attr("data") == 2 && distanceCheck < 120){
+        // gainSidekick();
+        // }
+        
+        console.log($(this).attr("data"));
 
-        var pp1 = $(this)[0].offsetLeft - car.position().left
-        var pp2 = $(this)[0].offsetTop - car.position().top
-        var distanceCheck = Math.sqrt((pp1 * pp1) + (pp2 * pp2));
+        pp1 = $(this)[0].offsetLeft - car.position().left
+        pp2 = $(this)[0].offsetTop - car.position().top
+        distanceCheck = Math.sqrt((pp1 * pp1) + (pp2 * pp2));
 
         if (distanceCheck < 120) {
+
+            //clicking trashcan data2 makes a sidekick/item pop up
+            if ($(this).attr("data") == randomNumber){
+                gainSidekick();
+            }
+
             trashSpawnPoints[counter][$(this).attr("data")].state = "open";
             // trashSpawnPoints[counter][$(this).attr("data")].streetX = (trashSpawnPoints[counter][$(this).attr("data")].streetX - 40);
             // trashHtml.css({top: trashCan.streetY, left: trashCan.streetX});
@@ -269,7 +305,8 @@ function trashCanGenerator() {
             console.log($(this)[0].offsetLeft);
             console.log(car.position().left);
         } else {
-            //audio "drive closer"
+            responsiveVoice.speak("Try getting closer");
+
         }
         console.log(distanceCheck);
         // console.log((trashSpawnPoints[counter][$(this).attr("data")].streetX));
@@ -296,12 +333,14 @@ function trashCanGenerator() {
 //     trash.css({top: 100, left: 400});
 //     $(".game-container").append(trash); 
 // }
-
-
+// doorGenerator();
+var carLastPos;
 $(document).keydown(function (e) {
     // car = $("<img id='car' src=assets/images/p1-carRight.png>");
+    if(insideMode == false){
     var pos = car.position();
     var carYAxis = parseInt(pos.top) - 1;
+    carLastPos = pos;
     //console.log(pos);
     //console.log(counter);
     //drive left
@@ -313,20 +352,26 @@ $(document).keydown(function (e) {
             } else {
                 car.css("left", "-=20px");
             }
-        } else if (pos.left < 10) {
+        } else if (pos.left < 20) {
+            if (counter !==0) {
             $("#gameId").removeClass("game-container" + counter);
             counter--;
-            // progress = false;
-            // progressTotal = false;
             trashCanGenerator();
+            doorGenerator();
             $("#gameId").addClass("game-container" + counter);
             car.css({
                 top: carYAxis,
                 left: 800
             });
+            // if (counter === 0) {
+            //     $(".trash").hide();
+            // }
             // console.log("progress "+progress);
             console.log("progress total " + progressTotal);
-
+            } else {
+                
+                car.css("left", "-=0px");
+            }
         } else {
             // $(car).attr("src", "assets/images/p1-carLeft.png");
             car.css("left", "-=50px");
@@ -338,14 +383,24 @@ $(document).keydown(function (e) {
     //drive up
     else if (e.keyCode == 38 || e.keyCode == 87) {
         $(car).attr("src", "assets/images/p1-carUp.png").addClass("carUpDown");
-        if (counter === 10 && pos.left > 615) {
+        if (counter === 10 && pos.left > 675) {
             car.css("top", "-=20px");
-        } else if (pos.top < 200) {
-            car.css("top", "-=0px");
+            if(pos.top < 20){
+                insideMode = true;
+                $("#gameId").empty();
+                $("#gameId").removeClass("game-container" + counter);
+                counter++;
+                $("#gameId").addClass("game-container" + counter);
+
+            }
+            console.log(car.position());
+        } 
+        else if (pos.top < 200){
+        car.css("top", "-=0px"); 
         } else {
             // $(car).attr("src", "assets/images/p1-carUp.png");
             car.css("top", "-=20px");
-            console.log(carYAxis);
+            // console.log(carYAxis);
         }
     }
 
@@ -353,30 +408,31 @@ $(document).keydown(function (e) {
     else if (e.keyCode == 39 || e.keyCode == 68) {
         $(car).attr("src", "assets/images/p1-carRight.png").removeClass("carUpDown");
         if (counter === 10) {
-            if (pos.left > 755) {
+            if (pos.left > 775) {
                 car.css("left", "-=0px");
+                responsiveVoice.speak("Look up there, go north");
             } else {
                 car.css("left", "+=50px");
             }
         } else if (pos.left > 800) {
             $("#gameId").removeClass("game-container" + counter);
             counter++;
+            $("#gameId").addClass("game-container" + counter);
             if (counter > progressTotal) {
                 progressTotal++;
             }
 
             trashCanGenerator();
-            $("#gameId").addClass("game-container" + counter);
-            console.log("progress total " + progressTotal);
+            doorGenerator();
+            console.log("progress total "+progressTotal);
             console.log("counter " + counter);
-            car.css({
-                top: carYAxis,
-                left: 0
-            });
-
+            car.css({top: carYAxis, left: 0});
+            
         } else {
             car.css("left", "+=50px");
-
+          
+        
+            
         }
     }
 
@@ -390,7 +446,7 @@ $(document).keydown(function (e) {
             car.css("top", "+=20px");
         }
     }
-
+    }
 })
 
 

@@ -233,29 +233,31 @@ $(document).ready(function () {
 
     //-----------------------Interactions-----------------------------------
 
-    var interaction = [{
-            story: "You hear a band playing and the music is intoxicating. Click the door to go inside.",
-
-            scenario: "You cannot maintain clear thought while the music is playing. You are surrounded by people...at least they look like people, it is hard to tell.",
-
-            question: "There is an empty container lying at the doorway. Do you:",
-
-            answerChoices: {
-                idealChoice: "Grab the container and capture the music",
-                nothingChoice: "Turn around and leave, you want no part of whatever is going on here.",
-                negativeChoice: "Go to the bar and get a drink",
-                positiveChoice: "move towards the stage and start dancing."
-            },
-            consequences: {
-                ideal: "increases your health and adds the item to your inventory. Nice!",
-                nothing: "nothing happens. You are no closer to uncovering the truth.",
-                negative: "Your drink is poisoned. You wake up the next day in the alley and you lose health.",
-                positive: "Everyone starts laughing at you because your dancing is off beat. You use your new found notoriety to make a new friend."
-            },
-            item: "music box with hypnotic music",
-            itemImg: "assets/images/musicbox.jpg",
-        },
-        {
+    var interaction =  { 
+        2:{
+             story: "You hear a band playing and the music is intoxicating. Click the door to go inside.",
+  
+             scenario: "You cannot maintain clear thought while the music is playing. You are surrounded by people...at least they look like people, it is hard to tell.",
+  
+             question: "There is an empty container lying at the doorway. Do you:",
+  
+             answerChoices: {
+                 idealChoice: "Grab the container and capture the music",
+                 nothingChoice: "Turn around and leave, you want no part of whatever is going on here.",
+                 negativeChoice: "Go to the bar and get a drink",
+                 positiveChoice: "move towards the stage and start dancing."
+             },
+             consequences: {
+                 ideal: "increases your health and adds the item to your inventory. Nice!",
+                 nothing: "nothing happens. You are no closer to uncovering the truth.",
+                 negative: "Your drink is poisoned. You wake up the next day in the alley and you lose health.",
+                 positive: "Everyone starts laughing at you because your dancing is off beat. You use your new found notoriety to make a new friend."
+             },
+             item: "music box with hypnotic music",
+             itemImg: "assets/images/musicbox.jpg",
+             class: "interactions0"
+         },
+        5: {
             story: "You find yourself outside of a quaint little country bar. You decide to go inside.",
 
             scenario: "Once you are inside the bar, you realize that this is not your typical, run of the mill country bar. There are shirtless men EVERYWHERE and many of the women are extremely tall. As you make your way further into the bar you",
@@ -275,9 +277,10 @@ $(document).ready(function () {
                 positive: "Your master winkery causes the person to walk over to you. As they come closer, you see that you have just winked at...RuPaul! You spend the rest of the evening talking candidly and learning the drag queen secrets."
             },
             item: "Cowboy Hat",
-            itemImg: "assets/images/cowboyHat.jpg"
+            itemImg: "assets/images/cowboyHat.jpg",
+            class: "interactions1"
         },
-        {
+        8: {
             story: "The smell of bacon permeates the air. You see a line of people down the street and wonder what they are waiting for. When you look up, you see the sign, 'Pete's Kitchen'. Click the door to go inside.",
 
             scenario: "The smell is the best smell that you have ever encountered. It makees you hungry and satisfied at the same time.",
@@ -298,10 +301,11 @@ $(document).ready(function () {
             },
             item: "Golden Fork",
             itemImg: "assets/images/goldFork.jpg",
+            class: "interactions2"
 
-        },
+        }
 
-    ];
+    };
 
 
     var currrentScenario;
@@ -325,14 +329,15 @@ $(document).ready(function () {
     
 
     //continue button gets made 
+    // var buttonSpotDiv = $("<div class='col-sm-3' id='buttonSpot'>");
+    // buttonSpotDiv.append(".interactions");
+    // var next = $("<button>");
+    // next.text("Continue");
+    // next.addClass("btn btn-success continue");
 
-    var next = $("<button>");
-    next.text("Continue");
-    next.addClass("btn btn-success continue");
+    // $("#buttonSpot").append(next);
 
-    $("#buttonSpot").append(next);
-
-    $(".continue").hide();
+    // $(".continue").hide();
 
 
     database.ref().on("value", function (snapshot) {
@@ -391,7 +396,7 @@ $(document).ready(function () {
         imgDiv.addClass("item img-thumbnail");
 
         //var image = $("<img>")
-        image.attr("src", interaction[iCounter].itemImg);
+        image.attr("src", interaction[counter].itemImg).addClass("imgItems");
         console.log(image);
         imgDiv.append(image);
 
@@ -399,7 +404,7 @@ $(document).ready(function () {
 
 
         $(".inventory").append(imgDiv);
-        inventory.push(interaction[iCounter].item);
+        inventory.push(interaction[counter].item);
         //push inventory to Firebase
         database.ref().push({
             inventory: inventory
@@ -429,7 +434,7 @@ $(document).ready(function () {
 
             var limit = 1;
 
-            var input = sidekicks[iCounter];
+            var input = sidekicks[counter];
 
             var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + input + "&limit=" + limit + "&api_key=dc6zaTOxFJmzC";
             $.ajax({
@@ -462,23 +467,31 @@ $(document).ready(function () {
         })
     }
 
+    
     //create a function upon click of the door
-    $("#door").on('click', function doorExplore() {
+    $("#gameId").on('click', "#door", function doorExplore() {
+        pp1 = $(this)[0].offsetLeft - car.position().left
+        pp2 = $(this)[0].offsetTop - car.position().top
+        distanceCheck = Math.sqrt((pp1 * pp1) + (pp2 * pp2));
+
+        if (distanceCheck < 150) {
+        insideMode = true;
+        $("#gameId").empty();
         console.log("clicked");
         //as door is clicked, read story
-        responsiveVoice.speak(interaction[iCounter].story);
+        responsiveVoice.speak(interaction[counter].story);
         //clear the screen
-        $("#door").hide();
+        // $("#door").hide();
 
         //hides the game play panel
-        $(".gamePlay").hide();
+        // $(".gamePlay").hide();
         console.log("gamePlay hidden");
-
+       
         //changes the background 
-        $("#gameId").addClass("interactions" + iCounter);
+        $("#gameId").addClass(interaction[counter].class).removeClass("game-container").removeClass("game-container" + counter);
 
         var choices = $("<div>");
-        choices.addClass("interactions" + iCounter);
+        // choices.addClass("interactions" + iCounter);
         choices.attr("id", "int");
 
         $("#game").append(choices)
@@ -486,6 +499,9 @@ $(document).ready(function () {
         //Scenario and choices come up
 
         beginInteraction();
+        } else {
+            responsiveVoice.speak("Try getting closer");
+        }
     });
 
     // doorExplore();
@@ -496,25 +512,24 @@ $(document).ready(function () {
     function beginInteraction() {
 
         //removing game screen
-        $("#gameId").removeClass("game-container");
-        $(".car").hide();
-        $(".userStuff").show();
+        // $("#gameId").removeClass("game-container");
+        // $(".car").hide();
+        // $(".userStuff").show();
         //$("#gameId").addClass("")
 
-
+        
         //showing the text with the story and the user choices
         $(".interactions").show();
-        $(".scenario").html("<h2>Scenario: " + interaction[iCounter].scenario + "</h2>");
-        responsiveVoice.speak(interaction[iCounter].scenario);
-        $(".question").html("<h3>" + interaction[iCounter].question + "</h3>");
+        $(".scenario").html("<h2>Scenario: " + interaction[counter].scenario + "</h2>");
+        responsiveVoice.speak(interaction[counter].scenario);
+        $(".question").html("<h3>" + interaction[counter].question + "</h3>");
         console.log(iCounter);
         var x;
 
         // for (var i = 0; i < interaction.answerChoices.length; i++) 
-        for (x in interaction[iCounter].answerChoices) {
+        for (x in interaction[counter].answerChoices) {
             var choices = $("<div>");
-
-            choices.text(interaction[iCounter].answerChoices[x]);
+            choices.text(interaction[counter].answerChoices[x]);
             choices.attr({
                 "data-index": x
             });
@@ -548,13 +563,21 @@ $(document).ready(function () {
         //playContinue = true;
         // update and alert users choice
 
-        $(".gamePlay").html("You decide to " + interaction[iCounter].answerChoices[userSelect]);
-        responsiveVoice.speak("You decide to " + interaction[iCounter].answerChoices[userSelect]);
+        // makes button after user chooses
+        var buttonSpotDiv = $("<div class='col-sm-3' id='buttonSpot'>");
+        $("#gameId").append(buttonSpotDiv);
+        var next = $("<button>");
+        next.text("Continue");
+        next.addClass("btn btn-success continue");
+        $("#buttonSpot").append(next);
 
-        var ideal = interaction[iCounter].consequences.ideal;
-        var positive = interaction[iCounter].consequences.positive;
-        var negative = interaction[iCounter].consequences.negative;
-        var nothing = interaction[iCounter].consequences.nothing;
+        $(".gamePlay").html("You decide to " + interaction[counter].answerChoices[userSelect]);
+        responsiveVoice.speak("You decide to " + interaction[counter].answerChoices[userSelect]);
+
+        var ideal = interaction[counter].consequences.ideal;
+        var positive = interaction[counter].consequences.positive;
+        var negative = interaction[counter].consequences.negative;
+        var nothing = interaction[counter].consequences.nothing;
 
         //if statements to add consequences for each choice
         if (userSelect == "idealChoice") {
@@ -587,9 +610,9 @@ $(document).ready(function () {
             database.ref().push({
                 playerScore: playerScore
             })
-
+            // $(".scenario").hide();
             highScore();
-
+            updateDisplay();
             console.log(highScore);
 
             if (userSelect == interaction[2].answerChoices.positiveChoice) {
@@ -608,7 +631,7 @@ $(document).ready(function () {
             //return to main map feature
             updateDisplay();
             // chooseSidekick();
-            $(".continue").show();
+            // $(".continue").show();
 
 
         } else if (userSelect == "nothingChoice") {
@@ -620,7 +643,7 @@ $(document).ready(function () {
 
 
             updateDisplay();
-            $(".continue").show();
+            // $(".continue").show();
         }
         if (userSelect == "negativeChoice") {
             console.log("negative choice");
@@ -630,7 +653,7 @@ $(document).ready(function () {
 
             //return to main map feature
 
-            $(".continue").show();
+            // $(".continue").show();
             console.log(highScore);
             updateDisplay();
         }
@@ -638,14 +661,20 @@ $(document).ready(function () {
 
 
 
-    $(".continue").on("click", function () {
-        console.log("continue was clicked");
+    $("#gameId").on("click", ".continue", function () {
+        console.log("carpos" + carLastPos);
+        insideMode = false;
 
         // playContinue = false;
-        $("#gameId").addClass("game-container");
-        $(".game-container").removeClass("interactions" + iCounter);
-        $(".userStuff").hide();
-        $(".car").show()
+        $("#gameId").addClass("game-container").addClass("game-container" + counter);
+        $("#gameId").removeClass(interaction[counter].class);
+        $(".userStuff").show();
+        // $(".scenario").hide();
+        trashCanGenerator();
+        doorGenerator();
+        car.css(carLastPos);
+        
+        // $(".car").show()
       
 
         //.addClass("game-container" + counter);
@@ -656,12 +685,12 @@ $(document).ready(function () {
 
         console.log("interaction # " + iCounter);
 
-        $("#door").show();
+        // $("#door").show();
 
         //hides the game play panel
-        $(".gamePlay").hide();
+        $(".gamePlay").show();
 
-        $(".continue").hide();
+        // $(".continue").hide();
 
 
     });
