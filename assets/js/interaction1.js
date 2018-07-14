@@ -340,6 +340,18 @@ $(document).ready(function () {
     $(".continue").hide();
 
 
+    //continue button gets made 
+    // var buttonSpotDiv = $("<div class='col-sm-3' id='buttonSpot'>");
+    // buttonSpotDiv.append(".interactions");
+    // var next = $("<button>");
+    // next.text("Continue");
+    // next.addClass("btn btn-success continue");
+
+    // $("#buttonSpot").append(next);
+
+    // $(".continue").hide();
+
+
     // database.ref().on("value", function (snapshot) {
     //     //If Firebase has a highscore and a highPlayer, update our client-side variables
     //     if (snapshot.child("highScore").exists() && snapshot.child("highPlayer").exists()) {
@@ -372,19 +384,19 @@ $(document).ready(function () {
         //Player Stats display --> create function upon game start
         $("#health").html("Player HP: " + health);
         $("#score").html("Score: " + playerScore);
-        if (playerScore <= highScore) {
-            playerScore = highScore;
-        }
+        // if (playerScore <= highScore) {
+        //     playerScore = highScore;
+        // }
         var newDiv = $("<div>");
-        newDiv.append(highPlayer);
-        $("#highScore").append("High Player: " + newDiv);
-        $("#highScore").html("High Score: " + highScore);
+        // newDiv.append(highPlayer);
+        // $("#highScore").append("High Player: " + newDiv);
+        // $("#highScore").html("High Score: " + highScore);
         $(".interactions").hide();
-        //push to Firebase
-        ref.update({
-            highScore: highScore,
+        // //push to Firebase
+        // ref.update({
+        //     highScore: highScore,
 
-        })
+        // })
     }
 
     updateDisplay();
