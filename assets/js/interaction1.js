@@ -108,9 +108,9 @@ $(document).ready(function () {
     //function loads the player card and attack button
     function bossFight() {
 
-                $(".game-container").empty();
-                $(".game-container").addClass("boss-container");
-                $(".boss-container").removeClass("game-container");
+                $("#gameId").empty();
+                $("#gameId").addClass("boss-container");
+                $(".boss-container").removeClass("game-container11");
 
 
                 var bossDiv = $("<div>");
@@ -214,7 +214,7 @@ $(document).ready(function () {
         $(".boss-container").append(playAgain);
     }
     // $(document).on("click", "#fight-boss", function(){
-    bossFight();
+    // bossFight();
     // })
 
 
@@ -799,6 +799,41 @@ $(document).ready(function () {
 
 
     });
+
+    //boss fight tester code
+    // $(document).on("click", "#continue-to-boss", function () {
+    //     console.log("clicky")
+    //     $("#gameId").removeClass("game-container" + counter);
+    //     $("#gameId").empty();
+    //     $("#gameId").addClass("game-container"+ "11")
+
+    //     var bossButton = $("<button>");
+    //     bossButton.addClass("btn btn-danger");
+    //     bossButton.attr("id", "start-boss");
+    //     bossButton.text("Fight!")
+
+    //     var bossText = $("<div>");
+    //     bossText.attr("id", "boss-story");
+    //     bossText.addClass("boss-paragraph");
+    //     bossText.text("Something russles in the bushes...")
+    //     setTimeout(function(){
+    //         responsiveVoice.speak("Prepare to defnd yourself human!");
+    //         bossText.text("Prepare to defend yourself Human!")
+    //         bossText.append(bossButton);
+
+    //     }, 3000)
+    
+    //     $(".game-container11").append(bossText);
+
+       
+
+    
+    
+    //     $(document).on("click", "#start-boss", function(){
+    //         bossFight();
+    //     })
+      
+    // })
 
 
 

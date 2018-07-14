@@ -298,6 +298,15 @@ body {
     border-color: rgb(158, 16, 6);
 }
 
+#skip {
+    background-color: black;
+    font-size: 30px;
+    color: rgb(158, 16, 6);
+    border-color: rgb(158, 16, 6);
+    margin-left: 10px;
+
+}
+
 .boss-container {
     width: 900px;
     height: 500px;
