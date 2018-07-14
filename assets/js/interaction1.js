@@ -1,5 +1,3 @@
-
-
 $(document).ready(function () {
 
     var config = {
@@ -13,21 +11,28 @@ $(document).ready(function () {
     firebase.initializeApp(config);
 
     var database = firebase.database();
-  
+
     var newUserID;
     var ref = database.ref("user")
-   
+
     var newUser;
-  
-    
-    
-    firebase.auth().onAuthStateChanged(function (user) { /**************** */
-      
-    //  newUserID = user.uid;
-    //  console.log(user.uid);
-    //  console.log(newUserID)
+
+
+
+    $("#startGamePlay").on("click", function(){
+
+     firebase.auth().onAuthStateChanged(function (user) {
+        console.log("clicky")
+        console.log(user.uiu);
+    })});
+
+    // firebase.auth().onAuthStateChanged(function (user) { /**************** */
+
+        //  newUserID = user.uid;
+        //  console.log(user.uid);
+        //  console.log(newUserID)
         // newUser = ref.child(newUserID)
-    })
+    // })
 
 
     var playerRef = ref.child("player1");
@@ -322,7 +327,7 @@ $(document).ready(function () {
     console.log("continue button should be hidden");
 
     $(".gamePlay").hide();
-    
+
 
     //continue button gets made 
 
@@ -335,33 +340,33 @@ $(document).ready(function () {
     $(".continue").hide();
 
 
-    database.ref().on("value", function (snapshot) {
-        //If Firebase has a highscore and a highPlayer, update our client-side variables
-        if (snapshot.child("highScore").exists() && snapshot.child("highPlayer").exists()) {
-            //set the variables for highScore/highPlayer equal to the stored values.
-            highPlayer = snapshot.val().highPlayer;
-            highScore = snapshot.val().highScore;
-            console.log(highPlayer);
-            console.log(highScore);
+    // database.ref().on("value", function (snapshot) {
+    //     //If Firebase has a highscore and a highPlayer, update our client-side variables
+    //     if (snapshot.child("highScore").exists() && snapshot.child("highPlayer").exists()) {
+    //         //set the variables for highScore/highPlayer equal to the stored values.
+    //         highPlayer = snapshot.val().highPlayer;
+    //         highScore = snapshot.val().highScore;
+    //         console.log(highPlayer);
+    //         console.log(highScore);
 
-        }
-    })
+    //     }
+    // })
 
-    function storeHighScore() {
-        //var playerName = $("#player-name").val().trim();
-        //playerScore = parseInt($("#score").val().trim());
-        //console.log(playerName);
-        console.log(playerScore);
-        if (playerScore > highScore) {
-            console.warn("new high Score");
-            database.ref().set({
-                highPlayer: playerName,
-                highScore: playerScore,
-            });
-        }
+    // function storeHighScore() {
+    //     //var playerName = $("#player-name").val().trim();
+    //     //playerScore = parseInt($("#score").val().trim());
+    //     //console.log(playerName);
+    //     console.log(playerScore);
+    //     if (playerScore > highScore) {
+    //         console.warn("new high Score");
+    //         database.ref().set({
+    //             highPlayer: playerName,
+    //             highScore: playerScore,
+    //         });
+    //     }
 
-    }
-    storeHighScore();
+    // }
+    // storeHighScore();
 
     function updateDisplay() {
         //Player Stats display --> create function upon game start
@@ -490,7 +495,7 @@ $(document).ready(function () {
 
     // doorExplore();
 
-   
+
 
 
     function beginInteraction() {
@@ -646,7 +651,7 @@ $(document).ready(function () {
         $(".game-container").removeClass("interactions" + iCounter);
         $(".userStuff").hide();
         $(".car").show()
-      
+
 
         //.addClass("game-container" + counter);
 
@@ -666,7 +671,7 @@ $(document).ready(function () {
 
     });
 
- 
+
 
 
 
