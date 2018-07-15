@@ -335,7 +335,7 @@ $(document).ready(function () {
             answerChoices: {
                 negativeChoice: "Upon further observation, you are extremely uncomfortable. You try to walk towards the door in an easy, smooth manner.  ",
                 nothingChoice: "Stand in the middle of the room and observe the situation.",
-                idealChoice: "Go up to the bar and order a drink from a bar tender who is wearing a rainbow cowboy hat.",
+                idealChoice: "Go up to the bar and order a drink from a bar tender who is wearing a rainbow-cowboy-hat.",
                 positiveChoice: "You spy an attractive person across the bar and wink at them."
             },
             consequences: {
