@@ -34,7 +34,7 @@ $(document).ready(function () {
     var database = firebase.database();
     var auth = firebase.auth();
 
-    var ui = new firebaseui.auth.AuthUI(auth); 
+    var ui = new firebaseui.auth.AuthUI(auth);
 
     ui.start('#firebaseui-auth-container', {
         signInOptions: [
@@ -72,8 +72,32 @@ $(document).ready(function () {
 
     $("#auth").append(skipAuth)
 
-    $("#auth").on("click", function(){
-        window.location="index1.html";
+    $(document).on("click", "#skip-auth", function () {
+        window.location = "index1.html";
+
+
+    //     console.log("clicky")
+    //     $("#auth").empty();
+
+    //     var instructions = $("<div>");
+    //     instructions.addClass("instruct");
+    //     instructions.text("Something ... strange is happening on Colfax tonight. You should investigate before you meet your firends at the civic center. Hop in you car and use the arrow keys to navigate and the mouse to inspect suspicious or interesting things on the street.")
+
+
+
+    //     var readInstructions = $("<button>");
+    //     readInstructions.addClass("btn btn-danger");
+    //     readInstructions.attr("id", "done-reading");
+    //     readInstructions.text("I'm Ready!");
+
+    //     instructions.append(readInstructions);
+
+    //     $("#auth").append(instructions);
+
+    // })
+
+    // $(document).on("click", "#done-reading", function () {
+    //     window.location = "index1.html";
     })
 
     //auth listener
@@ -85,8 +109,8 @@ $(document).ready(function () {
     //     }
 
     // });
-    
-    
+
+
     firebase.auth().signOut().then(function () {
         // Sign-out successful.
     }).catch(function (error) {
@@ -136,7 +160,7 @@ $(document).ready(function () {
             $("#gif-div").append(buttDiv);
         }, 13000);
     }
- 
+
 
 
 });

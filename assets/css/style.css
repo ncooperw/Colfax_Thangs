@@ -5,19 +5,15 @@
     left: 0;
     right: 0;
     margin: auto;
-    /* padding: 0; */
     background-image: url("../images/p1-street1-bg.png");
-    /* background-size:; */
     background-repeat: no-repeat;
-    /* margin-left: 20%; */
-    /* margin-right: 20%; */
+
 }
 
 .game-container1 {
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-street2-bg.png");
-    /* background-size:; */
     background-repeat: no-repeat;
 }
 
@@ -25,7 +21,6 @@
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-ogden-bg.png");
-    /* background-size:; */
     background-repeat: no-repeat;
 }
 
@@ -33,7 +28,6 @@
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-street4-bg.png");
-    /* background-size:; */
     background-repeat: no-repeat;
 }
 
@@ -41,7 +35,6 @@
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-street5-bg.png");
-    /* background-size:; */
     background-repeat: no-repeat;
 }
 
@@ -49,7 +42,6 @@
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-charlies-bg.png");
-    /* background-size:; */
     background-repeat: no-repeat;
 }
 
@@ -57,7 +49,7 @@
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-street7-bg.png");
-    /* background-size:; */
+  
     background-repeat: no-repeat;
 }
 
@@ -65,7 +57,6 @@
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-street8-bg.png");
-    /* background-size:; */
     background-repeat: no-repeat;
 }
 
@@ -73,7 +64,6 @@
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-petes-bg.png");
-    /* background-size:; */
     background-repeat: no-repeat;
 }
 
@@ -81,7 +71,6 @@
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-street10-bg.png");
-    /* background-size:; */
     background-repeat: no-repeat;
 }
 
@@ -89,7 +78,6 @@
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-street11-bg.png");
-    /* background-size:; */
     background-repeat: no-repeat;
 }
 
@@ -97,15 +85,8 @@
     width: 900px;
     height: 500px;
     background-image: url("../images/p1-boss-bg.png");
-    /* background-size:; */
     background-repeat: no-repeat;
 }
-
-/* .rectangle {
-    height: 100px;
-    width: 50px;
-    background-color: red;
-} */
 
 .car {
     position: relative;
@@ -229,7 +210,7 @@
 }
 
 .userStuff {
-    top: 580px;
+    top: 530px;
     left: 210px;
     position: absolute;
     left: 0;
@@ -288,6 +269,10 @@ body {
     width: 1070px;
     height: 600px;
 }
+.thangsOutro {
+    width: 900px;
+    height: 500px;
+}
 
 #play-game {
     position: fixed;
@@ -312,6 +297,7 @@ body {
     color: rgb(158, 16, 6);
     font-size: 50px;
     text-align: center;
+    margin-bottom: 0;
 }
 
 #skip-auth {
@@ -333,22 +319,24 @@ body {
 }
 
 .player-card {
-    height: 220px;
-    width: 100px;
-    color: black;
+    height: 250px;
+    width: 130px;
+    color: white;
     border: rgb(100, 11, 11) solid 4px;
-    background: lightslategray;
+    background: black;
     margin: 20px;
     padding: 3px;
     position: relative;
-    top: 235px;
+    top: 205px;
     right: 530px;
+    text-align: center;
 }
 
 .attack {
     background-color: red;
     color: white;
-    border-color: black;
+    border-color: red;
+    box-shadow: lightcoral;
 }
 
 .dis {
@@ -357,19 +345,30 @@ body {
 }
 
 .attack:hover {
-    background-color: rgb(26, 2, 2);
+    background-color: rgb(61, 5, 5);
     border-color: black;
 }
 
 .dis:hover {
-    background-color: darkslategray;
+    background-color: gray;
     border-color: black;
 }
 
-
 .btn-success {
     margin: 5px;
-    background: rgb(3, 53, 82);
+    background: black;
+    border: rgb(158, 16, 6) solid 3px;
+    color: rgb(158, 16, 6);
+    position: relative;
+    top: 200px;
+    left: 290px;
+    font-size: 50px;
+}
+
+.btn-success:hover {
+    background: rgb(61, 5, 5);
+    border: black solid 3px;
+    color: rgb(158, 16, 6);
 }
 
 #invent {
@@ -379,7 +378,7 @@ body {
 .img-thumbnail {
     width: 100px;
     height: 100px;
-    margin: 10px 5px;
+    margin: 5px 2px;
 }
 
 .imgItems {
@@ -387,18 +386,25 @@ body {
     height: 90px;
 }
 
+p {
+    margin-bottom: 2px;
+}
+
 .no-pad {
     margin-bottom: 1px;
 }
 
 #boss-stat-card {
-    float: right;
-    color: black;
+    /* float: right; */
+    text-align: center;
+    color: white;
     border: rgb(100, 11, 11) solid 4px;
-    background: lightslategray;
+    background: black;
     margin: 20px;
     padding: 3px;
     position: relative;
+   bottom: 450px;
+    left: 700px;
     height: 100px;
     /* left: 560px;  */
     width: 150px;
@@ -412,8 +418,94 @@ body {
     /* opacity: 0.0; */
     display: none;
 }
+
 .lose {
     background: black;
+}
+
+.bButt {
+    font-size: 50px;
+    color:rgb(158, 16, 6);
+    position: relative;
+    top: 200px;
+    left: 50px;
+    background: black;
+    border: rgb(158, 16, 6) solid 3px;
+}
+
+.bButt:hover {
+    border: black solid 2px;
+    color: black;
+    background: rgb(61, 5, 5);
+}
+
+#boss-story {
+    font-size: 20px;
+    position: relative;
+    top: 100px;
+}
+
+#boss-stat-card,
+.player-card {
+    display: none;
+}
+
+#game-over {
+    font-size: 50px;
+    color: rgb(158, 16, 6);
+    text-align: center;
+}
+
+.game-over {
+    font-size: 45px;
+    color: rgb(158, 16, 6);
+    text-align: center;
+}
+
+.play-again,{
+    position: fixed;
+    left: 470px;
+    background-color: black;
+    font-size: 30px;
+    color: rgb(158, 16, 6);
+    border-color: rgb(158, 16, 6);
+}
+
+.play-again:hover, #done-reading, {
+    background-color: rgb(61, 5, 5);
+    border-color: black;
+    align-self: center;
+}
+
+#done-reading{
+    position: relative;
+    top: 70px;
+    right: 70px;
+    background-color: black;
+    font-size: 30px;
+    color: rgb(158, 16, 6);
+    border-color: rgb(158, 16, 6);
+
+}
+
+.end-still {
+    width: 500px;
+    height: 300px;
+    position: relative;
+    left: 220px;
+    top: 100px;
+}
+
+.min, .instruct {
+    position: relative;
+    top: 30px;
+    left: 270px;
+    color: rgb(158, 16, 6);
+    width: 500px;
+    height: 300px;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
 }
 
 /* megan's styling */
