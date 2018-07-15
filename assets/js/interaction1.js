@@ -77,7 +77,7 @@ $(document).ready(function () {
 
         var instructions = $("<div>");
         instructions.addClass("instruct");
-        instructions.text("Something ... strange is happening on Colfax tonight. You should investigate before you meet your firends at the civic center. Hop in you car and use the arrow keys to navigate and the mouse to inspect suspicious or interesting things on the street.")
+        instructions.html("<h4>Something ... strange is happening on Colfax tonight. You should investigate before you meet your firends at the civic center.</h4><h4> Hop in you car and use the W, A, S, and D keys or your arrow keys to navigate, and use the mouse to inspect suspicious or interesting things on the street.</h4>")
 
 
 
@@ -575,7 +575,7 @@ $(document).ready(function () {
             playerHp += 50;
             playerAp += 10;
             bossHp -= 75;
-            bossAp -= 25;
+            bossAp -= 10;
             playerScore += 100;
 
             updateDisplay();
@@ -587,7 +587,7 @@ $(document).ready(function () {
             playerHp += 25;
             playerAp += 15;
             bossHp -= 50;
-            bossAp -= 25;
+            bossAp -= 10;
             playerScore += 50;
             updateDisplay();
 

@@ -579,15 +579,18 @@ function gainSidekick() {
     displayDiv.append(sidekit).append(kittenName);
     $("#gameId").append(displayDiv);
     $(".sidekick").append(displayDiv);
+
+    $(".sidekick").fadeIn(3000);
     kittens.splice(arrNum, 1);
     // console.log(kittens);
 
-    sideKittens.push(apiImage);   
+    sideKittens.push(apiImage);  
+    responsiveVoice.speak("You've found a kitten! We'll name it after someone helpful.") 
 
     playerHp += 50;
     playerScore += 40;
     playerAp +=25;
-    bossHp -= 575;
-    bossAp -= 20;
+    bossHp -= 50;
+    bossAp -= 5;
     updateDisplay();
 }
