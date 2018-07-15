@@ -118,6 +118,7 @@
     width: 50px;
     height: 60px;
 }
+
 .carTurning {
     position: relative;
     width: 80px;
@@ -298,7 +299,8 @@ body {
     border-color: rgb(158, 16, 6);
 }
 
-#skip, #skip-auth {
+#skip,
+#skip-auth {
     background-color: black;
     font-size: 30px;
     color: rgb(158, 16, 6);
@@ -343,11 +345,27 @@ body {
     right: 530px;
 }
 
-.btn-primary {
+.attack {
     background-color: red;
-    color: black;
+    color: white;
     border-color: black;
 }
+
+.dis {
+    background-color: gray;
+    border-color: black;
+}
+
+.attack:hover {
+    background-color: rgb(26, 2, 2);
+    border-color: black;
+}
+
+.dis:hover {
+    background-color: darkslategray;
+    border-color: black;
+}
+
 
 .btn-success {
     margin: 5px;
@@ -368,6 +386,7 @@ body {
     width: 90px;
     height: 90px;
 }
+
 .no-pad {
     margin-bottom: 1px;
 }
@@ -392,6 +411,9 @@ body {
     left: 350px;
     /* opacity: 0.0; */
     display: none;
+}
+.lose {
+    background: black;
 }
 
 /* megan's styling */

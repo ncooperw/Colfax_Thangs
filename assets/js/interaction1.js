@@ -43,7 +43,7 @@ $(document).ready(function () {
     // console.log(userRef);
     // var bossAp = 0;
     // var bossHp = 0;
-    initializeDatabase();
+  
 
     bossRef.on("value", function (snapshot) {
         console.log(snapshot.val())
@@ -88,7 +88,7 @@ $(document).ready(function () {
     function initializeDatabase() {
         playerRef.set({
             hp: 200,
-            ap: 10,
+            ap: 1000,
         })
         bossRef.set({
             hp: 1000,
@@ -97,9 +97,15 @@ $(document).ready(function () {
         scoreRef.set({
             score: null,
         })
+        inventoryRef.set({
+        })
+        sideKitsRef.set({
+        })
 
     }
+    initializeDatabase();
     //play again button global variable
+
     var playAgain = $("<button>");
     playAgain.addClass("btn btn-seconadry play-again");
     playAgain.text("Play Again?")
@@ -201,29 +207,8 @@ $(document).ready(function () {
         // });
     }
     function reset() {
-        counter = 0;
-        $(".inventory").empty();
-        $(".sidekick").empty();
-        updateDisplay();
-        initializeDatabase();
-        $("#gameId").empty();
-        $("#gameId").removeClass(".boss-container");
-        $("#gameId").addClass("game-container");
-        $(".userStuff").show();
-        // $(".scenario").hide();
-        trashCanGenerator();
-        doorGenerator();
-        car.css({
-            top: 380,
-            left: 0
-        });
 
-        console.log("gamejs " + counter);
-
-        iCounter++;
-
-        console.log("interaction # " + iCounter);
-        $(".gamePlay").show();
+        window.location = "index1.html"
 
     }
 
@@ -235,17 +220,20 @@ $(document).ready(function () {
 
 
     function winning() {
-        $(".boss-container").empty();
+        $("#gameId").empty();
+        $("#gameId").removeClass("game-container").removeClass("boss-container");
 
-        var openGif = $("<img>");
-        openGif.addClass("thangsIntro");
-        openGif.attr("src", "assets/images/Colfax Thangs - The End.gif");
 
-        $(".boss-container").append(openGif)
+        var theEnd = $("<img>");
+        theEnd.addClass("thangsIntro");
+        theEnd.attr("src", "assets/images/Colfax Thangs - The End.gif");
+        $("#gameId").append(theEnd)
+        var newSound = document.createElement("audio");
+        newSound.src = "assets/sounds/theme.mp3";
+        newSound.play();
 
-        $(".boss-container").html("<h1> Congradulations! You won with a score of: " + playerScore + "</h1>")
-
-        $(".boss-container").append(playAgain);
+        $("#gameId").html("<h1> Congradulations! You won with a score of: " + playerScore + "</h1>")
+        $("#gameId").append(playAgain);
       
     }
 
@@ -253,13 +241,12 @@ $(document).ready(function () {
     function gameOver() {
         //load game-over screen
         $(".boss-container").empty();
-        $(".boss-container").html("<h1> Game Over </h1>")
+        $(".boss-container").addClass("lose");
+        $(".lose").removeClass("boss-container");
 
-        $(".boss-container").append(playAgain);
-        // $(".play-again").on("click", function () {
+        $(".lose").html("<h1 id='game-over'> Game Over </h1>")
 
-        //     playAgain();
-        // })
+        $(".lose").append(playAgain);
    
     }
     // })
@@ -269,8 +256,14 @@ $(document).ready(function () {
     function attack() {
         if (playerHp && bossHp > 0) {
             bossHp -= playerAp;
+            score += 50;
+            updateDisplay()
             if (bossHp > 0) {
-                playerHp -= bossAp;
+                // setTimeout(function(){
+                    playerHp -= bossAp;
+                    updateDisplay();
+                // }, 500)
+         
             } else {
                 console.log("you win")
                 console.log(bossHp)
@@ -287,60 +280,15 @@ $(document).ready(function () {
     }
 
     $(document).on("click", ".attack", function () {
-        console.log("clicked")
+      
         attack();
+        $(".attack").addClass("dis")
+        $(".dis").removeClass("attack");
+        setTimeout(function(){
+            $(".dis").addClass("attack");
+            $(".attack").removeClass("dis");
+        }, 1200)
     })
-
-    //--------------------------------------------firebase & boss
-
-    //------------first page--game start------------------
-    // var newSound = document.createElement("audio");
-
-    // function mystery() {
-
-    //     var mysteryDiv = $("<div>");
-    //     mysteryDiv.addClass("mDiv")
-    //     $("#game-box").append(mysteryDiv);
-
-    //     var mystery = $("<button>");
-    //     mystery.addClass("mystery");
-    //     mystery.attr("id", "mysteryButt")
-    //     mystery.text("?");
-    //     $(mysteryDiv).append(mystery);
-    // }
-
-    // function startPage() {
-    //     var buttDiv = $("<div>");
-    //     buttDiv.addClass("pButt");
-
-    //     var playGame = $("<button>");
-    //     playGame.attr("id", "play-game");
-    //     playGame.addClass("btn btn-danger");
-    //     playGame.text("Begin?");
-    //     buttDiv.append(playGame)
-
-    //     var newSound = document.createElement("audio");
-    //     newSound.src = "theme.mp3";
-    //     newSound.play();
-
-    //     var gifDiv = $("<div>");
-    //     gifDiv.addClass("gif-div");
-    //     $("game-box").append(gifDiv);
-
-    //     var openGif = $("<img>");
-    //     openGif.addClass("thangsIntro");
-    //     openGif.attr("src", "Colfax Thangs Open.gif");
-
-    //     $(".gif-div").append(openGif)
-
-    //     setTimeout(function () {
-    //         openGif.attr("src", "colfax_thangs_static.gif");
-    //         $(".gif-div").append(buttDiv);
-    //     }, 1000);
-    // }
-
-
-    //------------first page --game start----------------
 
 
     //-----------------------Interactions-----------------------------------
@@ -422,10 +370,8 @@ $(document).ready(function () {
 
     var currrentScenario;
     var userSelect;
-    //var playContinue = false;
     var playerScore = 0;
-    // var bossHp;
-    // var bossAp;
+  
     // var highScore = 0; //get high score from Firebase
     var highPlayer = "No one";
     var health = 100;
@@ -437,33 +383,8 @@ $(document).ready(function () {
 
     //need to hide continue button upon game start
 
-    console.log("continue button should be hidden");
-
     $(".gamePlay").hide();
 
-
-    //continue button gets made 
-    // var buttonSpotDiv = $("<div class='col-sm-3' id='buttonSpot'>");
-    // buttonSpotDiv.append(".interactions");
-    // var next = $("<button>");
-    // next.text("Continue");
-    // next.addClass("btn btn-success continue");
-
-    // $("#buttonSpot").append(next);
-
-    // $(".continue").hide();
-
-
-    //continue button gets made 
-    // var buttonSpotDiv = $("<div class='col-sm-3' id='buttonSpot'>");
-    // buttonSpotDiv.append(".interactions");
-    // var next = $("<button>");
-    // next.text("Continue");
-    // next.addClass("btn btn-success continue");
-
-    // $("#buttonSpot").append(next);
-
-    // $(".continue").hide();
 
 
     // database.ref().on("value", function (snapshot) {
@@ -500,8 +421,8 @@ $(document).ready(function () {
         $("#score").html("Score: " + playerScore);
         // if (playerScore <= highScore) {
         //     playerScore = highScore;
-        // }
-        var newDiv = $("<div>");
+        
+        // var newDiv = $("<div>");
         // newDiv.append(highPlayer);
         // $("#highScore").append("High Player: " + newDiv);
         // $("#highScore").html("High Score: " + highScore);
@@ -848,10 +769,12 @@ $(document).ready(function () {
 
     });
 
- 
+    $(document).on("click", "#start-boss", function(){
+        bossFight();
+      })
 
 
-    bossFight();
+    // bossFight();
 
 });
 
@@ -884,9 +807,7 @@ $(document).ready(function () {
 
 
 
-//     $(document).on("click", "#start-boss", function(){
-      
-//     })
+   
 
 // })
 
