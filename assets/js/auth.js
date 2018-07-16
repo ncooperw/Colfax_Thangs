@@ -125,7 +125,7 @@ $(document).ready(function () {
             openGif.attr("src", "assets/images/colfax_thangs_static.gif");
             $("#skip").hide();
             $("#gif-div").append(buttDiv);
-        }, 13000);
+        }, 12500);
     }
 
 
