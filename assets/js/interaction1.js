@@ -286,9 +286,9 @@ $(document).ready(function () {
                     left: "-=350px"
                 }, 150);
                 // setTimeout(function () {
-                    $(".boss-image").animate({
-                        left: "+=350px"
-                    }, 350)
+                $(".boss-image").animate({
+                    left: "+=350px"
+                }, 350)
                 // }, 150)
 
                 setTimeout(function () {
@@ -408,9 +408,10 @@ $(document).ready(function () {
     var sidekick = [];
     var inventory = [];
     var sidekickChoice; //user selected sidekick
-    // var 2 = false;
-    // var 5 = false;
-    // var 8 = false;
+    var doorclicker = 0;
+    var door1 = false;
+    var door2 = false;
+    var door3 = false;
 
     $(".gamePlay").hide();
 
@@ -518,16 +519,22 @@ $(document).ready(function () {
         })
     }
 
+    function doorUpdate() {
+        if (doorclicker = 1) {
+            door1 = true
+        }
+        if (doorclicker = 2) {
+            door2 = true
+        }
+        if (doorclicker = 3) {
+            door3 = true
+        }
+    }
 
-    //create a function upon click of the door
-    $("#gameId").on('click', "#door", function doorExplore() {
-        // if ((instance2 || instance5 || instance8) === false) {
-        pp1 = $(this)[0].offsetLeft - car.position().left
-        pp2 = $(this)[0].offsetTop - car.position().top
-        distanceCheck = Math.sqrt((pp1 * pp1) + (pp2 * pp2));
-
+    function checkDoor() {
         if (distanceCheck < 150) {
             insideMode = true;
+            doorclicker++
             $("#gameId").empty();
             //as door is clicked, read story
             responsiveVoice.speak(interaction[counter].story);
@@ -545,6 +552,48 @@ $(document).ready(function () {
         } else {
             responsiveVoice.speak("Try getting closer");
         }
+    }
+    //create a function upon click of the door
+    $("#gameId").on('click', "#door", function doorExplore() {
+
+
+        pp1 = $(this)[0].offsetLeft - car.position().left
+        pp2 = $(this)[0].offsetTop - car.position().top
+        distanceCheck = Math.sqrt((pp1 * pp1) + (pp2 * pp2));
+        if(door1 ===false){
+        checkDoor()
+        }
+        else if(door2 === false){
+            checkDoor()
+        }
+        else if (door3 ===false){
+            checkDoor();
+        } else {
+            responsiveVoice.speak("You've been here already today.")
+        }
+
+        // function checkDoor() {
+        //     if (distanceCheck < 150) {
+        //         insideMode = true;
+        //         doorclicker++
+        //         $("#gameId").empty();
+        //         //as door is clicked, read story
+        //         responsiveVoice.speak(interaction[counter].story);
+        //         //changes the background 
+        //         $("#gameId").addClass(interaction[counter].class).removeClass("game-container").removeClass("game-container" + counter);
+        //         var choices = $("<div>");
+        //         // choices.addClass("interactions" + iCounter);
+        //         choices.attr("id", "int");
+
+        //         $("#game").append(choices)
+
+        //         //Scenario and choices come up
+        //         beginInteraction();
+
+        //     } else {
+        //         responsiveVoice.speak("Try getting closer");
+        //     }
+        // }
         // }
     });
 
@@ -656,6 +705,7 @@ $(document).ready(function () {
             bossAp += 15;
             updateDisplay();
         }
+
     }
 
 
@@ -670,6 +720,7 @@ $(document).ready(function () {
         doorGenerator();
         car.css(carLastPos);
         // console.log("gamejs " + counter);
+        doorUpdate();
         $(".gamePlay").show();
     });
 
