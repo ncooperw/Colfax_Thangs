@@ -233,8 +233,11 @@ function doorGenerator() {
     door.removeAttr("src");
     door.attr("src", 'assets/images/DoorOpening-gif.gif');
 
+
     // console.log(counter);
     if (counter === 2) {
+        door.removeClass("doorNum5").removeClass("doorNum8")
+        door.addClass("doorNum" + counter)
         door.css({
             top: 105,
             left: 410
@@ -242,12 +245,16 @@ function doorGenerator() {
         });
         $("#gameId").append(door);
     } else if (counter === 5) {
+        door.removeClass("doorNum2").removeClass("doorNum8")
+        door.addClass("doorNum" + counter)
         door.css({
             top: 79,
             left: 400
         });
         $("#gameId").append(door);
     } else if (counter === 8) {
+        door.removeClass("doorNum2").removeClass("doorNum5")
+        door.addClass("doorNum" + counter)
         door.css({
             top: 132,
             left: 440
@@ -438,9 +445,10 @@ $(document).keydown(function (e) {
                         var bossText = $("<div>");
                         bossText.attr("id", "boss-story");
                         bossText.addClass("boss-paragraph");
-                        bossText.text("Something rustles in the bushes...")
+                        bossText.text("Something rustles in the bushes...");
+                        responsiveVoice.speak("Something rustles in the bushes...");
                         setTimeout(function () {
-                            responsiveVoice.speak("Prepare to defnd yourself human!");
+                            responsiveVoice.speak("Prepare to defend yourself... human!");
                             bossText.text("Prepare to defend yourself Human!")
                             bossText.append(bossButton);
 
