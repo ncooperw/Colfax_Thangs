@@ -471,13 +471,13 @@ p {
     border-color: rgb(158, 16, 6);
 }
 
-.play-again:hover, #done-reading, {
+.play-again:hover, {
     background-color: rgb(61, 5, 5);
     border-color: black;
     align-self: center;
 }
 
-#done-reading{
+/* #done-reading{
     position: relative;
     top: 70px;
    left: 680px;
@@ -486,7 +486,7 @@ p {
     color: rgb(158, 16, 6);
     border-color: rgb(158, 16, 6);
 
-}
+} */
 
 .end-still {
     width: 500px;
@@ -511,7 +511,20 @@ h4 {
 .sidekick {
     display: none;
 }
+.input-group {
+    width: 300px;
+    background: #333333;
+    color: white;
+    position: relative;
+    left: 630px;
+    top: 0px
+}
 
+.form-control, .input-group-text {
+    background: #333333;
+    color: white;
+    border: white solid 1px;
+}
 
 
 /* megan's styling */

@@ -20,6 +20,8 @@ $(document).ready(function () {
     var inventoryRef = ref.child("inventory");
     var sideKitsRef = ref.child("SideKits")
     var scoreRef = ref.child("score");
+    var nameRef = ref.child("name");
+    var playerInput = "";
 
 
     bossRef.on("value", function (snapshot) {
@@ -62,6 +64,9 @@ $(document).ready(function () {
         sideKitsRef.set({
 
         })
+        nameRef.set({
+            name: playerInput,
+        })
 
     }
     initializeDatabase();
@@ -77,33 +82,41 @@ $(document).ready(function () {
 
         var instructions = $("<div>");
         instructions.addClass("instruct");
-        instructions.html("<h4>Something ... strange is happening on Colfax tonight. You should investigate before you meet your firends at the civic center.</h4><h4> Hop in you car and use the W, A, S, and D keys or your arrow keys to navigate, and use the mouse to inspect suspicious or interesting things on the street.</h4>")
+        instructions.html("<h4>Something ... strange is happening on Colfax tonight. You should investigate before you meet your firends at the civic center.</h4><h4> Hop in you car and use the W, A, S, and D keys or your arrow keys to navigate, and use the mouse to inspect suspicious or interesting things on the street.</h4><h4>Enter in your alias, and push 'I am ready'</h4>")
 
 
 
-        var readInstructions = $("<button>");
-        readInstructions.addClass("btn btn-danger");
-        readInstructions.attr("id", "done-reading");
-        readInstructions.text("I'm Ready!");
+        // var readInstructions = $("<button>");
+        // readInstructions.addClass("btn btn-danger");
+        // readInstructions.attr("id", "done-reading");
+        // readInstructions.text("I'm Ready!");
 
-        instructions.append(readInstructions);
+        var input = $("<div>");
+        input.html('<div class="input-group input-group-lg">' +
+            '<button class="input-group-text done-reading" id="inputGroup-sizing-lg">'+"I'm Ready" +'</button>' +
+            '<input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">' +
+            '</div>');
+
+        // instructions.append(readInstructions);
+        instructions.append(input);
 
         $(".min").append(instructions);
+
 
     }
 
     instr();
-    $("#done-reading").on("click", function(){
+    $(".done-reading").on("click", function () {
+        playerInput = $(".form-control").val()
+        // if (name != undefined){
         $(".min").remove();
         $("#gameId").show();
-    })
-
-
-
-
-
-
-
+        nameRef.update({
+            name: playerInput,
+        })
+        updateDisplay();
+        }
+    )
 
     //function loads the player card and attack button
     function bossFight() {
@@ -165,13 +178,13 @@ $(document).ready(function () {
 
         var p1img = $("<img>");
         p1img.addClass("card-img-top");
-        p1img.attr("src", "https://placekitten.com/g/100/100");
+        p1img.attr("src", "https://robohash.org/" + playerInput);
         p1card.append(p1img);
 
         var p1 = $("<h5>")
         p1.addClass("no-pad");
         p1.addClass("card-title");
-        p1.text("Player 1");
+        p1.text(playerInput);
         p1card.append(p1);
 
         var p1HP = $("<p>");
@@ -303,7 +316,7 @@ $(document).ready(function () {
 
     var interaction = {
         2: {
-            story: "You hear a band playing and the music is intoxicating. Click the door to go inside.",
+            story: "You hear a band playing and the music is intoxicating.",
 
             scenario: "You cannot maintain clear thought while the music is playing. You are surrounded by people...at least they look like people, it is hard to tell.",
 
@@ -389,7 +402,7 @@ $(document).ready(function () {
     function updateDisplay() {
         sideKitDisplay();
         //Player Stats display --> create function upon game start
-        $("#health").html("Player HP: " + playerHp);
+        $("#health").html(playerInput + " HP: " + playerHp);
         $("#score").html("Score: " + playerScore);
         scoreRef.update({
             score: playerScore,
@@ -591,20 +604,20 @@ $(document).ready(function () {
             playerScore += 50;
             updateDisplay();
 
-            if (userSelect == interaction[2].answerChoices.positiveChoice) {
-                var image = $("<img>")
-                var imgDiv = $("<div>");
-                imgDiv.addClass("item img-thumbnail");
-                image.attr("src", "assets/images/rupaul.gif");
-                $(".sidekick").append(imgDiv);
-                sidekick.push("RuPaul");
+            // if (userSelect == interaction[2].answerChoices.positiveChoice) {
+            //     var image = $("<img>")
+            //     var imgDiv = $("<div>");
+            //     imgDiv.addClass("item img-thumbnail");
+            //     image.attr("src", "assets/images/rupaul.gif");
+            //     $(".sidekick").append(imgDiv);
+            //     sidekick.push("RuPaul");
 
-                ref.push({
-                    sidekick: sidekick
-                });
-            }
+            //     ref.push({
+            //         sidekick: sidekick
+            //     });
+            // }
             //return to main map feature
-            updateDisplay();
+            // updateDisplay();
 
         } else if (userSelect == "nothingChoice") {
             // console.log("nothing happens");
@@ -618,7 +631,7 @@ $(document).ready(function () {
             // console.log("negative choice");
             $(".gamePlay").append(": " + negative);
 
-            pleayerHp -= 25;
+            playerHp -= 25;
             playerScore -= 25;
             bossHp += 50;
             bossAp += 15;
