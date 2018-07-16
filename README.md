@@ -24,7 +24,8 @@ Kitten image API
 The game is fully functioning. 
 We are still working on a few bugs with the smoothness of the interactions. The story cuts off depending on the users choice. 
 
-#Getting Started
+# Getting Started
+
 To enter the game, sign in with your preferred method so your game play scores can be saved.
 
 Movement
