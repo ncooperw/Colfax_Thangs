@@ -402,8 +402,10 @@ $(document).keydown(function (e) {
             if ($(car).attr("data") === "east") {
                 $(car).attr("src", "assets/images/p1-car-turning-NE.png").addClass("carTurning");
                 if (counter === 10 && pos.left > 715) {
-                    car.animate({
+                     
+                     car.animate({
                         left: "+=0px"
+
                     }, 100);
                     $(car).removeAttr("data", "east").attr("data", "north");
                 } else {
@@ -429,7 +431,7 @@ $(document).keydown(function (e) {
                 if (counter === 10 && pos.left > 675) {
                     $(car).attr("data", "north").attr("src", "assets/images/p1-carUp.png").addClass("carUpDown").removeClass("carTurning");
                     car.css("top", "-=20px");
-
+                    
                     if (pos.top < 20) {
                         insideMode = true;
                         $("#gameId").empty();
@@ -520,6 +522,7 @@ $(document).keydown(function (e) {
                 $(car).attr("data", "east").removeClass("carTurning");
                 if (counter === 10 && pos.left > 700) {
                     car.css("left", "-=0px");
+                    responsiveVoice.speak("Look up there...go north!");
                 } else if (pos.top < 140 && pos.left > 690) {
                     car.css("left", "-=0px");
                     car.animate({
