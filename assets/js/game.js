@@ -238,6 +238,7 @@ function doorGenerator() {
         door.css({
             top: 105,
             left: 410
+            
         });
         $("#gameId").append(door);
     } else if (counter === 5) {

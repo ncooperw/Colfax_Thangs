@@ -341,8 +341,8 @@ $(document).ready(function () {
                 positiveChoice: "move towards the stage and start dancing."
             },
             consequences: {
-                ideal: "increases your health and adds the item to your inventory. Nice!",
-                nothing: "nothing happens. You are no closer to uncovering the truth.",
+                ideal: " It increases your health and adds the item to your inventory. Nice!",
+                nothing: "Nothing happens. You are no closer to uncovering the truth.",
                 negative: "Your drink is poisoned. You wake up the next day in the alley and you lose health.",
                 positive: "Everyone starts laughing at you because your dancing is off beat. You use your new found notoriety to make a new friend."
             },
@@ -535,6 +535,8 @@ $(document).ready(function () {
         if (distanceCheck < 150) {
             insideMode = true;
             doorclicker++
+            console.log("doorclicker # " + doorclicker);
+            concole.log("door = " + door + doorclicker);
             $("#gameId").empty();
             //as door is clicked, read story
             responsiveVoice.speak(interaction[counter].story);
@@ -560,6 +562,7 @@ $(document).ready(function () {
         pp1 = $(this)[0].offsetLeft - car.position().left
         pp2 = $(this)[0].offsetTop - car.position().top
         distanceCheck = Math.sqrt((pp1 * pp1) + (pp2 * pp2));
+        console.warn("This door was not visited")
         if(door1 ===false){
         checkDoor()
         }
@@ -604,6 +607,8 @@ $(document).ready(function () {
         $(".interactions").show();
         $(".scenario").html("<h2>Scenario: " + interaction[counter].scenario + "</h2>");
         responsiveVoice.speak(interaction[counter].scenario);
+        responsiveVoice.speak(interaction[counter].question);
+        responsiveVoice.speak("make your choice.")
         $(".question").html("<h3>" + interaction[counter].question + "</h3>");
         var x;
 
@@ -653,6 +658,7 @@ $(document).ready(function () {
             // console.log("ideal choice");
             $(".gamePlay").append(" which " + ideal);
             itemsDisplay();
+            responsiveVoice.speak(interaction[counter].consequences.ideal);
             playerHp += 50;
             playerAp += 10;
             bossHp -= 75;
@@ -665,6 +671,7 @@ $(document).ready(function () {
         } else if (userSelect == "positiveChoice") {
             // console.log("positive Choice");
             $(".gamePlay").append(": " + positive);
+            responsiveVoice.speak(interaction[counter].consequences.positive)
             playerHp += 25;
             playerAp += 15;
             bossHp -= 50;
@@ -689,6 +696,7 @@ $(document).ready(function () {
 
         } else if (userSelect == "nothingChoice") {
             // console.log("nothing happens");
+            responsiveVoice.speak(interaction[counter].consequences.nothing)
             $(".gamePlay").append(": " + nothing);
             //add button to end interaction or give user a chance to try again
             playerScore += 1;
@@ -697,6 +705,7 @@ $(document).ready(function () {
         }
         if (userSelect == "negativeChoice") {
             // console.log("negative choice");
+            responsiveVoice.speak(interaction[counter].consequences.negative)
             $(".gamePlay").append(": " + negative);
 
             playerHp -= 25;
