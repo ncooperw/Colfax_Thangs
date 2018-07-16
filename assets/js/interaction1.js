@@ -72,6 +72,7 @@ $(document).ready(function () {
     initializeDatabase();
     //play again button global variable
 
+
     var playAgain = $("<button>");
     playAgain.addClass("btn btn-seconadry play-again");
     playAgain.text("Play Again?")
@@ -93,7 +94,7 @@ $(document).ready(function () {
 
         var input = $("<div>");
         input.html('<div class="input-group input-group-lg">' +
-            '<button class="input-group-text done-reading" id="inputGroup-sizing-lg">'+"I'm Ready" +'</button>' +
+            '<button class="input-group-text done-reading" id="inputGroup-sizing-lg">' + "I am Ready" + '</button>' +
             '<input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">' +
             '</div>');
 
@@ -108,15 +109,17 @@ $(document).ready(function () {
     instr();
     $(".done-reading").on("click", function () {
         playerInput = $(".form-control").val()
-        // if (name != undefined){
-        $(".min").remove();
-        $("#gameId").show();
-        nameRef.update({
-            name: playerInput,
-        })
-        updateDisplay();
+        if (playerInput != "") {
+            $(".min").remove();
+            $("#gameId").show();
+            nameRef.update({
+                name: playerInput,
+            })
+            updateDisplay();
+        } else {
+            responsiveVoice.speak("Enter Your Name Please")
         }
-    )
+    })
 
     //function loads the player card and attack button
     function bossFight() {
@@ -267,7 +270,7 @@ $(document).ready(function () {
     if (playerHp <= 0) {
         gameOver();
     }
-
+bossFight();
 
     //function runs when attack button is pushed
     function attack() {
@@ -279,6 +282,15 @@ $(document).ready(function () {
             })
             updateDisplay()
             if (bossHp > 0) {
+                $(".boss-image").animate({
+                    left: "-=350px"
+                }, 150);
+                // setTimeout(function () {
+                    $(".boss-image").animate({
+                        left: "+=350px"
+                    }, 350)
+                // }, 150)
+
                 setTimeout(function () {
                     playerHp -= bossAp;
                     $("#p1hp").text("HP: " + playerHp);
@@ -362,7 +374,7 @@ $(document).ready(function () {
             class: "interactions1"
         },
         8: {
-            story: "The smell of bacon permeates the air. You see a line of people down the street and wonder what they are waiting for. When you look up, you see the sign, 'Pete's Kitchen'. Click the door to go inside.",
+            story: "The smell of bacon permeates the air. You see a line of people down the street and wonder what they are waiting for. When you look up, you see the sign, 'Pete's Kitchen'. ",
 
             scenario: "The smell is the best smell that you have ever encountered. It makees you hungry and satisfied at the same time.",
 
@@ -396,6 +408,9 @@ $(document).ready(function () {
     var sidekick = [];
     var inventory = [];
     var sidekickChoice; //user selected sidekick
+    // var 2 = false;
+    // var 5 = false;
+    // var 8 = false;
 
     $(".gamePlay").hide();
 
@@ -506,6 +521,7 @@ $(document).ready(function () {
 
     //create a function upon click of the door
     $("#gameId").on('click', "#door", function doorExplore() {
+        // if ((instance2 || instance5 || instance8) === false) {
         pp1 = $(this)[0].offsetLeft - car.position().left
         pp2 = $(this)[0].offsetTop - car.position().top
         distanceCheck = Math.sqrt((pp1 * pp1) + (pp2 * pp2));
@@ -529,9 +545,12 @@ $(document).ready(function () {
         } else {
             responsiveVoice.speak("Try getting closer");
         }
+        // }
     });
 
     function beginInteraction() {
+
+
 
         $(".interactions").show();
         $(".scenario").html("<h2>Scenario: " + interaction[counter].scenario + "</h2>");
