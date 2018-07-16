@@ -62,6 +62,9 @@ $(document).ready(function () {
         sideKitsRef.set({
 
         })
+        // playerName.set({
+            // name: playerInput,
+        // })
 
     }
     initializeDatabase();

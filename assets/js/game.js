@@ -481,76 +481,89 @@ $(document).keydown(function (e) {
                 // console.log("counter " + counter);
 
             }
-            if ($(car).attr("data") === "north") {
-                $(car).attr("src", "assets/images/p1-car-turning-NE.png").removeClass("carUpDown").addClass("carTurning");
-                if (pos.top < 210) {
-                    car.animate({
-                        left: "+=20px"
-                    }, 100);
-                    // $(car).attr("src", "assets/images/p1-car-turning-ES.png").addClass("carTurning");
-                } else if ($(car).attr("data") === "west") {
-                    $(car).removeAttr("data", "west").attr("data", "south");
-                    car.animate({
-                        left: "-=20px"
-                    }, 100);
-                    $(car).attr("src", "assets/images/p1-car-turning-WS.png").addClass("carTurning");
-                } else {
-                    $(car).attr("data", "south").attr("src", "assets/images/p1-carDown.png").addClass("carUpDown").removeClass("carTurning");
-                    car.css("top", "+=20px");
-                }
-                $(car).removeAttr("data", "south").attr("data", "east");
+            // console.log("pos left " + pos.left);
+            trashCanGenerator();
+            doorGenerator();
+            // console.log("progress total "+progressTotal);
+            // console.log("counter " + counter);
+           
+        }
+        if ($(car).attr("data") === "north"){
+            $(car).attr("src","assets/images/p1-car-turning-NE.png").removeClass("carUpDown").addClass("carTurning");
+            if (pos.top < 210){
+                car.animate({
+                    top: "-=0px"
+                    }, 100); 
             } else {
-                if (pos.left > 715 && counter === 10) {
-                    // console.log("posleft " + pos.left);
-                    // console.log("postionleft >775");
-                    car.css("left", "-=0px");
-                    car.animate({
-                        left: "+=0px"
-                    }, 100);
-                    responsiveVoice.speak("Look up there, go north");
-                } else {
-                    $(car).attr("src", "assets/images/p1-carRight.png").removeClass("carTurning carUpDown").attr("data", "east");
-                    car.css("left", "+=50px");
-                    // console.log(pos.left, pos.top);
-                }
+                car.animate({
+                    top: "-=20px"
+                    }, 100); 
             }
+            $(car).removeAttr("data", "north").attr("data", "east");
 
-            //drive down
-        } else if (e.keyCode == 40 || e.keyCode == 83) {
-            $(car).attr("src", "assets/images/p1-carDown.png").removeClass("carTurning");
-            if (pos.top > 360) {
-                $(car).attr("data", "south").attr("src", "assets/images/p1-carDown.png").addClass("carUpDown");
-                car.css("top", "+=0px");
-            } else if ($(car).attr("data") === "east") {
-                $(car).removeAttr("data", "east").attr("data", "south");
-                if (counter === 10 && pos.left > 715) {
-                    car.animate({
-                        left: "+=0px"
-                    }, 100);
-                    $(car).attr("src", "assets/images/p1-car-turning-ES.png").addClass("carTurning");
-                } else {
-                    car.animate({
-                        left: "+=20px"
-                    }, 100);
-                    $(car).attr("src", "assets/images/p1-car-turning-ES.png").addClass("carTurning");
-                }
-            } else if ($(car).attr("data") === "west") {
-                $(car).removeAttr("data", "west").attr("data", "south");
-                if (counter === 0 && pos.left < 40) {
-                    car.animate({
-                        left: "-=0px"
-                    }, 100);
-                    $(car).attr("src", "assets/images/p1-car-turning-WS.png").addClass("carTurning");
-                } else {
-                    car.animate({
-                        left: "-=20px"
-                    }, 100);
-                    $(car).attr("src", "assets/images/p1-car-turning-WS.png").addClass("carTurning");
-                }
+        } else if ($(car).attr("data") === "south"){
+            $(car).attr("src","assets/images/p1-car-turning-ES.png").removeClass("carUpDown").addClass("carTurning");
+            if (pos.top > 360){
+                car.animate({
+                    top: "+=0px"
+                    }, 100); 
             } else {
-                $(car).attr("data", "south").attr("src", "assets/images/p1-carDown.png").addClass("carUpDown").removeClass("carTurning");
-                car.css("top", "+=20px");
+               car.animate({
+                    top: "+=20px"
+                    }, 100); 
             }
+            $(car).removeAttr("data", "south").attr("data", "east");
+        } else {
+            $(car).attr("src", "assets/images/p1-carRight.png");
+            $(car).attr("data","east").removeClass("carTurning");
+            if(counter === 10 && pos.left > 700){
+                car.css("left", "-=0px");
+            }else if (pos.top < 140 && pos.left > 690) {
+                car.css("left", "-=0px");
+                car.animate({
+                    top: "+=0px"
+                    }, 100); 
+            } else {
+               car.css("left", "+=50px"); 
+            }
+            
+        }
+
+        //drive down
+    } else if (e.keyCode == 40 || e.keyCode == 83) {
+        $(car).attr("src", "assets/images/p1-carDown.png").removeClass("carTurning");
+        if (pos.top > 360) {
+            $(car).attr("data","south").attr("src", "assets/images/p1-carDown.png").addClass("carUpDown");
+            car.css("top", "+=0px");
+        } else if ($(car).attr("data") === "east") {
+            $(car).removeAttr("data", "east").attr("data", "south");
+            if (counter === 10 && pos.left > 715) {
+            car.animate({
+                left: "+=0px"
+            }, 100);
+            $(car).attr("src","assets/images/p1-car-turning-ES.png").addClass("carTurning");
+        } else {
+            car.animate({
+                left: "+=20px"
+            }, 100);
+            $(car).attr("src","assets/images/p1-car-turning-ES.png").addClass("carTurning");
+        }
+        } else if ($(car).attr("data") === "west") {
+            $(car).removeAttr("data", "west").attr("data", "south");
+            if (counter === 0 && pos.left < 40){
+                car.animate({
+                    left: "-=0px"
+                }, 100);
+                $(car).attr("src","assets/images/p1-car-turning-WS.png").addClass("carTurning");
+            } else {
+            car.animate({
+                left: "-=20px"
+            }, 100);
+            $(car).attr("src","assets/images/p1-car-turning-WS.png").addClass("carTurning");
+        }
+        } else {
+            $(car).attr("data", "south").attr("src", "assets/images/p1-carDown.png").addClass("carUpDown").removeClass("carTurning");
+            car.css("top", "+=20px");
         }
     }
 
