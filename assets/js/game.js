@@ -233,7 +233,7 @@ function doorGenerator() {
     door.removeAttr("src");
     door.attr("src", 'assets/images/DoorOpening-gif.gif');
 
-    console.log(counter);
+    // console.log(counter);
     if (counter === 2) {
         door.css({
             top: 105,
@@ -259,7 +259,7 @@ var randomNumber;
 
 function trashCanGenerator() {
     randomNumber = Math.floor(Math.random() * 5);
-    console.log("rand" + randomNumber);
+    // console.log("rand" + randomNumber);
     $("#gameId").empty();
     car.css({
         top: carYAxis,
@@ -287,7 +287,7 @@ function trashCanGenerator() {
         //clicking trashcan data2 makes a sidekick/item pop up
     
         
-        console.log($(this).attr("data"));
+        // console.log($(this).attr("data"));
 
         pp1 = $(this)[0].offsetLeft - car.position().left
         pp2 = $(this)[0].offsetTop - car.position().top
@@ -306,13 +306,13 @@ function trashCanGenerator() {
                 left: "-=15px"
             }, 100);
         
-            console.log($(this)[0].offsetLeft);
-            console.log(car.position().left);
+            // console.log($(this)[0].offsetLeft);
+            // console.log(car.position().left);
         } else {
             responsiveVoice.speak("Try getting closer");
 
         }
-        console.log(distanceCheck);
+        // console.log(distanceCheck);
         
     })
 
@@ -371,7 +371,7 @@ $(document).keydown(function (e) {
         } 
         
         if (pos.left < 50) {
-            console.log("pos.left<20 is working");
+            // console.log("pos.left<20 is working");
             if (counter !==0) {
             $("#gameId").removeClass("game-container" + counter);
             counter--;
@@ -383,7 +383,7 @@ $(document).keydown(function (e) {
                 left: 800
             });
            
-            console.log("progress total " + progressTotal);
+            // console.log("progress total " + progressTotal);
             } 
         } 
 
@@ -428,8 +428,27 @@ $(document).keydown(function (e) {
                         $("#gameId").removeClass("game-container" + counter);
                         counter++;
                         $("#gameId").addClass("game-container" + counter);
+
+                        var bossButton = $("<button>");
+                        bossButton.addClass("btn btn-danger bButt");
+                        bossButton.attr("id", "start-boss");
+                        bossButton.text("Fight!")
+                    
+                        var bossText = $("<div>");
+                        bossText.attr("id", "boss-story");
+                        bossText.addClass("boss-paragraph");
+                        bossText.text("Something rustles in the bushes...")
+                        setTimeout(function () {
+                            responsiveVoice.speak("Prepare to defnd yourself human!");
+                            bossText.text("Prepare to defend yourself Human!")
+                            bossText.append(bossButton);
+                    
+                        }, 3000)
+                    
+                        $(".game-container11").append(bossText);
+                    
                     }
-                    console.log(car.position());
+                    // console.log(car.position());
                 } else if (pos.top < 210){
                     $(car).attr("data","north").attr("src", "assets/images/p1-carUp.png").addClass("carUpDown").removeClass("carTurning"); 
                     car.css("top", "-=0px"); 
@@ -452,11 +471,11 @@ $(document).keydown(function (e) {
             if (counter > progressTotal) {
                 progressTotal++;
             }
-            console.log("pos left " + pos.left);
+            // console.log("pos left " + pos.left);
             trashCanGenerator();
             doorGenerator();
-            console.log("progress total "+progressTotal);
-            console.log("counter " + counter);
+            // console.log("progress total "+progressTotal);
+            // console.log("counter " + counter);
            
         }
         if ($(car).attr("data") === "north"){
@@ -479,8 +498,8 @@ $(document).keydown(function (e) {
             $(car).removeAttr("data", "south").attr("data", "east");    
         } else {
             if (pos.left > 715 && counter === 10) {
-                console.log("posleft " + pos.left);
-                console.log("postionleft >775");
+                // console.log("posleft " + pos.left);
+                // console.log("postionleft >775");
                 car.css("left", "-=0px");
                 car.animate({
                     left: "+=0px"
@@ -489,7 +508,7 @@ $(document).keydown(function (e) {
             } else {
             $(car).attr("src", "assets/images/p1-carRight.png").removeClass("carTurning carUpDown").attr("data","east");
             car.css("left", "+=50px");
-            console.log(pos.left, pos.top);
+            // console.log(pos.left, pos.top);
             }   
         }
 
@@ -537,7 +556,15 @@ $(document).keydown(function (e) {
     
 })
 
+
+function updateDisplay(){
+    $("#health").html("Player HP: " + playerHp);
+    $("#score").html("Score: " + playerScore);
+}
+
 var kittens = ["Devin", "Jen", "Jared", "Dylan", "Charlie", "Bryan", "Colin"];
+var sideKittens = [];
+
 
 function gainSidekick() {
 
@@ -547,11 +574,23 @@ function gainSidekick() {
     var kittenName = $("<p class='text-center'>" + kittens[arrNum] + "</p>");
     var apiImage = "https://robohash.org/" + kittens[arrNum] + "/?set=set4";
     sidekit.attr("src", apiImage).addClass("imgItems img-thumbnail");
-    console.log(apiImage);
+    // console.log(apiImage);
     displayDiv.addClass("item");
     displayDiv.append(sidekit).append(kittenName);
     $("#gameId").append(displayDiv);
     $(".sidekick").append(displayDiv);
+
+    $(".sidekick").fadeIn(3000);
     kittens.splice(arrNum, 1);
-    console.log(kittens);
+    // console.log(kittens);
+
+    sideKittens.push(apiImage);  
+    responsiveVoice.speak("You've found a kitten! We'll name it after someone helpful.") 
+
+    playerHp += 50;
+    playerScore += 40;
+    playerAp +=25;
+    bossHp -= 50;
+    bossAp -= 5;
+    updateDisplay();
 }
