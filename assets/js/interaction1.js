@@ -270,7 +270,7 @@ $(document).ready(function () {
     if (playerHp <= 0) {
         gameOver();
     }
-bossFight();
+
 
     //function runs when attack button is pushed
     function attack() {
