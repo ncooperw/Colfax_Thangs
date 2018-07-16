@@ -481,9 +481,6 @@ $(document).ready(function () {
                     $("#game").append(choices)
 
                     //Scenario and choices come up
-                    console.log("1", door2)
-                    console.log("2", door5);
-                    console.log("3", door8);
                     beginInteraction();
                 }
 
