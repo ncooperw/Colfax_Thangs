@@ -408,12 +408,12 @@ $(document).ready(function () {
     var sidekick = [];
     var inventory = [];
     var sidekickChoice; //user selected sidekick
-    var doorclicker = 0;
-    var door1 = false;
     var door2 = false;
-    var door3 = false;
+    var door5 = false;
+    var door8 = false;
 
     $(".gamePlay").hide();
+
 
     function updateDisplay() {
         sideKitDisplay();
@@ -432,7 +432,6 @@ $(document).ready(function () {
             ap: bossAp,
         })
         $(".interactions").hide();
-
     }
 
     updateDisplay();
@@ -446,9 +445,6 @@ $(document).ready(function () {
         image.attr("src", interaction[counter].itemImg).addClass("imgItems");
         // console.log(image);
         imgDiv.append(image);
-
-
-
 
         $(".inventory").append(imgDiv);
         inventory.push(interaction[counter].item);
@@ -464,140 +460,72 @@ $(document).ready(function () {
         })
     }
 
-
-    //sidekick function
-    //----------------------------------------------------
-
-    function gainSidekick() {
-        var sparkleDiv = $("<div>");
-        sparkleDiv.addClass("sparkle");
-
-        var sparkleImage = "<img src='assets/images/sparkle.gif'/>";
-
-        sparkleDiv.append(sparkleImage);
-        sparkleDiv.hide();
-        $(".sidekickSparkle").append(sparkleDiv);
-        $(".sparkle").on("click", function () {
-
-            $(".sparkle").hide();
-
-            var sidekicks = ["bum", "prostitute", "mangie+dog", "drug dealer"]
-
-
-            var limit = 1;
-
-            var input = sidekicks[counter];
-
-            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + input + "&limit=" + limit + "&api_key=dc6zaTOxFJmzC";
-            $.ajax({
-                url: queryURL,
-                method: "GET"
-            }).done(function (response) {
-
-                for (var j = 0; j < limit; j++) {
-                    // console.log(response);
-
-                    var displayDiv = $("<div>");
-                    displayDiv.addClass("item");
-
-                    var image = $("<img>");
-
-                    image.attr("src", response.data[j].images.original_still.url);
-                    image.attr("data-still", response.data[j].images.original_still.url);
-                    image.attr("data-animate", response.data[j].images.original.url);
-                    image.attr("data-state", "still");
-                    image.attr("class", "gif img-thumbnail");
-                    displayDiv.append(image);
-
-
-
-                    $(".sidekick").append(displayDiv);
-
-
-                }
-            })
-        })
-    }
-
-    function doorUpdate() {
-        if (doorclicker = 1) {
-            door1 = true
-        }
-        if (doorclicker = 2) {
-            door2 = true
-        }
-        if (doorclicker = 3) {
-            door3 = true
-        }
-    }
-
     function checkDoor() {
-        if (distanceCheck < 150) {
-            insideMode = true;
-            doorclicker++
-            $("#gameId").empty();
-            //as door is clicked, read story
-            responsiveVoice.speak(interaction[counter].story);
-            //changes the background 
-            $("#gameId").addClass(interaction[counter].class).removeClass("game-container").removeClass("game-container" + counter);
-            var choices = $("<div>");
-            // choices.addClass("interactions" + iCounter);
-            choices.attr("id", "int");
 
-            $("#game").append(choices)
+        insideMode = true;
+        $("#gameId").empty();
+        //as door is clicked, read story
+        responsiveVoice.speak(interaction[counter].story);
+        //changes the background 
+        $("#gameId").addClass(interaction[counter].class).removeClass("game-container").removeClass("game-container" + counter);
+        var choices = $("<div>");
+        // choices.addClass("interactions" + iCounter);
+        choices.attr("id", "int");
 
-            //Scenario and choices come up
-            beginInteraction();
+        $("#game").append(choices)
 
+        //Scenario and choices come up
+        console.log("1", door2)
+        console.log("2", door5);
+        console.log("3", door8);
+        beginInteraction();
+    }
+
+    function checkForRepeat() {
+        if (door8 === false) {
+            checkDoor();
+        }
+        else if (door5 === false) {
+            checkDoor()
+        }
+        else if (door2 === false) {
+            checkDoor();
         } else {
-            responsiveVoice.speak("Try getting closer");
+            responsiveVoice.speak("You've been here tonight already.")
         }
     }
+
+    $(document).on("click", ".doorNum2", function () {
+        door2 = true
+    })
+    $(document).on("click", ".doorNum5", function () {
+        door5 = true
+    })
+    $(document).on("click", ".doorNum8", function () {
+        door8 = true
+    })
+
+
+
     //create a function upon click of the door
     $("#gameId").on('click', "#door", function doorExplore() {
-
 
         pp1 = $(this)[0].offsetLeft - car.position().left
         pp2 = $(this)[0].offsetTop - car.position().top
         distanceCheck = Math.sqrt((pp1 * pp1) + (pp2 * pp2));
-        if(door1 ===false){
-        checkDoor()
-        }
-        else if(door2 === false){
-            checkDoor()
-        }
-        else if (door3 ===false){
-            checkDoor();
+
+        if (distanceCheck < 150) {
+            checkForRepeat()
+            // checkDoor()
+
         } else {
-            responsiveVoice.speak("You've been here already today.")
+            responsiveVoice.speak("Try getting closer");
         }
 
-        // function checkDoor() {
-        //     if (distanceCheck < 150) {
-        //         insideMode = true;
-        //         doorclicker++
-        //         $("#gameId").empty();
-        //         //as door is clicked, read story
-        //         responsiveVoice.speak(interaction[counter].story);
-        //         //changes the background 
-        //         $("#gameId").addClass(interaction[counter].class).removeClass("game-container").removeClass("game-container" + counter);
-        //         var choices = $("<div>");
-        //         // choices.addClass("interactions" + iCounter);
-        //         choices.attr("id", "int");
-
-        //         $("#game").append(choices)
-
-        //         //Scenario and choices come up
-        //         beginInteraction();
-
-        //     } else {
-        //         responsiveVoice.speak("Try getting closer");
-        //     }
-        // }
-        // }
     });
 
     function beginInteraction() {
+
 
 
 
@@ -720,7 +648,6 @@ $(document).ready(function () {
         doorGenerator();
         car.css(carLastPos);
         // console.log("gamejs " + counter);
-        doorUpdate();
         $(".gamePlay").show();
     });
 
