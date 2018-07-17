@@ -297,7 +297,7 @@ function trashCanGenerator() {
 
         //makes sure user is close enough to click 
         if (distanceCheck < 120) {
-            if ($(this).attr("data") == randomNumber) {
+            if ($(this).attr("data") == randomNumber && trashSpawnPoints[counter][$(this).attr("data")].state === "closed") {
                 gainSidekick();
             }
             trashSpawnPoints[counter][$(this).attr("data")].state = "open";
