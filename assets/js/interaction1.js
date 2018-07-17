@@ -347,7 +347,7 @@ $(document).ready(function () {
                             positiveChoice: "move towards the stage and start dancing."
                         },
                         consequences: {
-                            ideal: "increases your health and adds the item to your inventory. Nice!",
+                            ideal: "This choice increases your health and adds the item to your inventory. Nice!",
                             nothing: "nothing happens. You are no closer to uncovering the truth.",
                             negative: "Your drink is poisoned. You wake up the next day in the alley and you lose health.",
                             positive: "Everyone starts laughing at you because your dancing is off beat. You use your new found notoriety to make a new friend."
@@ -357,11 +357,11 @@ $(document).ready(function () {
                         class: "interactions0"
                     },
                     5: {
-                        story: "You find yourself outside of a quaint little country bar. You decide to go inside.",
+                        story: "You find yourself outside of a quaint little country bar. You go inside.",
 
-                        scenario: "Once you are inside the bar, you realize that this is not your typical, run of the mill country bar. There are shirtless men EVERYWHERE and many of the women are extremely tall. As you make your way further into the bar you",
+                        scenario: "Immediately, you realize this is not your typical, run of the mill country bar. There are shirtless men EVERYWHERE and many of the women are extremely tall.",
 
-                        question: "As you make your way further into the bar you realize that this place is really fun. People seem happy to be themselves. Do you: ",
+                        question: "As you make your way further into the bar you realize that this place is really fun. People seem happy to be themselves. Make a choice.",
 
                         answerChoices: {
                             negativeChoice: "Upon further observation, you are extremely uncomfortable. You try to walk towards the door in an easy, smooth manner.  ",
@@ -370,7 +370,7 @@ $(document).ready(function () {
                             positiveChoice: "You spy an attractive person across the bar and wink at them."
                         },
                         consequences: {
-                            ideal: "You strike up a conversation with the bartender and comment on the awesome hat he is wearing. He decides to give you the hat.",
+                            ideal: "You strike up a conversation with the bartender and comment on the awesome hat he is wearing. He decides to give you the hat. It increases your health and adds the item to your inventory. Nice!",
                             nothing: "nothing happens. You are no closer to uncovering the truth.",
                             negative: "In your quest to make a hasty exit you trip over your own feet completely shattering your ankle in the process. You lose health.",
                             positive: "Your master winkery causes the person to walk over to you. As they come closer, you see that you have just winked at...RuPaul! You spend the rest of the evening talking candidly and learning the drag queen secrets."
@@ -380,23 +380,23 @@ $(document).ready(function () {
                         class: "interactions1"
                     },
                     8: {
-                        story: "The smell of bacon permeates the air. You see a line of people down the street and wonder what they are waiting for. When you look up, you see the sign, 'Pete's Kitchen'. ",
+                        story: "The smell of bacon permeates the air. As you enter you notice there is a line of people down the street. What are they waiting for?",
 
-                        scenario: "The smell is the best smell that you have ever encountered. It makees you hungry and satisfied at the same time.",
+                        scenario: "The smell is the best smell that you have ever encountered. It makes you hungry and satisfied at the same time.",
 
-                        question: "As you cut the line to enter the diner, you notice the cramped space is full of people. A person behind you yells, 'Hey, you can't cut!' Do you:",
+                        question: "As you cut to the front of the line, you notice the cramped space is full of people. A person behind you yells, 'Hey... back of the line!'... Make a choice",
 
                         answerChoices: {
-                            nothingChoice: "turn around and realize that you did indeed cut. You apologize and walk to the end of the line to wait your turn.",
-                            idealChoice: "look around as you attempt to form a plan. You see a golden fork lying on a table that is waiting to be bussed. You pick up the fork.",
-                            positiveChoice: "go over to a table with a lone person and ask to sit with them. They are delighted that you asked and invite you to eat thier left over breakfast burrito.",
-                            negativeChoice: "turn around and punch the person; they sound angry and you are in no mood to deal with them."
+                            nothingChoice: "You turn around and realize that you did indeed cut. You apologize and walk to the end of the line to wait your turn.",
+                            idealChoice: "You look around as you attempt to form a plan. You see a golden fork lying on a table that is waiting to be bussed. You pick up the fork.",
+                            positiveChoice: "You go over to a table with a lone person and ask to sit with them. They are delighted that you asked and invite you to eat thier left over breakfast burrito.",
+                            negativeChoice: "You turn around and punch the person; they sound angry and you are in no mood to deal with them."
                         },
                         consequences: {
                             ideal: "increases your health and adds the item to your inventory. Nice!",
                             nothing: "nothing happens. You are no closer to uncovering the truth.",
                             negative: "Your are beat up so badly that you lose an entire day...you cannot remember anything. You wake up the next day in the alley and you lose health.",
-                            positive: "The person you sat next to is so appreciative of the conversation that you share that they give you a hint. They say, 'be kind to people and they will help you.'"
+                            positive: "The person you sat next to is appreciative of the conversation that you share. They tell you, 'the secret to life is in the upside down and the key to winning lies in the trash can.'"
                         },
                         item: "Golden Fork",
                         itemImg: "assets/images/goldFork.jpg",
@@ -534,6 +534,8 @@ $(document).ready(function () {
                     $(".scenario").html("<h2>Scenario: " + interaction[counter].scenario + "</h2>");
                     responsiveVoice.speak(interaction[counter].scenario);
                     $(".question").html("<h3>" + interaction[counter].question + "</h3>");
+                    responsiveVoice.speak(interaction[counter].question);
+                    
                     var x;
 
                     for (x in interaction[counter].answerChoices) {
@@ -569,8 +571,8 @@ $(document).ready(function () {
                     next.addClass("btn btn-success continue");
                     $("#buttonSpot").append(next);
 
-                    $(".gamePlay").html("You decide to " + interaction[counter].answerChoices[userSelect]);
-                    responsiveVoice.speak("You decide to " + interaction[counter].answerChoices[userSelect]);
+                    $(".gamePlay").html(interaction[counter].answerChoices[userSelect]);
+                    responsiveVoice.speak(interaction[counter].answerChoices[userSelect]);
 
                     var ideal = interaction[counter].consequences.ideal;
                     var positive = interaction[counter].consequences.positive;
@@ -581,6 +583,8 @@ $(document).ready(function () {
                     if (userSelect == "idealChoice") {
                         // console.log("ideal choice");
                         $(".gamePlay").append(" which " + ideal);
+
+                        responsiveVoice.speak(interaction[counter].consequences.ideal);
                         itemsDisplay();
                         playerHp += 50;
                         playerAp += 10;
@@ -594,6 +598,8 @@ $(document).ready(function () {
                     } else if (userSelect == "positiveChoice") {
                         // console.log("positive Choice");
                         $(".gamePlay").append(": " + positive);
+
+                        responsiveVoice.speak(interaction[counter].consequences.positive);
                         playerHp += 25;
                         playerAp += 15;
                         bossHp -= 50;
@@ -619,7 +625,9 @@ $(document).ready(function () {
                     } else if (userSelect == "nothingChoice") {
                         // console.log("nothing happens");
                         $(".gamePlay").append(": " + nothing);
-                        //add button to end interaction or give user a chance to try again
+                        
+                        responsiveVoice.speak(interaction[counter].consequences.nothing);
+
                         playerScore += 1;
                         // return to main map feature
                         updateDisplay();
@@ -627,7 +635,7 @@ $(document).ready(function () {
                     if (userSelect == "negativeChoice") {
                         // console.log("negative choice");
                         $(".gamePlay").append(": " + negative);
-
+                        responsiveVoice.speak(interaction[counter].consequences.negative);
                         playerHp -= 25;
                         playerScore -= 25;
                         bossHp += 50;

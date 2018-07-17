@@ -241,6 +241,7 @@ function doorGenerator() {
         door.css({
             top: 105,
             left: 410
+            
         });
         $("#gameId").append(door);
     } else if (counter === 5) {
@@ -401,8 +402,10 @@ $(document).keydown(function (e) {
             if ($(car).attr("data") === "east") {
                 $(car).attr("src", "assets/images/p1-car-turning-NE.png").addClass("carTurning");
                 if (counter === 10 && pos.left > 715) {
-                    car.animate({
+                     
+                     car.animate({
                         left: "+=0px"
+
                     }, 100);
                     $(car).removeAttr("data", "east").attr("data", "north");
                 } else {
@@ -428,7 +431,7 @@ $(document).keydown(function (e) {
                 if (counter === 10 && pos.left > 675) {
                     $(car).attr("data", "north").attr("src", "assets/images/p1-carUp.png").addClass("carUpDown").removeClass("carTurning");
                     car.css("top", "-=20px");
-
+                    
                     if (pos.top < 20) {
                         insideMode = true;
                         $("#gameId").empty();
@@ -444,9 +447,10 @@ $(document).keydown(function (e) {
                         var bossText = $("<div>");
                         bossText.attr("id", "boss-story");
                         bossText.addClass("boss-paragraph");
-                        bossText.text("Something rustles in the bushes...")
+                        bossText.text("Something rustles in the bushes...");
+                        responsiveVoice.speak("Something rustles in the bushes...");
                         setTimeout(function () {
-                            responsiveVoice.speak("Prepare to defnd yourself human!");
+                            responsiveVoice.speak("Prepare to defend yourself... human!");
                             bossText.text("Prepare to defend yourself Human!")
                             bossText.append(bossButton);
 
@@ -518,6 +522,7 @@ $(document).keydown(function (e) {
                 $(car).attr("data", "east").removeClass("carTurning");
                 if (counter === 10 && pos.left > 700) {
                     car.css("left", "-=0px");
+                    responsiveVoice.speak("Look up there...go north!");
                 } else if (pos.top < 140 && pos.left > 690) {
                     car.css("left", "-=0px");
                     car.animate({
