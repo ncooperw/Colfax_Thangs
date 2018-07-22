@@ -23,9 +23,9 @@ Kitten image API
 
 ## Screen Shots
 
-![alt text](screenshots/colfax_thangs_screenshot.PNG "Opening Scene of the game")
+![alt text](assets/images/screenshots/colfax_thangs_screenshot.PNG "Opening Scene of the game")
 
-![alt text](screenshots/ColfaxThangs2.PNG "Basic play screen")
+![alt text](assets/images/screenshots/ColfaxThangs2.PNG "Basic play screen")
 
 # Project Status
 The game is fully functioning. 
